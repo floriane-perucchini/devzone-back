@@ -2,11 +2,11 @@
   "name": "projet-13-devzone-back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "DEBUG=* node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "start": "nodemon ./app/bin/www",
+    "dev": "DEBUG=* node ./app/bin/www"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,6 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "redis": "^4.6.4"
-  }
+  },
+  "type": "module"
 }

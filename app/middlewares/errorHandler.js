@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 const debug = require('debug')('ErrorHandling');
 
-const errorService = {
+const errorHandler = {
   /**
      * Méthode de gestion globale des erreurs
      * @param {*} err
@@ -13,7 +13,7 @@ const errorService = {
      */
   manage(err, req, res, next) {
     // je loggue l'erreur pour moi
-    errorService.writeLog(req.url, err);
+    errorHandler.writeLog(req.url, err);
 
     switch (err.code) {
       case 404:
@@ -83,4 +83,4 @@ const errorService = {
   },
 };
 
-export default errorService;
+export default errorHandler;
