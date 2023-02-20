@@ -1,12 +1,8 @@
-CREATE ROLE admin_devzone WITH LOGIN PASSWORD 'devzonepassword';
-
-CREATE DATABASE devzone WITH OWNER admin_devzone;
-
 BEGIN;
 
 CREATE DOMAIN mail AS text CHECK(VALUE (([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}));
 
-CREATE TABLE user (
+CREATE TABLE "user" (
                       id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                       email mail NOT NULL,
                       password text NOT NULL,
@@ -29,7 +25,7 @@ CREATE TABLE favorite (
                           description text,
                           link text,
                           link_img text,
-                          user_id int REFERENCES user (id),
+                          user_id int REFERENCES "user" (id),
                           tool_id int  REFERENCES tool (id)
 );
 
