@@ -3,7 +3,7 @@ import express from "express";
 // import fs from "fs";
 // import cors from "cors";
 
-// import router from "./app/routes/index.js";
+import router from "./app/routes/index.router.js";
 // import { handleErrors } from "./app/middlewares/index.js";
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// app.use(router);
+app.use(router);
 
 // app.use(handleErrors);
 
