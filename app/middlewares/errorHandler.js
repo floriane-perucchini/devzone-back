@@ -1,23 +1,25 @@
-import { appendFile } from 'fs/promises';
-import { resolve } from 'path';
+import { appendFile } from "fs/promises";
+import { resolve } from "path";
 
-const debug = require('debug')('ErrorHandling');
+const debug = require("debug")("ErrorHandling");
 
 const errorHandler = {
   /**
-     * Méthode de gestion globale des erreurs
-     * @param {*} err
-     * @param {*} req
-     * @param {*} res
-     * @param {*} next
-     */
+   * Méthode de gestion globale des erreurs
+   * @param {*} err
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
   manage(err, req, res, next) {
-    // je loggue l'erreur pour moi
+    // je log l'erreur pour moi
     errorHandler.writeLog(req.url, err);
 
     switch (err.code) {
       case 404:
-        res.status(404).sendFile(resolve(`${__dirname}../../../public/notFound.html`));
+        res
+          .status(404)
+          .sendFile(resolve(`${__dirname}../../../public/notFound.html`));
         break;
       default:
         // j'informe l'utilisateur
@@ -26,10 +28,10 @@ const errorHandler = {
     }
   },
   /**
-     * Permet l'écriture dans un fichier .log
-     * @param {string} url url qui a amené à l'erreur
-     * @param {Error} err erreur
-     */
+   * Permet l'écriture dans un fichier .log
+   * @param {string} url url qui a amené à l'erreur
+   * @param {Error} err erreur
+   */
   writeLog(url, err) {
     // le debug n'est appelé qu'en environnement de développement
     debug(err);
@@ -49,7 +51,7 @@ const errorHandler = {
     // je crèe une variable qui va contenir le nom de mon fichier
     const fileName = `${year}-${month}-${day}.log`;
 
-    const dirPath = resolve(__dirname, '../../logs/', fileName);
+    const dirPath = resolve(__dirname, "../../logs/", fileName);
     // debug(dirPath);
 
     const hours = date.getUTCHours();
@@ -66,18 +68,18 @@ const errorHandler = {
         */
     appendFile(dirPath, content, (_error) => {
       if (err) throw err;
-      console.log('Saved!');
+      console.log("Saved!");
     });
   },
   /**
-     * Gestion de l'erreur 404
-     * @param {*} _req requête
-     * @param {*} _res réponse
-     * @param {*} next méthode pour passer au prochain middleware
-     */
+   * Gestion de l'erreur 404
+   * @param {*} _req requête
+   * @param {*} _res réponse
+   * @param {*} next méthode pour passer au prochain middleware
+   */
   // eslint-disable-next-line no-underscore-dangle
   _404(_req, _res, next) {
-    const error = new Error('Page non trouvée');
+    const error = new Error("Page non trouvée");
     error.code = 404;
     next(error);
   },
