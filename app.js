@@ -2,10 +2,9 @@ import express from "express";
 // import logger from "morgan";
 // import fs from "fs";
 // import cors from "cors";
-//import expressJSDocSwagger  from 'express-jsdoc-swagger';
 
 // import router from "./app/routes/index.js";
-//import { handleErrors } from "./app/middlewares/errorHandler.js";
+// import { handleErrors } from "./app/middlewares/index.js";
 
 const app = express();
 
