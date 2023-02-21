@@ -7,28 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model favorite {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  link        String?
-  link_img    String?
-  user_id     Int?
-  tool_id     Int?
-  tool        tool?   @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user        user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([link])
-  @@index([link_img])
-  @@index([name])
-}
-
 model tool {
   id          Int        @id @default(autoincrement())
   name        String
   logo        String?
   description String?
-  favorite    favorite[]
+  bookmark    bookmark[]
 
   @@index([logo])
   @@index([name])
@@ -42,9 +26,25 @@ model user {
   lastname  String?
   pseudo    String
   avatar    String?
-  favorite  favorite[]
+  bookmark  bookmark[]
 
   @@index([email])
   @@index([firstname])
   @@index([lastname])
+}
+
+model bookmark {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  link        String?
+  link_img    String?
+  user_id     Int?
+  tool_id     Int?
+  tool        tool?   @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorite_tool_id_fkey")
+  user        user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorite_user_id_fkey")
+
+  @@index([link])
+  @@index([link_img])
+  @@index([name])
 }

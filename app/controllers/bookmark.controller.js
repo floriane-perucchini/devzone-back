@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const userController = {
+const bookmarkController = {
   getAll: async function (request, response) {
     try {
-      const users = await prisma.user.findMany({});
-      response.json({ users });
+      const bookmarks = await prisma.bookmark.findMany({});
+      response.json({ bookmarks });
     } catch (error) {
       console.error(error);
       response.status(500).send(error);
@@ -15,10 +15,10 @@ const userController = {
   get: async function (request, response) {
     const { id } = request.params;
     try {
-      const user = await prisma.user.findUnique({
+      const bookmark = await prisma.bookmark.findUnique({
         where: { id: Number(id) },
       });
-      response.json({ user });
+      response.json({ bookmark });
     } catch (error) {
       console.error(error);
       response.status(500).send(error);
@@ -26,18 +26,17 @@ const userController = {
   },
 
   create: async function (request, response) {
-    const { lastname, firstname, email, password, pseudo } = request.body;
+    const { name, description, link, link_img } = request.body;
     try {
-      const newUser = await prisma.user.create({
+      const newBookmark = await prisma.user.create({
         data: {
-          lastname,
-          firstname,
-          email,
-          password,
-          pseudo,
+          name,
+          description,
+          link,
+          link_img,
         },
       });
-      response.json(newUser);
+      response.json(newBookmark);
     } catch (err) {
       return response.status(500).json(err);
     }
@@ -45,17 +44,17 @@ const userController = {
 
   update: async function (request, response) {
     const { id } = request.params;
-    const { email, password, pseudo } = request.body;
+    const { name, description, link } = request.body;
     try {
-      const user = await prisma.user.update({
+      const bookmark = await prisma.bookmark.update({
         where: { id: Number(id) },
         data: {
-          email: String(email),
-          password: String(password),
-          pseudo: String(pseudo),
+          name: String(name),
+          description: String(description),
+          link: String(link),
         },
       });
-      response.json({ user });
+      response.json({ bookmark });
     } catch (error) {
       response.status(500).render(500).json(error);
     }
@@ -64,17 +63,17 @@ const userController = {
   delete: async function (request, response) {
     const { id } = request.params;
     try {
-      const user = await prisma.user.delete({
+      const bookmark = await prisma.bookmark.delete({
         where: {
           id: Number(id),
         },
       });
 
-      response.json(user);
+      response.json(bookmark);
     } catch (err) {
       return response.status(500).json(err);
     }
   },
 };
 
-export default userController;
+export default bookmarkController;

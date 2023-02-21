@@ -1,6 +1,7 @@
 BEGIN;
 
 CREATE DOMAIN mail AS text CHECK(VALUE ~ '(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}$');
+
 CREATE TABLE "user" (
                       id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                       email mail NOT NULL,
@@ -18,7 +19,7 @@ CREATE TABLE tool (
                       description text
 );
 
-CREATE TABLE favorite (
+CREATE TABLE bookmark (
                           id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                           name text NOT NULL,
                           description text,

@@ -1,13 +1,5 @@
-feature/issue-#1/Logshandling
-import favoriteController from "./favorite.controller";
-import toolController from "./tool.controller";
-import userController from "./user.controller";
-
-
-
-export  { favoriteController, userController, toolController };
-
+import bookmarkController from "./bookmark.controller.js";
 import userController from "./user.controller.js";
+import toolController from "./tool.controller.js";
 
-export { userController };
- dev
+export { bookmarkController, toolController, userController };

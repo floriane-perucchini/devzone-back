@@ -33,7 +33,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "redis": "^4.6.4"
+    "redis": "^4.6.4",
+    "zod": "^3.20.6"
   },
   "type": "module"
 }

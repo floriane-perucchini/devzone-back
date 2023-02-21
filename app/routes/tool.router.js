@@ -1,20 +1,19 @@
 import express from "express";
-import   { toolController } from '../controllers/index.controller.js';
+import { toolController as tool } from "../controllers/index.controller.js";
 
 const router = express.Router();
 
 // GET Routes
-router.get("/tools", toolController.getAlltools);
-router.get("/tool/:id", toolController.getTool);
+router.get("/tools", tool.getAll);
+router.get("/tool/:id", tool.get);
 
 // POST Routes
-router.post("/tool", toolController.createTool);
-
+router.post("/tool", tool.create);
 
 // PATCH Routes
-router.patch("/tool/:id", toolController.updateTool);
+router.patch("/tool/:id", tool.update);
 
 //DELETE Routes
-router.delete("/tool/:id", toolController.deleteTool)
+router.delete("/tool/:id", tool.delete);
 
 export default router;

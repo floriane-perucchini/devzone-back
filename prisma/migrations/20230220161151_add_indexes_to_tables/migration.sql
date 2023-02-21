@@ -1,11 +1,11 @@
 -- CreateIndex
-CREATE INDEX "favorite_link_idx" ON "favorite"("link");
+CREATE INDEX "bookmark_link_idx" ON "bookmark"("link");
 
 -- CreateIndex
-CREATE INDEX "favorite_link_img_idx" ON "favorite"("link_img");
+CREATE INDEX "bookmark_link_img_idx" ON "bookmark"("link_img");
 
 -- CreateIndex
-CREATE INDEX "favorite_name_idx" ON "favorite"("name");
+CREATE INDEX "bookmark_name_idx" ON "bookmark"("name");
 
 -- CreateIndex
 CREATE INDEX "tool_logo_idx" ON "tool"("logo");
