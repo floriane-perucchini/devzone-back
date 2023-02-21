@@ -36,7 +36,7 @@ const bookmarkController = {
         },
       });
 
-      response.json(newBookmark);
+      response.status(201).json(newBookmark);
     } catch (error) {
       next(error);
     }

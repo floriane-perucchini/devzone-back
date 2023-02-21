@@ -32,7 +32,7 @@ const toolController = {
           logo,
         },
       });
-      response.json(newTool);
+      response.status(201).json(newTool);
     } catch (error) {
       next(error);
     }

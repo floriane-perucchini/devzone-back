@@ -1,31 +1,33 @@
 import { prisma } from "../services/index.service.js";
 
 const userController = {
-  getAll: async function (request, response) {
+  getAll: async function (request, response, next) {
     try {
       const users = await prisma.user.findMany({});
+
       response.json({ users });
     } catch (error) {
-      console.error(error);
-      response.status(500).send(error);
+      next(error);
     }
   },
 
-  get: async function (request, response) {
+  get: async function (request, response, next) {
     const { id } = request.params;
+
     try {
       const user = await prisma.user.findUnique({
         where: { id: Number(id) },
       });
+
       response.json({ user });
     } catch (error) {
-      console.error(error);
-      response.status(500).send(error);
+      next(error);
     }
   },
 
-  create: async function (request, response) {
+  create: async function (request, response, next) {
     const { lastname, firstname, email, password, pseudo } = request.body;
+
     try {
       const newUser = await prisma.user.create({
         data: {
@@ -36,15 +38,17 @@ const userController = {
           pseudo,
         },
       });
-      response.json(newUser);
-    } catch (err) {
-      return response.status(500).json(err);
+
+      response.status(201).json(newUser);
+    } catch (error) {
+      next(error);
     }
   },
 
-  update: async function (request, response) {
+  update: async function (request, response, next) {
     const { id } = request.params;
     const { email, password, pseudo } = request.body;
+
     try {
       const user = await prisma.user.update({
         where: { id: Number(id) },
@@ -54,14 +58,16 @@ const userController = {
           pseudo: String(pseudo),
         },
       });
+
       response.json({ user });
     } catch (error) {
-      response.status(500).render(500).json(error);
+      next(error);
     }
   },
 
-  delete: async function (request, response) {
+  delete: async function (request, response, next) {
     const { id } = request.params;
+
     try {
       const user = await prisma.user.delete({
         where: {
@@ -70,8 +76,8 @@ const userController = {
       });
 
       response.json(user);
-    } catch (err) {
-      return response.status(500).json(err);
+    } catch (error) {
+      next(error);
     }
   },
 };
