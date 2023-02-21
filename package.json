@@ -32,8 +32,10 @@
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-jsdoc-swagger": "^1.8.0",
     "jsonwebtoken": "^9.0.0",
-    "redis": "^4.6.4"
+    "redis": "^4.6.4",
+    "swagger-jsdoc": "^6.2.8"
   },
   "type": "module"
 }

@@ -1,16 +1,21 @@
 import { PrismaClient } from  "@prisma/client";
 const prisma = new PrismaClient();
 
-const favoriteController = {
+const bookmarkController = {
+     /**
+     * Répond à la demande d'un bookmark 
+     * @param {*} request requête
+     * @param {*} response réponse
+     */
 
 
-getAllFavorite: async function (request, response) {
+getAllBookmark: async function (request, response) {
     
     try {
-        const favorites = await prisma.favorite.findMany({
+        const bookmarks = await prisma.bookmark.findMany({
             
         });
-        response.json({ favorites });
+        response.json({ bookmarks });
     } catch (error) {
         console.error(error);
         response.status(500).send(error);
@@ -18,23 +23,30 @@ getAllFavorite: async function (request, response) {
 },
  
 
-getFavorite: async function (request, response) {
+getBookmark: async function (request, response) {
     const { id } = request.params;
     try {
-        const favorite = await prisma.favorite.findUnique({
+        const bookmark = await prisma.bookmark.findUnique({
             where: { id: Number(id) },
         });
-        response.json({ favorite });
+        response.json({ bookmark });
     } catch (error) {
         console.error(error);
         response.status(500).send(error);
     }
 },
  
-createFavorite: async function (request,response) {
+/**
+     * Répond à la demande d'insertion de données en BDD
+     * en renvoyant un bookmark qui utilise ces données
+     * @param {*} request requête
+     * @param {*} response réponse
+     */
+
+createBookmark: async function (request,response) {
     const { name, description, link, link_img } = request.body;
     try {
-        const newFavorite = await prisma.user.create ({
+        const newBookmark = await prisma.bookmark.create ({
             data:
             {
                 name,
@@ -44,17 +56,17 @@ createFavorite: async function (request,response) {
                 
             },
         });
-        response.json(newFavorite);
+        response.json(newBookmark);
     } catch (err) {
         return response.status(500).json(err);
     }
 },
 
-updateFavorite: async function (request, response) {
+updateBookmark: async function (request, response) {
     const { id } = request.params;
     const { name, description, link } = request.body;
     try {
-        const favorite =  await prisma.favorite.update({
+        const bookmark =  await prisma.bookmark.update({
             where: { id: Number(id) },
             data : { 
                 name: String(name),
@@ -63,23 +75,23 @@ updateFavorite: async function (request, response) {
                 
             }
         });
-        response.json({ favorite });
+        response.json({ bookmark });
     } catch (error) {
         response.status(500).render(500).json(error)
     }
 },
 
-deleteFavorite: async function (request, response) {
+deleteBookmark: async function (request, response) {
     const { id } = request.params;
     try {
-      const favorite = await prisma.favorite.delete({
+      const bookmark = await prisma.bookmark.delete({
         where: {
           id: Number(id),
         },
 
       });
       
-      response.json(favorite);
+      response.json(bookmark);
     } catch (err) {
       return response.status(500).json(err);
     } 
@@ -88,4 +100,4 @@ deleteFavorite: async function (request, response) {
 };
 
 
-export default favoriteController;
+export default bookmarkController;

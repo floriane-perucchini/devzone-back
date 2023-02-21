@@ -3,6 +3,12 @@ const prisma = new PrismaClient();
 
 const toolController = {
 
+    /**
+     * Répond à la demande d'un tool
+     * @param {*} request requête
+     * @param {*} response réponse
+     */
+
 
 getAlltools: async function (request, response) {
     
@@ -30,6 +36,12 @@ getTool: async function (request, response) {
         response.status(500).send(error);
     }
 },
+/**
+     * Répond à la demande d'insertion de données en BDD
+     * en renvoyant un tool qui utilise ces données
+     * @param {*} request requête
+     * @param {*} response réponse
+     */
  
 createTool: async function (request,response) {
     const { name, logo, description } = request.body;

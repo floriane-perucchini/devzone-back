@@ -1,7 +1,7 @@
-import favoriteController from "./favorite.controller";
-import toolController from "./tool.controller";
-import userController from "./user.controller";
+import bookmarkController from "./bookmark.controller.js";
+import toolController from "./tool.controller.js";
+import userController from "./user.controller.js";
 
 
 
-export  { favoriteController, userController, toolController };
+export  { bookmarkController, userController, toolController };
