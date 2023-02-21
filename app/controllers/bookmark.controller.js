@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../services/index.service.js";
 
 const bookmarkController = {
   getAll: async function (request, response) {
