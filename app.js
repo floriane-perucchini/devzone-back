@@ -20,7 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(router);
-
 app.use(errorsHandler);
 
 export default app;

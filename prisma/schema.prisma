@@ -24,7 +24,7 @@ model user {
   password  String
   firstname String?
   lastname  String?
-  pseudo    String
+  username  String
   avatar    String?
   bookmark  bookmark[]
 
