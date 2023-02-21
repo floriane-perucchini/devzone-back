@@ -8,11 +8,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 import router from "./app/routes/index.router.js";
-// import { handleErrors } from "./app/middlewares/errorHandler.js";
+ import debug  from "./app/middlewares/errorLogger.js";
 
 const app = express();
 
+/****************************/
+/**** Swagger generator  ****/
+/****************************/
+
 import expressJSDocSwagger from "express-jsdoc-swagger";
+
 
 const options = {
     info: {
@@ -37,7 +42,11 @@ const options = {
 
 expressJSDocSwagger(app)(options);
 
- app.use(cors());
+/********************************/
+/**** Configuration express  ****/
+/********************************/
+
+app.use(cors());
 // app.use(logger("dev"));
 // app.use(logger("common", { stream: fs.createWriteStream("./access.log", { flags: "a" }) }));
 app.use(express.json());
@@ -45,8 +54,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(router);
+app.use(debug._404);
+app.use(debug.manage);
 
-//app.use(errorService.manage);
-//app.use(handleErrors);
 
 export default app;

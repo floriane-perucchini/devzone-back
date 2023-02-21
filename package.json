@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "start": "nodemon ./app/bin/www",
-    "dev": "DEBUG=* node ./app/bin/www"
+    "dev": "DEBUG=* node ./app/bin/www, controllers,errorHandling node app.js" 
   },
   "repository": {
     "type": "git",
@@ -28,12 +28,14 @@
   "dependencies": {
     "@prisma/client": "^4.10.1",
     "bcrypt": "^5.1.0",
+    "chai": "^4.3.7",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-jsdoc-swagger": "^1.8.0",
     "jsonwebtoken": "^9.0.0",
+    "mocha": "^10.2.0",
     "redis": "^4.6.4",
     "swagger-jsdoc": "^6.2.8"
   },
