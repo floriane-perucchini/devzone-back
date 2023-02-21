@@ -6,7 +6,11 @@ async function errorsHandler(error, request, response, next) {
     return response.status(403).json(error.flatten().fieldErrors);
 
   // Handle General Errors
-  response.status(500).json(error);
+  response.status(error.status || 500);
+  response.json({
+    message: error.message,
+    error,
+  });
 }
 
 export default errorsHandler;

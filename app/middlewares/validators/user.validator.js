@@ -1,5 +1,4 @@
 import { userSchemas } from "./schemas/index.schemas.js";
-import { ZodError } from "zod";
 
 function validateUser(request, response, next) {
   try {
@@ -7,13 +6,13 @@ function validateUser(request, response, next) {
       const { createSchema } = userSchemas;
       createSchema.parse(request.body);
     }
-  } catch (error) {
-    if (error instanceof ZodError) return next(error);
-  }
 
-  if (/^\/categories\/[0-9]*$/.test(request.url) && request.method === "PUT") {
-    const { updateSchema } = userSchemas;
-    const { error } = updateSchema.parse(request.body);
+    if (/^\/user\/[0-9]*$/.test(request.url) && request.method === "PUT") {
+      const { updateSchema } = userSchemas;
+      updateSchema.parse(request.body);
+    }
+  } catch (error) {
+    next(error);
   }
 
   next();

@@ -8,9 +8,9 @@ const toolSchemas = {
   }),
 
   updateSchema: z.object({
-    name: z.string(),
-    logo: z.string(),
-    description: z.string(),
+    name: z.string().optional(),
+    logo: z.string().optional(),
+    description: z.string().optional(),
   }),
 };
 

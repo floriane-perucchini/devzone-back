@@ -1,16 +1,18 @@
 import { bookmarkSchemas } from "./schemas/index.schemas.js";
 
 function validateBookmark(request, response, next) {
-  if (request.url === "/posts" && request.method === "POST") {
-    const { createSchema } = bookmarkSchemas;
-    const { error } = createSchema.parse(request.body);
-    if (error) return next(error);
-  }
+  try {
+    if (request.url === "/user" && request.method === "POST") {
+      const { createSchema } = bookmarkSchemas;
+      createSchema.parse(request.body);
+    }
 
-  if (/^\/posts\/[0-9]*$/.test(request.url) && request.method === "PUT") {
-    const { updateSchema } = bookmarkSchemas;
-    const { error } = updateSchema.parse(request.body);
-    if (error) return next(error);
+    if (/^\/user\/[0-9]*$/.test(request.url) && request.method === "PUT") {
+      const { updateSchema } = bookmarkSchemas;
+      updateSchema.parse(request.body);
+    }
+  } catch (error) {
+    next(error);
   }
 
   next();
