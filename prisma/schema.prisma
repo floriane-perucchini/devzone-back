@@ -41,8 +41,8 @@ model bookmark {
   link_img    String?
   user_id     Int?
   tool_id     Int?
-  tool        tool?   @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorite_tool_id_fkey")
-  user        user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorite_user_id_fkey")
+  tool        tool?   @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_tool_id_fkey")
+  user        user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_user_id_fkey")
 
   @@index([link])
   @@index([link_img])
