@@ -1,9 +1,12 @@
-async function errorsHandler(error, request, response) {
+import { ZodError } from "zod";
+
+async function errorsHandler(error, request, response, next) {
   // Handle Zod Errors
-  if (error.details) return response.json(error.details[0].message);
+  if (error instanceof ZodError)
+    return response.status(403).json(...error.issues);
 
   // Handle General Errors
-  response.status(500).json(error.message);
+  response.status(500).json(error);
 }
 
 export default errorsHandler;
