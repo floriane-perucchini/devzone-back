@@ -1,30 +1,30 @@
 import { prisma } from "../services/index.service.js";
 
 const bookmarkController = {
-  getAll: async function (request, response) {
+  getAll: async function (request, response, next) {
     try {
       const bookmarks = await prisma.bookmark.findMany({});
+
       response.json({ bookmarks });
     } catch (error) {
-      console.error(error);
-      response.status(500).send(error);
+      next(error);
     }
   },
 
-  get: async function (request, response) {
+  get: async function (request, response, next) {
     const { id } = request.params;
     try {
       const bookmark = await prisma.bookmark.findUnique({
         where: { id: Number(id) },
       });
+
       response.json({ bookmark });
     } catch (error) {
-      console.error(error);
-      response.status(500).send(error);
+      next(error);
     }
   },
 
-  create: async function (request, response) {
+  create: async function (request, response, next) {
     const { name, description, link, link_img } = request.body;
     try {
       const newBookmark = await prisma.user.create({
@@ -35,13 +35,14 @@ const bookmarkController = {
           link_img,
         },
       });
+
       response.json(newBookmark);
-    } catch (err) {
-      return response.status(500).json(err);
+    } catch (error) {
+      next(error);
     }
   },
 
-  update: async function (request, response) {
+  update: async function (request, response, next) {
     const { id } = request.params;
     const { name, description, link } = request.body;
     try {
@@ -53,13 +54,14 @@ const bookmarkController = {
           link: String(link),
         },
       });
+
       response.json({ bookmark });
     } catch (error) {
-      response.status(500).render(500).json(error);
+      next(error);
     }
   },
 
-  delete: async function (request, response) {
+  delete: async function (request, response, next) {
     const { id } = request.params;
     try {
       const bookmark = await prisma.bookmark.delete({
@@ -70,7 +72,7 @@ const bookmarkController = {
 
       response.json(bookmark);
     } catch (err) {
-      return response.status(500).json(err);
+      next(error);
     }
   },
 };

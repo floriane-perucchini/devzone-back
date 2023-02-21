@@ -1,17 +1,16 @@
 import { prisma } from "../services/index.service.js";
 
 const toolController = {
-  getAll: async function (request, response) {
+  getAll: async function (request, response, next) {
     try {
       const tools = await prisma.tool.findMany({});
       response.json({ tools });
     } catch (error) {
-      console.error(error);
-      response.status(500).send(error);
+      next(error);
     }
   },
 
-  get: async function (request, response) {
+  get: async function (request, response, next) {
     const { id } = request.params;
     try {
       const tool = await prisma.tool.findUnique({
@@ -19,12 +18,11 @@ const toolController = {
       });
       response.json({ tool });
     } catch (error) {
-      console.error(error);
-      response.status(500).send(error);
+      next(error);
     }
   },
 
-  create: async function (request, response) {
+  create: async function (request, response, next) {
     const { name, logo, description } = request.body;
     try {
       const newTool = await prisma.tool.create({
@@ -35,12 +33,12 @@ const toolController = {
         },
       });
       response.json(newTool);
-    } catch (err) {
-      return response.status(500).json(err);
+    } catch (error) {
+      next(error);
     }
   },
 
-  update: async function (request, response) {
+  update: async function (request, response, next) {
     const { id } = request.params;
     const { name, logo, description } = request.body;
     try {
@@ -54,11 +52,11 @@ const toolController = {
       });
       response.json({ tool });
     } catch (error) {
-      response.status(500).render(500).json(error);
+      next(error);
     }
   },
 
-  delete: async function (request, response) {
+  delete: async function (request, response, next) {
     const { id } = request.params;
     try {
       const tool = await prisma.tool.delete({
@@ -68,8 +66,8 @@ const toolController = {
       });
 
       response.json(tool);
-    } catch (err) {
-      return response.status(500).json(err);
+    } catch (error) {
+      next(error);
     }
   },
 };
