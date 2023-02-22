@@ -14,15 +14,26 @@ const userController = {
     const { id } = Number(request.params);
 
     try {
+ feature/17/app-authentification
+      const user = await prisma.user.findUnique({
+        where: { id: Number(id) },
+        include: {
+          tool: true,
+        }
+      });
+
+      response.json({ user });
+
       const users = await user.get(id);
       response.json({ users });
+
     } catch (error) {
       next(error);
     }
   },
 
   create: async function (request, response, next) {
-    const { lastname, firstname, email, password, pseudo } = request.body;
+    const { lastname, firstname, email, password, username, avatar, tool_id } = request.body;
 
     try {
       const newUser = await prisma.user.create({
@@ -31,7 +42,9 @@ const userController = {
           firstname,
           email,
           password,
-          pseudo,
+          username,
+          avatar,
+          tool_id
         },
       });
 
@@ -43,7 +56,7 @@ const userController = {
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { email, password, pseudo } = request.body;
+    const { email, password, username, tool_id } = request.body;
 
     try {
       const user = await prisma.user.update({
@@ -51,7 +64,8 @@ const userController = {
         data: {
           email: String(email),
           password: String(password),
-          pseudo: String(pseudo),
+          username: String(username),
+          tool_id: String(tool_id),
         },
       });
 
