@@ -12,7 +12,6 @@ function validateTool(request, response, next) {
   } catch (error) {
     next(error);
   }
-
   next();
 }
 

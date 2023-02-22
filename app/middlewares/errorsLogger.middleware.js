@@ -18,7 +18,6 @@ const errorLogger = {
    * @param {*} next
    */
   manage(err, req, res, next) {
-    // je log l'erreur pour moi
     errorLogger.writeLog(req.url, err);
 
     switch (err.code) {
