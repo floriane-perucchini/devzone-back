@@ -6,7 +6,9 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 const server = http.createServer(app);
-server.listen(port, () => console.log(`✅ Server ready: http://localhost:${port}`));
+server.listen(port, () =>
+  console.log(`✅ Server ready: http://localhost:${port}`)
+);
 server.on("error", onError);
 
 /**
@@ -40,7 +42,7 @@ function onError(error) {
 
   const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
-  // handle specific listen errors with friendly messages
+  // Handle specific listen errors with friendly messages
   switch (error.code) {
     case "EACCES":
       console.error("⛔" + bind + " requires elevated privileges");
