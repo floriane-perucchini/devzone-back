@@ -1,6 +1,11 @@
 import { prisma } from "../services/index.service.js";
 
 const bookmarkController = {
+  /**
+   * Répond à la demande d'un bookmark
+   * @param {*} request requête
+   * @param {*} response réponse
+   */
   getAll: async function (request, response, next) {
     try {
       const bookmarks = await prisma.bookmark.findMany({});
@@ -24,6 +29,12 @@ const bookmarkController = {
     }
   },
 
+  /**
+   * Répond à la demande d'insertion de données en BDD
+   * en renvoyant un bookmark qui utilise ces données
+   * @param {*} request requête
+   * @param {*} response réponse
+   */
   create: async function (request, response, next) {
     const { name, description, link, link_img } = request.body;
     try {

@@ -2,6 +2,7 @@ import express from "express";
 import logger from "morgan";
 import fs from "fs";
 import cors from "cors";
+import debug from "./app/middlewares/errorsLogger.middleware.js";
 
 import router from "./app/routes/index.router.js";
 import { errorsHandler } from "./app/middlewares/index.middleware.js";
@@ -21,5 +22,7 @@ app.use(express.static("public"));
 
 app.use(router);
 app.use(errorsHandler);
+app.use(debug._404);
+app.use(debug.manage);
 
 export default app;

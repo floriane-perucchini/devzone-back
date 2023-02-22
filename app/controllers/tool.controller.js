@@ -1,6 +1,12 @@
 import { prisma } from "../services/index.service.js";
 
 const toolController = {
+  /**
+   * Répond à la demande d'un tool
+   * @param {*} request requête
+   * @param {*} response réponse
+   */
+
   getAll: async function (request, response, next) {
     try {
       const tools = await prisma.tool.findMany({});
@@ -22,6 +28,12 @@ const toolController = {
     }
   },
 
+  /**
+   * Répond à la demande d'insertion de données en BDD
+   * en renvoyant un tool qui utilise ces données
+   * @param {*} request requête
+   * @param {*} response réponse
+   */
   create: async function (request, response, next) {
     const { name, logo, description } = request.body;
     try {
