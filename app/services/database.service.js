@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { Client } from "pg";
+const db = new Client();
+await db.connect();
 
-export default prisma;
+export default db;

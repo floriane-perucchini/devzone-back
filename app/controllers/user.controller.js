@@ -1,9 +1,9 @@
-import { prisma } from "../services/index.service.js";
+import { db } from "../services/index.service.js";
 
 const userController = {
   getAll: async function (request, response, next) {
     try {
-      const users = await prisma.user.findMany({});
+      const users = await db.query();
 
       response.json({ users });
     } catch (error) {

@@ -1,3 +1,3 @@
-import prisma from "./database.service.js";
+import db from "./database.service.js";
 
-export { prisma };
+export { db };
