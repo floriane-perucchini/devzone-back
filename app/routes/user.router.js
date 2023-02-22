@@ -23,7 +23,7 @@ const router = express.Router();
  * @return {object} 500 - Unexpected error
  */
 router.get("/users", user.getAll);
-router.get("/user", user.get);
+router.get("/user/:id", user.get);
 
 // POST Routes
 /**

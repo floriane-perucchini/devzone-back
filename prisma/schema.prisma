@@ -8,25 +8,33 @@ datasource db {
 }
 
 model tool {
-  id          Int        @id @default(autoincrement())
-  name        String
-  logo        String?
-  description String?
-  bookmark    bookmark[]
+  id                      Int             @id @default(autoincrement())
+  name                    String
+  logo                    String?
+  description             String?
+  user_id                 Int?
+  bookmark                bookmark[]
+  user_tool_user_idTouser user?           @relation("tool_user_idTouser", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+  user_user_tool_idTotool user[]          @relation("user_tool_idTotool")
+  user_has_tool           user_has_tool[]
 
   @@index([logo])
   @@index([name])
 }
 
 model user {
-  id        Int        @id @default(autoincrement())
-  email     String
-  password  String
-  firstname String?
-  lastname  String?
-  username  String
-  avatar    String?
-  bookmark  bookmark[]
+  id                      Int             @id @default(autoincrement())
+  email                   String
+  password                String
+  firstname               String?
+  lastname                String?
+  username                String
+  avatar                  String?
+  tool_id                 Int?
+  bookmark                bookmark[]
+  tool_tool_user_idTouser tool[]          @relation("tool_user_idTouser")
+  tool_user_tool_idTotool tool?           @relation("user_tool_idTotool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tool_id")
+  user_has_tool           user_has_tool[]
 
   @@index([email])
   @@index([firstname])
@@ -47,4 +55,16 @@ model bookmark {
   @@index([link])
   @@index([link_img])
   @@index([name])
+}
+
+model user_has_tool {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  tool_id    Int
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @db.Timestamptz(6)
+  tool       tool      @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user       user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([user_id, tool_id])
 }
