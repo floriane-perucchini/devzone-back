@@ -27,6 +27,7 @@ model user {
   username  String
   avatar    String?
   bookmark  bookmark[]
+  tooloff   Int[]
 
   @@index([email])
   @@index([firstname])

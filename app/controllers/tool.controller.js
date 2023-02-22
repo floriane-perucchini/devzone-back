@@ -1,5 +1,3 @@
-import { prisma } from "../services/index.service.js";
-
 const toolController = {
   /**
    * Répond à la demande d'un tool

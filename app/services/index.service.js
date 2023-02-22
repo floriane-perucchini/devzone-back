@@ -1,3 +1,3 @@
-import db from "./database.service.js";
+import client from "./database.service.js";
 
-export { db };
+export { client };

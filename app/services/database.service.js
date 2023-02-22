@@ -1,5 +1,9 @@
-import { Client } from "pg";
-const db = new Client();
-await db.connect();
+import "dotenv/config";
+import pg from "pg";
 
-export default db;
+const { Client } = pg;
+
+const client = new Client();
+await client.connect();
+
+export default client;

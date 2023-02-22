@@ -1,25 +1,21 @@
-import { db } from "../services/index.service.js";
+import { userDatamapper as user } from "../models/index.datamapper.js";
 
 const userController = {
   getAll: async function (request, response, next) {
     try {
-      const users = await db.query();
-
-      response.json({ users });
+      const users = await user.getAll;
+      response.json(users);
     } catch (error) {
       next(error);
     }
   },
 
   get: async function (request, response, next) {
-    const { id } = request.params;
+    const { id } = Number(request.params);
 
     try {
-      const user = await prisma.user.findUnique({
-        where: { id: Number(id) },
-      });
-
-      response.json({ user });
+      const users = await user.get(id);
+      response.json({ users });
     } catch (error) {
       next(error);
     }
