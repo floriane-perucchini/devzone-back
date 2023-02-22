@@ -1,5 +1,3 @@
-import { prisma } from "../services/index.service.js";
-
 const mainController = {
   login: async function (request, response, next) {
     const { username, password } = request.body;

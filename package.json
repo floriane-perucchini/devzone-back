@@ -35,6 +35,7 @@
     "express-jsdoc-swagger": "^1.8.0",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
+    "pg": "^8.9.0",
     "redis": "^4.6.4",
     "zod": "^3.20.6"
   },

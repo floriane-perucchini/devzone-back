@@ -1,5 +1,3 @@
-import { prisma } from "../services/index.service.js";
-
 const bookmarkController = {
   /**
    * Répond à la demande d'un bookmark

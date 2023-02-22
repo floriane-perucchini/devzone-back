@@ -1,4 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import "dotenv/config";
+import pg from "pg";
 
-export default prisma;
+const { Client } = pg;
+
+const client = new Client();
+await client.connect();
+
+export default client;

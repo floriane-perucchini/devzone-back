@@ -23,6 +23,7 @@ model tool {
 }
 
 model user {
+
   id                      Int             @id @default(autoincrement())
   email                   String
   password                String
@@ -35,6 +36,17 @@ model user {
   tool_tool_user_idTouser tool[]          @relation("tool_user_idTouser")
   tool_user_tool_idTotool tool?           @relation("user_tool_idTotool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tool_id")
   user_has_tool           user_has_tool[]
+
+  id        Int        @id @default(autoincrement())
+  email     String
+  password  String
+  firstname String?
+  lastname  String?
+  username  String
+  avatar    String?
+  bookmark  bookmark[]
+  tooloff   Int[]
+
 
   @@index([email])
   @@index([firstname])
