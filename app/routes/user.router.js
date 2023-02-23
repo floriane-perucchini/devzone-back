@@ -23,18 +23,7 @@ const router = express.Router();
  * @return {object} 500 - Unexpected error
  */
 router.get("/users", user.getAll);
-router.get("/user", user.get);
-
-// POST Routes
-/**
- * POST /user
- * @summary ajout d'un nouveau user
- * @tags user
- * @param {user} request.body.required - user info
- * @return {object} 200 - bookmark response
- * @return {object} 500 - Unexpected error
- */
-router.post("/user", validate, user.create);
+router.get("/user/:id", user.get);
 
 // PATCH Routes
 /**
