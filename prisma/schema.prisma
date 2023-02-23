@@ -7,76 +7,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tool {
-  id                      Int             @id @default(autoincrement())
-  name                    String
-  logo                    String?
-  description             String?
-  user_id                 Int?
-  bookmark                bookmark[]
-  user_tool_user_idTouser user?           @relation("tool_user_idTouser", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
-  user_user_tool_idTotool user[]          @relation("user_tool_idTotool")
-  user_has_tool           user_has_tool[]
+model Tool {
+  id          Int            @id @default(autoincrement())
+  name        String
+  logo        String?
+  description String?
+  bookmark    Bookmark[]
+  users       ToolsOnUsers[]
 
   @@index([logo])
   @@index([name])
 }
 
-model user {
-
-  id                      Int             @id @default(autoincrement())
-  email                   String
-  password                String
-  firstname               String?
-  lastname                String?
-  username                String
-  avatar                  String?
-  tool_id                 Int?
-  bookmark                bookmark[]
-  tool_tool_user_idTouser tool[]          @relation("tool_user_idTouser")
-  tool_user_tool_idTotool tool?           @relation("user_tool_idTotool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tool_id")
-  user_has_tool           user_has_tool[]
-
-  id        Int        @id @default(autoincrement())
+model User {
+  id        Int            @id @default(autoincrement())
   email     String
   password  String
   firstname String?
   lastname  String?
-  avatar    String?
   username  String
-  tooloff   String[]
-  bookmark  bookmark[]
-
+  avatar    String?
+  bookmark  Bookmark[]
+  tools     ToolsOnUsers[]
 
   @@index([email])
   @@index([firstname])
   @@index([lastname])
 }
 
-model bookmark {
+model Bookmark {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
   link        String?
-  link_img    String?
-  user_id     Int?
-  tool_id     Int?
-  tool        tool?   @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_tool_id_fkey")
-  user        user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_user_id_fkey")
+  linkImg     String?
+  userId      Int?
+  toolId      Int?
+  tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_toolId_fkey")
+  user        User?   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_userId_fkey")
 
   @@index([link])
-  @@index([link_img])
+  @@index([linkImg])
   @@index([name])
 }
 
-model user_has_tool {
-  id         Int       @id @default(autoincrement())
-  user_id    Int
-  tool_id    Int
+model ToolsOnUsers {
+  user       User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId     Int
+  tool       Tool      @relation(fields: [toolId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  toolId     Int
   created_at DateTime  @default(now()) @db.Timestamptz(6)
   updated_at DateTime? @db.Timestamptz(6)
-  tool       tool      @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user       user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@unique([user_id, tool_id])
+  @@id([userId, toolId])
 }
