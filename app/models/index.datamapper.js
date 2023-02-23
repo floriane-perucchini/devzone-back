@@ -6,8 +6,4 @@ const dataMapper = {
   main: mainDatamapper,
 };
 
-feature/17/app-authentification
 export default dataMapper;
-
-export default dataMapper;
-

@@ -23,6 +23,3 @@ const mainDatamapper = {
 };
 
 export default mainDatamapper;
-
-export default mainDatamapper;
-

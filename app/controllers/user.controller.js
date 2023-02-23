@@ -25,6 +25,8 @@ const userController = {
 
       const users = await user.get(id);
       response.json({ users });
+      const user = await db.user.get(id);
+      response.json(user);
     } catch (error) {
       next(error);
     }
@@ -33,6 +35,12 @@ const userController = {
   update: async function (request, response, next) {
     const { id } = request.params;
     const { email, password, username, tool_id } = request.body;
+
+    const user = db.user.get(id);
+    if (!user) return next(new Error("404"));
+
+    if (email) user.email = email;
+    if (password) user.password = password;
 
     const user = db.user.get(id);
     if (!user) return next(new Error("404"));

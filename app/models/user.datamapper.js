@@ -13,35 +13,13 @@ const userDatamapper = {
     return result.rows[0];
   },
   create: async function ({
-    lastname,
-    firstname,
     email,
     password,
+    firstname,
+    lastname,
     username,
-    userTool,
+    avatar,
   }) {
-    if (!userTool.length) {
-      userTool = null;
-      const values = [lastname, firstname, email, password, username, userTool];
-      const sql = `INSERT INTO "user" (lastname, firstname, email, password,username, tooloff) VALUES ($1, $2, $3, $4, $5, ARRAY[$6])`;
-
-      const result = await client.query(sql, values);
-      return result.rowCount;
-    }
-
-    const values = [
-      lastname,
-      firstname,
-      email,
-      password,
-      username,
-      userTool,
-    ].flat();
-
-    const userToolValues = [];
-    for (let i = 0; i < userTool.length; i++) {
-      userToolValues.push(`$${6 + i}`);
-    }
     const sql = `INSERT INTO "user" (lastname, firstname, email, password,username,tooloff) VALUES ($1, $2, $3, $4, $5, ARRAY[${userToolValues}])`;
 
     const result = await client.query(sql, values);
