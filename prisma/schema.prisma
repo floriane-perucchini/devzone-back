@@ -7,45 +7,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tool {
-  id          Int        @id @default(autoincrement())
+model Tool {
+  id          Int            @id @default(autoincrement())
   name        String
   logo        String?
   description String?
-  bookmark    bookmark[]
+  bookmark    Bookmark[]
+  users       ToolsOnUsers[]
 
   @@index([logo])
   @@index([name])
 }
 
-model user {
-  id        Int        @id @default(autoincrement())
+model User {
+  id        Int            @id @default(autoincrement())
   email     String
   password  String
   firstname String?
   lastname  String?
-  avatar    String?
   username  String
-  tooloff   String[]
-  bookmark  bookmark[]
+  avatar    String?
+  bookmark  Bookmark[]
+  tools     ToolsOnUsers[]
 
   @@index([email])
   @@index([firstname])
   @@index([lastname])
 }
 
-model bookmark {
+model Bookmark {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
   link        String?
-  link_img    String?
-  user_id     Int?
-  tool_id     Int?
-  tool        tool?   @relation(fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_tool_id_fkey")
-  user        user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_user_id_fkey")
+  linkImg     String?
+  userId      Int?
+  toolId      Int?
+  tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_toolId_fkey")
+  user        User?   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_userId_fkey")
 
   @@index([link])
-  @@index([link_img])
+  @@index([linkImg])
   @@index([name])
+}
+
+model ToolsOnUsers {
+  user       User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId     Int
+  tool       Tool      @relation(fields: [toolId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  toolId     Int
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @db.Timestamptz(6)
+
+  @@id([userId, toolId])
 }
