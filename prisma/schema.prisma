@@ -42,10 +42,10 @@ model user {
   password  String
   firstname String?
   lastname  String?
-  username  String
   avatar    String?
+  username  String
+  tooloff   String[]
   bookmark  bookmark[]
-  tooloff   Int[]
 
 
   @@index([email])

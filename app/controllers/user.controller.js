@@ -1,9 +1,9 @@
-import { userDatamapper as user } from "../models/index.datamapper.js";
+import db from "../models/index.datamapper.js";
 
 const userController = {
   getAll: async function (request, response, next) {
     try {
-      const users = await user.getAll;
+      const users = await db.user.getAll();
       response.json(users);
     } catch (error) {
       next(error);
@@ -11,44 +11,20 @@ const userController = {
   },
 
   get: async function (request, response, next) {
-    const { id } = Number(request.params);
+    const { id } = request.params;
 
     try {
- feature/17/app-authentification
       const user = await prisma.user.findUnique({
         where: { id: Number(id) },
         include: {
           tool: true,
-        }
+        },
       });
 
       response.json({ user });
 
       const users = await user.get(id);
       response.json({ users });
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  create: async function (request, response, next) {
-    const { lastname, firstname, email, password, username, avatar, tool_id } = request.body;
-
-    try {
-      const newUser = await prisma.user.create({
-        data: {
-          lastname,
-          firstname,
-          email,
-          password,
-          username,
-          avatar,
-          tool_id
-        },
-      });
-
-      response.status(201).json(newUser);
     } catch (error) {
       next(error);
     }
@@ -57,6 +33,12 @@ const userController = {
   update: async function (request, response, next) {
     const { id } = request.params;
     const { email, password, username, tool_id } = request.body;
+
+    const user = db.user.get(id);
+    if (!user) return next(new Error("404"));
+
+    if (email) user.email = email;
+    if (password) user.password = password;
 
     try {
       const user = await prisma.user.update({
@@ -68,6 +50,7 @@ const userController = {
           tool_id: String(tool_id),
         },
       });
+      const user = await db.user.create(user);
 
       response.json({ user });
     } catch (error) {

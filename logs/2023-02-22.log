@@ -27,4 +27,9 @@
 9:20:58;/_next/static/development/_ssgManifest.js?ts=1675355896821;Page non trouvée
 11:10:48;/users;Page non trouvée
 11:12:47;/userss;Page non trouvée
+<<<<<<< HEAD
 
+=======
+13:39:59;/users/1;Page non trouvée
+13:40:6;/user/1;Page non trouvée
+>>>>>>> 3d89297 (Database update to pg)
