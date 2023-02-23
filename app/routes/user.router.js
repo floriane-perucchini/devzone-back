@@ -25,17 +25,6 @@ const router = express.Router();
 router.get("/users", user.getAll);
 router.get("/user/:id", user.get);
 
-// POST Routes
-/**
- * POST /user
- * @summary ajout d'un nouveau user
- * @tags user
- * @param {user} request.body.required - user info
- * @return {object} 200 - bookmark response
- * @return {object} 500 - Unexpected error
- */
-router.post("/user", validate, user.create);
-
 // PATCH Routes
 /**
  * PATCH /user/:id

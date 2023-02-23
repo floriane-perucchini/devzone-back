@@ -14,8 +14,17 @@ const userController = {
     const { id } = request.params;
 
     try {
-      const user = await db.user.get(id);
-      response.json(user);
+      const user = await prisma.user.findUnique({
+        where: { id: Number(id) },
+        include: {
+          tool: true,
+        },
+      });
+
+      response.json({ user });
+
+      const users = await user.get(id);
+      response.json({ users });
     } catch (error) {
       next(error);
     }
@@ -23,7 +32,7 @@ const userController = {
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { email, password, username } = request.body;
+    const { email, password, username, tool_id } = request.body;
 
     const user = db.user.get(id);
     if (!user) return next(new Error("404"));
@@ -32,6 +41,15 @@ const userController = {
     if (password) user.password = password;
 
     try {
+      const user = await prisma.user.update({
+        where: { id: Number(id) },
+        data: {
+          email: String(email),
+          password: String(password),
+          username: String(username),
+          tool_id: String(tool_id),
+        },
+      });
       const user = await db.user.create(user);
 
       response.json({ user });
