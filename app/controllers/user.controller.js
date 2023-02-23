@@ -14,7 +14,7 @@ const userController = {
     const { id } = request.params;
 
     try {
-      const user = await prisma.user.findUnique({
+      const user = await db.user.findUnique({
         where: { id: Number(id) },
         include: {
           tool: true,
@@ -41,16 +41,10 @@ const userController = {
     if (password) user.password = password;
 
     try {
-      const user = await prisma.user.update({
-        where: { id: Number(id) },
-        data: {
-          email: String(email),
-          password: String(password),
-          username: String(username),
-          tool_id: String(tool_id),
-        },
-      });
-      const user = await db.user.create(user);
+     const user = await db.user.create(user); 
+   
+      
+      
 
       response.json({ user });
     } catch (error) {
