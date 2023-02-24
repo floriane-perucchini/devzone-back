@@ -1,6 +1,7 @@
 import express from "express";
 import { userController as user } from "../controllers/index.controller.js";
 import { validateUser as validate } from "../middlewares/validators/index.validator.js";
+import { auth } from "../middlewares/index.middleware.js";
 
 const router = express.Router();
 /**
@@ -22,7 +23,7 @@ const router = express.Router();
  * @return {string} 200 - un ou plusieurs users"
  * @return {object} 500 - Unexpected error
  */
-router.get("/users", user.getAll);
+router.get("/users", auth, user.getAll);
 router.get("/user/:id", user.get);
 
 // PATCH Routes

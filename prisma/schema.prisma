@@ -19,16 +19,73 @@ model Tool {
   @@index([name])
 }
 
+<<<<<<< HEAD
 model User {
   id        Int            @id @default(autoincrement())
+=======
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+model user {
+
+  id                      Int             @id @default(autoincrement())
+  email                   String
+  password                String
+  firstname               String?
+  lastname                String?
+  username                String
+  avatar                  String?
+  tool_id                 Int?
+  bookmark                bookmark[]
+  tool_tool_user_idTouser tool[]          @relation("tool_user_idTouser")
+  tool_user_tool_idTotool tool?           @relation("user_tool_idTotool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tool_id")
+  user_has_tool           user_has_tool[]
+
+  id        Int        @id @default(autoincrement())
+>>>>>>> feature/17/app-authentification
   email     String
   password  String
   firstname String?
   lastname  String?
   username  String
+<<<<<<< HEAD
   avatar    String?
   bookmark  Bookmark[]
   tools     ToolsOnUsers[]
+=======
+  tooloff   String[]
+  bookmark  bookmark[]
+
+=======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String
+  password     String
+  firstname    String?
+  lastname     String?
+  username     String
+  avatar       String?
+  bookmark     Bookmark[]
+  tools        ToolsOnUsers[]
+  RefreshToken RefreshToken[]
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+>>>>>>> feature/17/app-authentification
 
   @@index([email])
   @@index([firstname])
@@ -60,4 +117,20 @@ model ToolsOnUsers {
   updated_at DateTime? @db.Timestamptz(6)
 
   @@id([userId, toolId])
+}
+
+model RefreshToken {
+  id         Int    @id @default(autoincrement())
+  token      String
+  expiration String
+  userId     Int
+  user       User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model RefreshToken {
+  id         Int    @id @default(autoincrement())
+  token      String
+  expiration String
+  userId     Int
+  user       User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
