@@ -12,23 +12,12 @@ const userDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
-  create: async function (body){
-    const sql = `INSERT INTO "User"(
-      lastname, firstname, email, password, username, avatar, tool_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7);` 
-    const values = [body['lastname', 'firstname', 'email', 'password', 'username', 'avatar','tool_id']];
-    const result = await client.query(sql, [values]);
-    return result.rows[0];
-  },
-      
 
-
-  update: async function (body){
-    const sql = `UPDATE User SET id=$1, lastname=$1, firstname=$1, email=$1, password=$1, username=$1, tool_id=$1
-    WHERE <condition>;`;
-    const values = [body['lastname', 'firstname', 'email', 'password', 'username', 'tool_id']];
-    const result = await client.query(sql, [values]);
-    return result.rows[0];
+  create: async function ({ email, password, firstname, lastname, username }) {
+    const sql = `INSERT INTO "User" (email, firstname, lastname, username, password) VALUES ($1, $2, $3, $4, $5)`;
+    const values = [email, firstname, lastname, username, password];
+    const result = await client.query(sql, values);
+    return result.rowCount;
 
   },
   delete: async function(id){

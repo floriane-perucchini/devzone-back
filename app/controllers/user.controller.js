@@ -21,10 +21,13 @@ const userController = {
   },
   create: async function (request, response, next) {
     try {
-      const user = await db.user.create(request.body);
-      response.render( user );
-    } catch(error) {
-      next(new Error("problème de BDD"));
+
+      const user = await db.user.get(id);
+
+      response.json(user);
+    } catch (error) {
+      next(error);
+
     }
    
     }, 
@@ -35,40 +38,38 @@ const userController = {
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { email, password, username, tool_id } = request.body;
+    const { email, password, username } = request.body;
 
     const user = db.user.get(id);
     if (!user) return next(new Error("404"));
 
-    if (email) user.email = email;
+    if (email) user.email = email.toLowerCase();
     if (password) user.password = password;
 
-    try {
-     const user = await db.user.create(user); 
-   
-      
-      
+    if (username) user.password = username.toLowerCase();
 
-      response.json({ user });
-    } catch (error) {
-      next(error);
-    }
+    // try {
+    //   const user = await prisma.user.update({
+    //     where: { id: Number(id) },
+    //     data: {
+    //       email: String(email),
+    //       password: String(password),
+    //       username: String(username),
+    //       tool_id: String(tool_id),
+    //     },
+    //   });
+    //   const user = await db.user.create(user);
+    //
+    //   response.json({ user });
+    // } catch (error) {
+    //   next(error);
+    // }
+
   },
 
   delete: async function (request, response, next) {
     const { id } = request.params;
 
-    try {
-      const user = await db.user.delete({
-        where: {
-          id: Number(id),
-        },
-      });
-
-      response.json(user);
-    } catch (error) {
-      next(error);
-    }
   },
   
 

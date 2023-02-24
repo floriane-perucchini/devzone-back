@@ -14,23 +14,25 @@ model Tool {
   description String?
   bookmark    Bookmark[]
   users       ToolsOnUsers[]
-  User        User[]
+
 
   @@index([logo])
   @@index([name])
 }
 
 model User {
-  id        Int            @id @default(autoincrement())
-  email     String
-  password  String
-  firstname String?
-  lastname  String?
-  username  String
-  avatar    String?
-  toolId    Int?
-  bookmark  Bookmark[]
-  
+
+  id           Int            @id @default(autoincrement())
+  email        String
+  password     String
+  firstname    String?
+  lastname     String?
+  username     String
+  avatar       String?
+  bookmark     Bookmark[]
+  tools        ToolsOnUsers[]
+  RefreshToken RefreshToken[]
+
 
   @@index([email])
   @@index([firstname])
@@ -54,12 +56,22 @@ model Bookmark {
 }
 
 model ToolsOnUsers {
+
+  user       User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId     Int
+  tool       Tool      @relation(fields: [toolId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   toolId     Int
   created_at DateTime  @default(now()) @db.Timestamptz(6)
   updated_at DateTime? @db.Timestamptz(6)
-  tool       Tool      @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, toolId])
 }
+
+model RefreshToken {
+  id         Int    @id @default(autoincrement())
+  token      String
+  expiration String
+  userId     Int
+  user       User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+

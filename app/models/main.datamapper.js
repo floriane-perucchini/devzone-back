@@ -17,12 +17,21 @@ const mainDatamapper = {
     const values = [username, email, password];
 
     const result = await client.query(sql, values);
-    console.log(result);
     return result.rows[0];
+  },
+  createRefreshToken: async function ({ userId, token, expiration }) {
+    const sql = `INSERT INTO "RefreshToken" ("userId", token, expiration) VALUES ($1, $2, $3)`;
+    const values = [userId, token, expiration];
+
+    const result = await client.query(sql, values);
+    console.log(result);
+    return result;
   },
 };
 
+
+
+
+
 export default mainDatamapper;
-
-
 
