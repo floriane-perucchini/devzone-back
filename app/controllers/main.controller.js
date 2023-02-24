@@ -49,13 +49,17 @@ const mainController = {
         token: refreshToken,
         expiration: Date.now() + config.refreshToken.expiresIn,
       });
-      // Send JTW Token & RefreshToken to client
+      // Send JTW Token, RefreshToken and user to client
+      delete user.password;
       return response.json({
-        accessToken,
-        tokenType: config.accessToken.type,
-        accessTokenExpiresIn: config.accessToken.expiresIn,
-        refreshToken,
-        refreshTokenExpiresIn: config.refreshToken.expiresIn,
+        token: {
+          accessToken,
+          tokenType: config.accessToken.type,
+          accessTokenExpiresIn: config.accessToken.expiresIn,
+          refreshToken,
+          refreshTokenExpiresIn: config.refreshToken.expiresIn,
+        },
+        user: user,
       });
     } catch (error) {
       return next();
@@ -73,9 +77,8 @@ const mainController = {
       // Hash password
       const newUser = request.body;
 
-      const { password, confirmedPassword } = newUser;
-      newUser.password = await bcrypt.hash(password, 12);
-      confirmedPassword.delete;
+      newUser.password = await bcrypt.hash(newUser.password, 12);
+      delete newUser.confirmedPassword;
 
       await db.user.create(newUser);
       response.status(201).json("Registered successfully.");
