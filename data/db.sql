@@ -4,7 +4,7 @@ CREATE DOMAIN mail AS text CHECK(VALUE ~ '(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s
 
 CREATE TABLE IF NOT EXISTS public."User"
 (
-    "id" integer NOT NULL DEFAULT ,
+    "id" integer NOT NULL DEFAULT,
     "email" text COLLATE pg_catalog."default" NOT NULL,
     "password" text COLLATE pg_catalog."default" NOT NULL,
     "firstname" text COLLATE pg_catalog."default",
