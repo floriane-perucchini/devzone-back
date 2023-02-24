@@ -1,6 +1,6 @@
 BEGIN;
 
-INSERT INTO public."Tool"("name", "logo", "description")
+INSERT INTO "tool"("name", "logo", "description")
 	 
 	VALUES 
 	 ("Github", "test", "git"),
@@ -8,7 +8,7 @@ INSERT INTO public."Tool"("name", "logo", "description")
 	 ("MDN", "test3", "Mozilla");
 
 
-INSERT INTO public."User"("email", "password", "firstname", "lastname", "username", "avatar")
+INSERT INTO "user"("email", "password", "firstname", "lastname", "username", "avatar")
 	 
 	VALUES 
   ("test@test.fr", "ddsqdlsj", "test1", "testbis", "toto", "test1"),
