@@ -1,13 +1,11 @@
 import userDatamapper from "./user.datamapper.js";
 import mainDatamapper from "./main.datamapper.js";
+import toolDatamapper from "./tool.datamapper.js";
 
-const dataMapper = {
+const db = {
   user: userDatamapper,
   main: mainDatamapper,
+  tool: toolDatamapper,
 };
 
-
-
-
-export default dataMapper;
-
+export default db;

@@ -1,9 +1,12 @@
 import db from "../models/index.datamapper.js";
+import bcrypt from "bcrypt";
 
 const userController = {
   getAll: async function (request, response, next) {
     try {
       const users = await db.user.getAll();
+      if (!users) return next(new Error("Couldn't get the users."));
+
       response.json(users);
     } catch (error) {
       next(error);
@@ -11,16 +14,11 @@ const userController = {
   },
 
   get: async function (request, response, next) {
-    try {
-      const user = await db.user.get(request.params.id);
-      response.json(user);
-    } catch (error) {
-      next(new Error("Problème de BDD"));
-    }
-  },
-  create: async function (request, response, next) {
+    const { id } = request.params;
+
     try {
       const user = await db.user.get(id);
+      if (!user) return next(new Error("Couldn't get the user."));
 
       response.json(user);
     } catch (error) {
@@ -30,36 +28,40 @@ const userController = {
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { email, password, username } = request.body;
+    const { email, firstname, lastname, username, password, avatar } =
+      request.body;
 
-    const user = db.user.get(id);
-    if (!user) return next(new Error("404"));
+    try {
+      const user = await db.user.get(id);
+      if (!user) return next(new Error("404"));
 
-    if (email) user.email = email.toLowerCase();
-    if (password) user.password = password;
+      if (email) user.email = email.toLowerCase();
+      if (firstname) user.firstname = firstname.toLowerCase();
+      if (lastname) user.lastname = lastname.toLowerCase();
+      if (username) user.username = username.toLowerCase();
+      if (avatar) user.avatar = avatar.toLowerCase();
+      if (password) user.password = await bcrypt.hash(password, 12);
 
-    if (username) user.password = username.toLowerCase();
+      const userUpdated = await db.user.update(user, id);
+      if (!userUpdated) return next(new Error("User update failed."));
 
-    // try {
-    //   const user = await prisma.user.update({
-    //     where: { id: Number(id) },
-    //     data: {
-    //       email: String(email),
-    //       password: String(password),
-    //       username: String(username),
-    //       tool_id: String(tool_id),
-    //     },
-    //   });
-    //   const user = await db.user.create(user);
-    //
-    //   response.json({ user });
-    // } catch (error) {
-    //   next(error);
-    // }
+      response.json("User updated successfully.");
+    } catch (error) {
+      next(error);
+    }
   },
 
   delete: async function (request, response, next) {
     const { id } = request.params;
+
+    try {
+      const userDeleted = await db.user.delete(id);
+      if (!userDeleted) return next(new Error("User deletion failed."));
+
+      response.json("User deleted successfully.");
+    } catch (error) {
+      next(error);
+    }
   },
 };
 

@@ -1,14 +1,12 @@
-const toolController = {
-  /**
-   * Répond à la demande d'un tool
-   * @param {*} request requête
-   * @param {*} response réponse
-   */
+import db from "../models/index.datamapper.js";
 
+const toolController = {
   getAll: async function (request, response, next) {
     try {
-      const tools = await prisma.tool.findMany({});
-      response.json({ tools });
+      const tools = await db.tool.getAll();
+      if (!tools) return next(new Error("Couldn't get the tools."));
+
+      response.json(tools);
     } catch (error) {
       next(error);
     }
@@ -16,32 +14,23 @@ const toolController = {
 
   get: async function (request, response, next) {
     const { id } = request.params;
+
     try {
-      const tool = await prisma.tool.findUnique({
-        where: { id: Number(id) },
-      });
-      response.json({ tool });
+      const tool = await db.tool.get(id);
+      if (!tool) return next(new Error("Couldn't get the tool."));
+
+      response.json(tool);
     } catch (error) {
       next(error);
     }
   },
 
-  /**
-   * Répond à la demande d'insertion de données en BDD
-   * en renvoyant un tool qui utilise ces données
-   * @param {*} request requête
-   * @param {*} response réponse
-   */
   create: async function (request, response, next) {
     const { name, logo, description } = request.body;
     try {
-      const newTool = await prisma.tool.create({
-        data: {
-          name,
-          description,
-          logo,
-        },
-      });
+      const newTool = await db.tool.create({ name, logo, description });
+      if (!newTool) return next(new Error("Tool creation failed."));
+
       response.status(201).json(newTool);
     } catch (error) {
       next(error);
@@ -51,16 +40,19 @@ const toolController = {
   update: async function (request, response, next) {
     const { id } = request.params;
     const { name, logo, description } = request.body;
+
     try {
-      const tool = await prisma.tool.update({
-        where: { id: Number(id) },
-        data: {
-          name: String(name),
-          description: String(description),
-          logo: String(logo),
-        },
-      });
-      response.json({ tool });
+      const tool = await db.user.get(id);
+      if (!tool) return next(new Error("404"));
+
+      if (name) tool.name = name.toLowerCase();
+      if (logo) tool.logo = logo.toLowerCase();
+      if (description) tool.description = description.toLowerCase();
+
+      const toolUpdated = await db.tool.update(tool, id);
+      if (!toolUpdated) return next(new Error("Tool update failed."));
+
+      response.json("Tool updated successfully.");
     } catch (error) {
       next(error);
     }
@@ -68,14 +60,12 @@ const toolController = {
 
   delete: async function (request, response, next) {
     const { id } = request.params;
-    try {
-      const tool = await prisma.tool.delete({
-        where: {
-          id: Number(id),
-        },
-      });
 
-      response.json(tool);
+    try {
+      const userDeleted = await db.user.delete(id);
+      if (!userDeleted) return next(new Error("User deletion failed."));
+
+      response.json("User deleted successfully.");
     } catch (error) {
       next(error);
     }

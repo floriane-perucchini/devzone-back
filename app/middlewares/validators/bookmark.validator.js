@@ -7,7 +7,7 @@ function validateBookmark(request, response, next) {
     if (request.url === "/user" && request.method === "POST")
       createSchema.parse(request.body);
 
-    if (/^\/bookmark\/[0-9]*$/.test(request.url) && request.method === "PUT")
+    if (/^\/bookmark\/[0-9]*$/.test(request.url) && request.method === "PATCH")
       updateSchema.parse(request.body);
   } catch (error) {
     error.status = 409;

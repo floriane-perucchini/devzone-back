@@ -25,8 +25,7 @@ const router = express.Router();
  */
 
 router.get("/users", auth, user.getAll);
-router.get("/user/:id", user.get);
-
+router.get("/user/:id", auth, user.get);
 
 // PATCH Routes
 /**
