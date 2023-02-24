@@ -1,6 +1,8 @@
 import db from "../models/index.datamapper.js";
 
 const mainController = {
+ 
+  
   login: async function (request, response, next) {
     const { username, email, password } = request.body;
     try {
@@ -21,7 +23,7 @@ const mainController = {
         throw new Error("This username is already in use.");
 
       await db.user.create(request.body);
-      response.status(201).json("User has been created successfully.");
+      response.render('signup');
     } catch (error) {
       next(error);
     }

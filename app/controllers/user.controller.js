@@ -11,24 +11,27 @@ const userController = {
   },
 
   get: async function (request, response, next) {
-    const { id } = request.params;
-
-    try {
-      const user = await db.user.findUnique({
-        where: { id: Number(id) },
-        include: {
-          tool: true,
-        },
-      });
-
-      response.json({ user });
-
-      const users = await user.get(id);
-      response.json({ users });
-    } catch (error) {
-      next(error);
-    }
+    
+    try { 
+      const user = await db.user.get(request.params.id);
+      response.json(user);
+  } catch(error) {
+    next(new Error("Problème de BDD"));
+  }
   },
+  create: async function (request, response, next) {
+    try {
+      const user = await db.user.create(request.body);
+      response.render( user );
+    } catch(error) {
+      next(new Error("problème de BDD"));
+    }
+   
+    }, 
+  
+
+    
+ 
 
   update: async function (request, response, next) {
     const { id } = request.params;
@@ -56,7 +59,7 @@ const userController = {
     const { id } = request.params;
 
     try {
-      const user = await prisma.user.delete({
+      const user = await db.user.delete({
         where: {
           id: Number(id),
         },
@@ -67,6 +70,8 @@ const userController = {
       next(error);
     }
   },
-};
+  
+
+}
 
 export default userController;
