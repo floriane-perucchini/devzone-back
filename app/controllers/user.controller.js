@@ -32,6 +32,23 @@ const userController = {
     if (email) user.email = email.toLowerCase();
     if (password) user.password = password;
     if (username) user.password = username.toLowerCase();
+
+    // try {
+    //   const user = await prisma.user.update({
+    //     where: { id: Number(id) },
+    //     data: {
+    //       email: String(email),
+    //       password: String(password),
+    //       username: String(username),
+    //       tool_id: String(tool_id),
+    //     },
+    //   });
+    //   const user = await db.user.create(user);
+    //
+    //   response.json({ user });
+    // } catch (error) {
+    //   next(error);
+    // }
   },
 
   delete: async function (request, response, next) {

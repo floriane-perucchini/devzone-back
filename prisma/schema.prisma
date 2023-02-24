@@ -24,6 +24,8 @@ model tool {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 model user {
 
   id                      Int             @id @default(autoincrement())
@@ -52,6 +54,10 @@ model user {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 model User {
   id           Int            @id @default(autoincrement())
   email        String
@@ -64,6 +70,12 @@ model User {
   tools        ToolsOnUsers[]
   RefreshToken RefreshToken[]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

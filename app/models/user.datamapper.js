@@ -12,7 +12,6 @@ const userDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
-
   create: async function ({ email, password, firstname, lastname, username }) {
     const sql = `INSERT INTO "User" (email, firstname, lastname, username, password) VALUES ($1, $2, $3, $4, $5)`;
     const values = [email, firstname, lastname, username, password];

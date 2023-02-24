@@ -11,21 +11,19 @@ const mainController = {
     try {
       // Check if user exists
       const user = await db.main.getUser({
-        username: username.toLowerCase(),
-        email: email.toLowerCase(),
+        username: username?.toLowerCase(),
+        email: email?.toLowerCase(),
       });
       if (!user) return next("Your email/username or password is not correct.");
 
-      console.log(user);
       // Check if password is correct
       const checkPassword = await bcrypt.compare(password, user.password);
       if (!checkPassword)
         return next("Your email/username or password is not correct.");
-
       // Check if credentials are valid
       const checkUser = await db.main.checkUser({
-        username: username.toLowerCase(),
-        email: email.toLowerCase(),
+        username: username?.toLowerCase(),
+        email: email?.toLowerCase(),
         password: user.password,
       });
       if (!checkUser)
@@ -60,8 +58,7 @@ const mainController = {
         refreshTokenExpiresIn: config.refreshToken.expiresIn,
       });
     } catch (error) {
-      console.log(error);
-      return response.status(500).json({ message: "Internal server error" });
+      return next();
     }
   },
 
@@ -73,14 +70,11 @@ const mainController = {
       if (checkUser?.username)
         throw new Error("This username is already in use.");
 
-      await db.user.create(request.body);
-      response.status(201).json("User has been created successfully.");
-
       // Hash password
       const newUser = request.body;
-      const { password } = newUser;
+      const { password, confirmedPassword } = newUser;
       newUser.password = await bcrypt.hash(password, 12);
-      newUser.confirmedPassword.delete;
+      confirmedPassword.delete;
 
       await db.user.create(newUser);
       response.status(201).json("Registered successfully.");
