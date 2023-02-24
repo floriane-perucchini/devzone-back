@@ -15,11 +15,13 @@ model Tool {
   bookmark    Bookmark[]
   users       ToolsOnUsers[]
 
+
   @@index([logo])
   @@index([name])
 }
 
 model User {
+
   id           Int            @id @default(autoincrement())
   email        String
   password     String
@@ -30,6 +32,7 @@ model User {
   bookmark     Bookmark[]
   tools        ToolsOnUsers[]
   RefreshToken RefreshToken[]
+
 
   @@index([email])
   @@index([firstname])
@@ -53,6 +56,7 @@ model Bookmark {
 }
 
 model ToolsOnUsers {
+
   user       User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId     Int
   tool       Tool      @relation(fields: [toolId], references: [id], onUpdate: Cascade, onDelete: Cascade)
@@ -70,3 +74,4 @@ model RefreshToken {
   userId     Int
   user       User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
+

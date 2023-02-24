@@ -12,20 +12,22 @@ const userDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
+
   create: async function ({ email, password, firstname, lastname, username }) {
     const sql = `INSERT INTO "User" (email, firstname, lastname, username, password) VALUES ($1, $2, $3, $4, $5)`;
     const values = [email, firstname, lastname, username, password];
     const result = await client.query(sql, values);
     return result.rowCount;
+
   },
-  update: async function ({
-    lastname,
-    firstname,
-    email,
-    password,
-    username,
-    userTool,
-  }) {},
+  delete: async function(id){
+    const sql = `DELETE FROM User
+    WHERE <condition>`;
+    const values = [id['id']];
+    const result = await client.query(sql, [values]);
+    return result.rows[0];
+  },
+    
 };
 
 export default userDatamapper;

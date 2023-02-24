@@ -23,8 +23,10 @@ const router = express.Router();
  * @return {string} 200 - un ou plusieurs users"
  * @return {object} 500 - Unexpected error
  */
+
 router.get("/users", auth, user.getAll);
 router.get("/user/:id", user.get);
+
 
 // PATCH Routes
 /**

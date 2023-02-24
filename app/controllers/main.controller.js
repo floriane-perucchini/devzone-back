@@ -6,6 +6,8 @@ import "dotenv/config";
 import config from "../config/token.config.js";
 
 const mainController = {
+ 
+  
   login: async function (request, response, next) {
     const { username, email, password } = request.body;
     try {
@@ -74,14 +76,7 @@ const mainController = {
       if (checkUser?.username)
         throw new Error("This username is already in use.");
 
-      // Hash password
-      const newUser = request.body;
 
-      newUser.password = await bcrypt.hash(newUser.password, 12);
-      delete newUser.confirmedPassword;
-
-      await db.user.create(newUser);
-      response.status(201).json("Registered successfully.");
     } catch (error) {
       next(error);
     }
