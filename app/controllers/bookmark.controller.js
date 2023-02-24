@@ -80,7 +80,7 @@ const bookmarkController = {
       });
 
       response.json(bookmark);
-    } catch (err) {
+    } catch (error) {
       next(error);
     }
   },

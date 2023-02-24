@@ -11,30 +11,22 @@ const userController = {
   },
 
   get: async function (request, response, next) {
-    
-    try { 
+    try {
       const user = await db.user.get(request.params.id);
       response.json(user);
-  } catch(error) {
-    next(new Error("Problème de BDD"));
-  }
+    } catch (error) {
+      next(new Error("Problème de BDD"));
+    }
   },
   create: async function (request, response, next) {
     try {
-
       const user = await db.user.get(id);
 
       response.json(user);
     } catch (error) {
       next(error);
-
     }
-   
-    }, 
-  
-
-    
- 
+  },
 
   update: async function (request, response, next) {
     const { id } = request.params;
@@ -64,15 +56,11 @@ const userController = {
     // } catch (error) {
     //   next(error);
     // }
-
   },
 
   delete: async function (request, response, next) {
     const { id } = request.params;
-
   },
-  
-
-}
+};
 
 export default userController;
