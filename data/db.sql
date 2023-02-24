@@ -1,7 +1,7 @@
 BEGIN;
 
 DROP TABLE IF EXISTS "User", "Tool", "Bookmark", "ToolsOnUsers";
-DROP DOMAIN IF EXISTS mail;
+
 
 
 CREATE TABLE IF NOT EXISTS public."User"
