@@ -501,4 +501,7 @@
 ::ffff:127.0.0.1 - - [24/Feb/2023:10:50:07 +0000] "POST /login HTTP/1.1" 200 475
 ::ffff:127.0.0.1 - - [24/Feb/2023:10:50:42 +0000] "GET /users HTTP/1.1" 401 27
 ::ffff:127.0.0.1 - - [24/Feb/2023:10:50:48 +0000] "GET /users HTTP/1.1" 200 301
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

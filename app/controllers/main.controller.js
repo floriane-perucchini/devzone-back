@@ -1,23 +1,14 @@
 import db from "../models/index.datamapper.js";
-<<<<<<< Updated upstream
-=======
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import "dotenv/config";
 import config from "../config/token.config.js";
->>>>>>> Stashed changes
 
 const mainController = {
   login: async function (request, response, next) {
     const { username, email, password } = request.body;
     try {
-<<<<<<< Updated upstream
-      const checkUser = await db.main.checkUser({ username, email, password });
-      if (!checkUser)
-        throw new Error("Your email/username or password is not correct.");
-      response.json("OK");
-=======
       // Check if user exists
       const user = await db.main.getUser({
         username: username.toLowerCase(),
@@ -68,7 +59,6 @@ const mainController = {
         refreshToken,
         refreshTokenExpiresIn: config.refreshToken.expiresIn,
       });
->>>>>>> Stashed changes
     } catch (error) {
       console.log(error);
       return response.status(500).json({ message: "Internal server error" });
@@ -83,10 +73,9 @@ const mainController = {
       if (checkUser?.username)
         throw new Error("This username is already in use.");
 
-<<<<<<< Updated upstream
       await db.user.create(request.body);
       response.status(201).json("User has been created successfully.");
-=======
+
       // Hash password
       const newUser = request.body;
       const { password } = newUser;
@@ -95,7 +84,6 @@ const mainController = {
 
       await db.user.create(newUser);
       response.status(201).json("Registered successfully.");
->>>>>>> Stashed changes
     } catch (error) {
       next(error);
     }

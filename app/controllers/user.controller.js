@@ -24,7 +24,7 @@ const userController = {
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { email, password, username, tool_id } = request.body;
+    const { email, password, username } = request.body;
 
     const user = db.user.get(id);
     if (!user) return next(new Error("404"));
@@ -36,18 +36,6 @@ const userController = {
 
   delete: async function (request, response, next) {
     const { id } = request.params;
-
-    try {
-      const user = await prisma.user.delete({
-        where: {
-          id: Number(id),
-        },
-      });
-
-      response.json(user);
-    } catch (error) {
-      next(error);
-    }
   },
 };
 
