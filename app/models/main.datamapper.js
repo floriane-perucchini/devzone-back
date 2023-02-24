@@ -2,7 +2,7 @@ import { client } from "../services/index.service.js";
 
 const mainDatamapper = {
   getUser: async function ({ username = null, email = null }) {
-    const sql = `SELECT * FROM "user" WHERE username = $1 OR email = $2`;
+    const sql = `SELECT * FROM "User" WHERE username = $1 OR email = $2`;
     const values = [username, email];
 
     const result = await client.query(sql, values);
@@ -13,12 +13,19 @@ const mainDatamapper = {
     email = null,
     password = null,
   }) {
-    const sql = `SELECT * FROM "user" WHERE username = $1 OR email = $2 AND password = $3`;
+    const sql = `SELECT * FROM "User" WHERE username = $1 OR email = $2 AND password = $3`;
     const values = [username, email, password];
 
     const result = await client.query(sql, values);
-    console.log(result);
     return result.rows[0];
+  },
+  createRefreshToken: async function ({ userId, token, expiration }) {
+    const sql = `INSERT INTO "RefreshToken" ("userId", token, expiration) VALUES ($1, $2, $3)`;
+    const values = [userId, token, expiration];
+
+    const result = await client.query(sql, values);
+    console.log(result);
+    return result;
   },
 };
 

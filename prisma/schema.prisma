@@ -22,6 +22,7 @@ model tool {
   @@index([name])
 }
 
+<<<<<<< Updated upstream
 model user {
 
   id                      Int             @id @default(autoincrement())
@@ -47,6 +48,19 @@ model user {
   tooloff   String[]
   bookmark  bookmark[]
 
+=======
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String
+  password     String
+  firstname    String?
+  lastname     String?
+  username     String
+  avatar       String?
+  bookmark     Bookmark[]
+  tools        ToolsOnUsers[]
+  RefreshToken RefreshToken[]
+>>>>>>> Stashed changes
 
   @@index([email])
   @@index([firstname])
@@ -79,4 +93,12 @@ model user_has_tool {
   user       user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([user_id, tool_id])
+}
+
+model RefreshToken {
+  id         Int    @id @default(autoincrement())
+  token      String
+  expiration String
+  userId     Int
+  user       User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
