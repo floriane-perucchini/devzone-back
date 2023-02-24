@@ -27,9 +27,6 @@ const mainController = {
       if (checkUser.username)
         throw new Error("This username is already in use.");
 
-      await db.user.create(request.body);
-      response.status(201).json("Registered successfully.");
-
       // Hash password
       const newUser = request.body;
       const { password } = newUser;
