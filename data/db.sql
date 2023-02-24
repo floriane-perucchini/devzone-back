@@ -1,6 +1,7 @@
 BEGIN;
 
 DROP TABLE IF EXISTS "User", "Tool", "Bookmark", "ToolsOnUsers";
+DROP DOMAIN IF EXISTS mail;
 
 CREATE DOMAIN mail AS text CHECK(VALUE ~ '(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}$');
 
