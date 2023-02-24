@@ -18,16 +18,13 @@ const userDatamapper = {
     const values = [email, firstname, lastname, username, password];
     const result = await client.query(sql, values);
     return result.rowCount;
-
   },
-  delete: async function(id){
-    const sql = `DELETE FROM User
-    WHERE <condition>`;
-    const values = [id['id']];
+  delete: async function (id) {
+    const sql = `DELETE FROM User WHERE <condition>`;
+    const values = [id["id"]];
     const result = await client.query(sql, [values]);
     return result.rows[0];
   },
-    
 };
 
 export default userDatamapper;
