@@ -32,7 +32,6 @@ const userDatamapper = {
     const sql = `DELETE FROM "User" WHERE id = $1`;
     const values = [id];
 
-    console.log(sql);
     const result = await client.query(sql, values);
     return result.rowCount;
   },

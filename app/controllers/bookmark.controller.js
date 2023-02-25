@@ -1,86 +1,90 @@
+import db from "../models/index.datamapper.js";
+import { Error404, Error409 } from "../utils/errors/index.util.js";
+
 const bookmarkController = {
-  /**
-   * Répond à la demande d'un bookmark
-   * @param {*} request requête
-   * @param {*} response réponse
-   */
   getAll: async function (request, response, next) {
     try {
-      const bookmarks = await prisma.bookmark.findMany({});
+      const bookmarks = await db.bookmark.getAll();
+      if (!bookmarks)
+        return next(new Error404("Couldn't find the bookmarks you requested."));
 
-      response.json({ bookmarks });
+      response.json(bookmarks);
     } catch (error) {
+      error.type = "database";
+      error.method = request.method;
+      error.message = "Bookmarks select request to the database failed.";
       next(error);
     }
   },
 
   get: async function (request, response, next) {
     const { id } = request.params;
-    try {
-      const bookmark = await prisma.bookmark.findUnique({
-        where: { id: Number(id) },
-      });
 
-      response.json({ bookmark });
+    try {
+      const tool = await db.bookmark.get(id);
+      if (!tool)
+        return next(new Error404("Couldn't find the bookmark you requested."));
+
+      response.json(tool);
     } catch (error) {
+      error.type = "database";
+      error.method = request.method;
+      error.message = "Bookmark select request to the database failed.";
       next(error);
     }
   },
 
-  /**
-   * Répond à la demande d'insertion de données en BDD
-   * en renvoyant un bookmark qui utilise ces données
-   * @param {*} request requête
-   * @param {*} response réponse
-   */
   create: async function (request, response, next) {
-    const { name, description, link, link_img } = request.body;
     try {
-      const newBookmark = await prisma.user.create({
-        data: {
-          name,
-          description,
-          link,
-          link_img,
-        },
-      });
+      const checkBookmark = db.bookmark.check(request.body.name);
+      if (checkBookmark) return next(new Error409("Bookmark already exists."));
+
+      const newBookmark = await db.bookmark.create(request.body);
 
       response.status(201).json(newBookmark);
     } catch (error) {
+      error.type = "database";
+      error.method = request.method;
+      error.message = "Bookmark insert request failed.";
       next(error);
     }
   },
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { name, description, link } = request.body;
-    try {
-      const bookmark = await prisma.bookmark.update({
-        where: { id: Number(id) },
-        data: {
-          name: String(name),
-          description: String(description),
-          link: String(link),
-        },
-      });
+    const { name, description, link, linkImg } = request.body;
 
-      response.json({ bookmark });
+    try {
+      const bookmark = await db.bookmark.get(id);
+      if (!bookmark) return next(new Error404("Bookmark couldn't be found."));
+
+      if (name) bookmark.name = name.toLowerCase();
+      if (description) bookmark.description = description.toLowerCase();
+      if (link) bookmark.link = link.toLowerCase();
+      if (linkImg) bookmark.linkImg = linkImg.toLowerCase();
+
+      await db.bookmark.update(bookmark, id);
+
+      response.json("Bookmark updated successfully.");
     } catch (error) {
+      error.type = "database";
+      error.method = request.method;
+      error.message = "Bookmark update request failed.";
       next(error);
     }
   },
 
   delete: async function (request, response, next) {
     const { id } = request.params;
-    try {
-      const bookmark = await prisma.bookmark.delete({
-        where: {
-          id: Number(id),
-        },
-      });
 
-      response.json(bookmark);
+    try {
+      await db.tool.delete(id);
+
+      response.json("Bookmark deleted successfully.");
     } catch (error) {
+      error.type = "database";
+      error.method = request.method;
+      error.message = "Bookmark delete request failed.";
       next(error);
     }
   },

@@ -11,7 +11,6 @@ function validateUser(request, response, next) {
     if (/^\/user\/[0-9]*$/.test(request.url) && request.method === "PATCH")
       updateSchema.parse(request.body);
   } catch (error) {
-    error.status = 409;
     next(error);
   }
 

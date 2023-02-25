@@ -3,27 +3,41 @@ import { ZodError } from "zod";
 async function errorsHandler(error, request, response, next) {
   // Handle Zod Errors
   if (error instanceof ZodError)
-    return response
-      .status(error.status || 403)
-      .json(error.flatten().fieldErrors);
+    return response.status(422).json(error.flatten().fieldErrors);
 
-  // Handler 404 Errors
-  if (error.status === 404) console.log(404);
+  // Handle Database 404 Errors : Element(s) not found
+  if (error.type === "not found") {
+    return response.status(error.type || 404).json(error);
+  }
 
-  // DataMapper Errors
-  if (error.type) {
-    return response.status(error.status || 409).json({
-      type: error.type,
-      message: error.message,
-      error,
+  // Handle Database 409 Errors : Element(s) already exists
+  if (error.type === "duplicate") {
+    return response.status(error.type || 409).json(error);
+  }
+
+  // Handle Database General Errors
+  if (error.type === "database") {
+    response.status(error.status || 500).json({
+      primary: {
+        message: error.message,
+        method: error.method,
+        status: error.status,
+        detail: error.detail,
+      },
+      secondary: error,
     });
   }
 
   // Handle General Errors
   response.status(error.status || 500);
   response.json({
-    message: error.message,
-    error,
+    primary: {
+      message: error.message,
+      method: error.method,
+      status: error.status,
+      detail: error.detail,
+    },
+    secondary: error,
   });
 }
 

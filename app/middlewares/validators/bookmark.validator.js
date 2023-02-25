@@ -10,7 +10,6 @@ function validateBookmark(request, response, next) {
     if (/^\/bookmark\/[0-9]*$/.test(request.url) && request.method === "PATCH")
       updateSchema.parse(request.body);
   } catch (error) {
-    error.status = 409;
     next(error);
   }
 
