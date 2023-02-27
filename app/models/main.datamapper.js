@@ -25,7 +25,7 @@ const mainDatamapper = {
 
     return await client.query(sql, values);
   },
-  checkEmailToken: async function (emailToken) {
+  getVerifiedUser: async function (emailToken) {
     const sql = `SELECT * FROM "Token" JOIN "User" ON "User".id = "Token"."userId" WHERE "Token"."emailToken" = $1`;
     const values = [emailToken];
 

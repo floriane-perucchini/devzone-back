@@ -115,7 +115,7 @@ const mainController = {
   verify: async function (request, response, next) {
     const { token } = request.query;
     try {
-      const verifiedUser = await db.main.checkEmailToken(token);
+      const verifiedUser = await db.main.getVerifiedUser(token);
       if (!verifiedUser)
         return next(new Error404(`User with token ${token} not found.`));
 
