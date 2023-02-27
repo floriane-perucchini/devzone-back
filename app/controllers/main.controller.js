@@ -11,7 +11,7 @@ const mainController = {
   signup: async function (request, response, next) {
     const wannabeUser = request.body;
     try {
-      // Check if username/email alrady exists
+      // Check if username/email already exists
       const checkUser = await db.main.getUser({
         username: wannabeUser.username,
         email: wannabeUser.email,
