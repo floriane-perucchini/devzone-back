@@ -13,7 +13,6 @@ const bookmarkController = {
       error.type = "database";
       error.method = request.method;
       error.message = "Bookmarks select request to the database failed.";
-      next(error);
     }
   },
 

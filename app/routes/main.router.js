@@ -1,27 +1,11 @@
 import express from "express";
 import { mainController as main } from "../controllers/index.controller.js";
-import { auth } from "../middlewares/index.middleware.js";
+import { validateMain as validate } from "../middlewares/validators/index.validator.js";
 
 const router = express.Router();
 
 // POST Routes
-/**
- * POST /login
- * @summary connection au site
- * @tags user
- * @param {user} request.body.required - user info
- * @return {object} 200 - bookmark response
- * @return {object} 500 - Unexpected error
- */
-router.post("/login", main.login);
-/**
- * POST /signup
- * @summary inscription au site
- * @tags user
- * @param {user} request.body.required - user info
- * @return {object} 200 - bookmark response
- * @return {object} 500 - Unexpected error
- */
-router.post("/signup", main.signup);
+router.post("/signup", validate, main.signup);
+router.post("/login", validate, main.login);
 
 export default router;

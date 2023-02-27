@@ -1,7 +1,7 @@
 import { mainSchemas } from "./schemas/index.schemas.js";
 const { loginSchema, signupSchema } = mainSchemas;
 
-function validateLogin(request, response, next) {
+function validateMain(request, response, next) {
   try {
     if (request.url === "/login" && request.method === "POST")
       loginSchema.parse(request.body);
@@ -15,4 +15,4 @@ function validateLogin(request, response, next) {
   next();
 }
 
-export default validateLogin;
+export default validateMain;

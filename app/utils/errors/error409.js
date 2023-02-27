@@ -7,7 +7,7 @@ class Error409 extends Error {
 
     this.name = this.constructor.name;
 
-    this.message = message || "Error 404: Ressource couldn't be find.";
+    this.message = message || "Error 409: Duplicate content.";
 
     this.status = 409;
 

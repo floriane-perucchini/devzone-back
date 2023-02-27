@@ -4,8 +4,34 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import "dotenv/config";
 import config from "../config/token.config.js";
+import { Error409 } from "../utils/errors/index.util.js";
 
 const mainController = {
+  signup: async function (request, response, next) {
+    const newUser = request.body;
+    try {
+      // Check if username/email alrady exists
+      const checkUser = await db.main.getUser({
+        username: newUser.username,
+        email: newUser.email,
+      });
+      if (checkUser?.email)
+        return next(new Error409("This email is already in use."));
+      if (checkUser?.username)
+        return next(new Error409("This username is already in use."));
+
+      // Hash user password
+      newUser.password = await bcrypt.hash(newUser.password, 12);
+      delete newUser.confirmedPassword;
+
+      // Create new user
+      await db.user.create(newUser);
+      response.status(201).json("Registered successfully.");
+    } catch (error) {
+      next(error);
+    }
+  },
+
   login: async function (request, response, next) {
     const { username, email, password } = request.body;
     try {
@@ -20,6 +46,7 @@ const mainController = {
       const checkPassword = await bcrypt.compare(password, user.password);
       if (!checkPassword)
         return next("Your email/username or password is not correct.");
+
       // Check if credentials are valid
       const checkUser = await db.main.checkUser({
         username: username?.toLowerCase(),
@@ -49,6 +76,7 @@ const mainController = {
         token: refreshToken,
         expiration: Date.now() + config.refreshToken.expiresIn,
       });
+
       // Send JTW Token, RefreshToken and user to client
       delete user.password;
       return response.json({
@@ -63,27 +91,6 @@ const mainController = {
       });
     } catch (error) {
       return next();
-    }
-  },
-
-  signup: async function (request, response, next) {
-    try {
-      const { username, email } = request.body;
-      const checkUser = await db.main.getUser({ username, email });
-      if (checkUser?.email) throw new Error("This email is already in use.");
-      if (checkUser?.username)
-        throw new Error("This username is already in use.");
-
-      // Hash password
-      const newUser = request.body;
-
-      newUser.password = await bcrypt.hash(newUser.password, 12);
-      delete newUser.confirmedPassword;
-
-      await db.user.create(newUser);
-      response.status(201).json("Registered successfully.");
-    } catch (error) {
-      next(error);
     }
   },
 };
