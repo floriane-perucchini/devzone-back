@@ -19,19 +19,25 @@ const mainDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
-  createRefreshToken: async function ({ userId, token, expiration }) {
-    const sql = `INSERT INTO "RefreshToken" ("userId", token, expiration) VALUES ($1, $2, $3)`;
-    const values = [userId, token, expiration];
+  createEmailToken: async function ({ userId, emailToken }) {
+    const sql = `INSERT INTO "Token" ("userId", "emailToken") VALUES ($1, $2)`;
+    const values = [userId, emailToken];
+
+    return await client.query(sql, values);
+  },
+  checkEmailToken: async function (emailToken) {
+    const sql = `SELECT * FROM "Token" JOIN "User" ON "User".id = "Token"."userId" WHERE "Token"."emailToken" = $1`;
+    const values = [emailToken];
 
     const result = await client.query(sql, values);
-    console.log(result);
-    return result;
+    return result.rows[0];
+  },
+  createRefreshToken: async function ({ userId, jwtRefreshToken, expiration }) {
+    const sql = `UPDATE "Token" SET "jwtRefreshToken" = $1, expiration = $2 WHERE "userId" = $3`;
+    const values = [jwtRefreshToken, expiration, userId];
+
+    return await client.query(sql, values);
   },
 };
 
-
-
-
-
 export default mainDatamapper;
-

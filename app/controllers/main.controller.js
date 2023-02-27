@@ -4,16 +4,17 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import "dotenv/config";
 import config from "../config/token.config.js";
-import { Error409 } from "../utils/errors/index.util.js";
+import { Error404, Error409 } from "../utils/errors/index.util.js";
+import { transporter } from "../services/index.service.js";
 
 const mainController = {
   signup: async function (request, response, next) {
-    const newUser = request.body;
+    const wannabeUser = request.body;
     try {
       // Check if username/email alrady exists
       const checkUser = await db.main.getUser({
-        username: newUser.username,
-        email: newUser.email,
+        username: wannabeUser.username,
+        email: wannabeUser.email,
       });
       if (checkUser?.email)
         return next(new Error409("This email is already in use."));
@@ -21,12 +22,30 @@ const mainController = {
         return next(new Error409("This username is already in use."));
 
       // Hash user password
-      newUser.password = await bcrypt.hash(newUser.password, 12);
-      delete newUser.confirmedPassword;
+      wannabeUser.password = await bcrypt.hash(wannabeUser.password, 12);
+      delete wannabeUser.confirmedPassword;
 
       // Create new user
-      await db.user.create(newUser);
-      response.status(201).json("Registered successfully.");
+      const newUser = await db.user.create(wannabeUser);
+      if (!newUser) return next(new Error("User creation failed."));
+
+      // Send email confirmation
+      const emailToken = String(Math.floor(Math.random() * 100 + 54));
+      await db.main.createEmailToken({ userId: newUser.id, emailToken });
+
+      // const link = `http://"+${request.get("host")}"/verify?id=${emailToken}`;
+      const link = `http://localhost:3000/verify?token=${emailToken}`;
+      const mailData = {
+        from: "devzoneapplication@gmail.com",
+        to: newUser.email,
+        subject: "Welcome to DevZone!",
+        text: "text",
+        html: `<b>Hey there! Click on this <a href='${link}'>link</a> to confirm your email.</b>`,
+      };
+
+      transporter.sendMail(mailData).catch((error) => next(error));
+
+      response.status(201).json("Registration and email sent successfully.");
     } catch (error) {
       next(error);
     }
@@ -55,6 +74,7 @@ const mainController = {
       });
       if (!checkUser)
         return next("Your email/username or password is not correct.");
+      if (!checkUser.active) return next("Please confirm your email.");
 
       // Create JWT Token
       const accessToken = jwt.sign(
@@ -73,7 +93,7 @@ const mainController = {
 
       await db.main.createRefreshToken({
         userId: user.id,
-        token: refreshToken,
+        jwtRefreshToken: refreshToken,
         expiration: Date.now() + config.refreshToken.expiresIn,
       });
 
@@ -91,6 +111,48 @@ const mainController = {
       });
     } catch (error) {
       return next();
+    }
+  },
+  verify: async function (request, response, next) {
+    const { token } = request.query;
+    try {
+      const verifiedUser = await db.main.checkEmailToken(token);
+      if (!verifiedUser)
+        return next(new Error404(`User with token ${token} not found.`));
+
+      verifiedUser.active = true;
+      const updatedUser = await db.user.update(
+        verifiedUser,
+        verifiedUser.userId
+      );
+      if (!updatedUser)
+        return next(new Error("User update active status failed."));
+
+      response.json("User email verified successfully.");
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  contact: async function (request, response, next) {
+    const { to, text } = request.body;
+
+    const mailData = {
+      from: "devzoneapplication@gmail.com",
+      to: to,
+      subject: "Contact Form",
+      text: text,
+      html: "<b>Hey there!</b>",
+    };
+
+    try {
+      const email = transporter.sendMail(mailData);
+      return response.json({
+        message: "Mail sent successfully.",
+        messageId: email.messageId,
+      });
+    } catch (error) {
+      return next(error);
     }
   },
 };

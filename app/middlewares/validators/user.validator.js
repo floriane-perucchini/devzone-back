@@ -3,7 +3,6 @@ const { createSchema } = userSchemas;
 const { updateSchema } = userSchemas;
 
 function validateUser(request, response, next) {
-  console.log(request.method);
   try {
     if (request.url === "/user" && request.method === "POST")
       createSchema.parse(request.body);
