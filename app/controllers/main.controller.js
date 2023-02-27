@@ -30,10 +30,9 @@ const mainController = {
       if (!newUser) return next(new Error("User creation failed."));
 
       // Send email confirmation
-      const emailToken = String(Math.floor(Math.random() * 100 + 54));
+      const emailToken = String(crypto.randomUUID());
       await db.main.createEmailToken({ userId: newUser.id, emailToken });
 
-      // const link = `http://"+${request.get("host")}"/verify?id=${emailToken}`;
       const link = `http://localhost:3000/verify?token=${emailToken}`;
       const mailData = {
         from: "devzoneapplication@gmail.com",
