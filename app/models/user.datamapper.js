@@ -8,8 +8,12 @@ const userDatamapper = {
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT * FROM "User" WHERE id = $1`;
-    //TODO: Add tools
+    const sql = `SELECT "Tool"."name"
+    FROM "User"
+    INNER JOIN "ToolsOnUsers" ON "User"."id" = "ToolsOnUsers"."userId"
+    INNER JOIN "Tool" ON "ToolsOnUsers"."toolId" = "Tool"."id"
+    WHERE "User"."id" = $1`;
+   
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
