@@ -23,9 +23,7 @@ model User {
   firstname String?
   lastname  String?
   username  String
-  avatar    String?
-  bookmark  Bookmark[]
-  tools     ToolsOnUsers[]
+
 }
 
 model Bookmark {
@@ -33,11 +31,9 @@ model Bookmark {
   name        String
   description String?
   link        String?
-  linkImg     String?
   userId      Int?
   toolId      Int?
-  tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_toolId_fkey")
-  user        User?   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_userId_fkey")
+
 }
 
 model ToolsOnUsers {
@@ -50,3 +46,4 @@ model ToolsOnUsers {
 
   @@id([userId, toolId])
 }
+

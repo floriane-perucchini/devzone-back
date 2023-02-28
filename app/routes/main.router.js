@@ -11,7 +11,6 @@ router.get("/feed", main.feed);
 // POST Routes
 router.post("/signup", validate, main.signup);
 router.post("/login", validate, main.login);
-router.post("/contact", main.contact);
 
 
 export default router;

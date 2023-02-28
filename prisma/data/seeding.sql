@@ -5,6 +5,16 @@ TRUNCATE TABLE "Bookmark" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "User" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
+TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
+
+INSERT INTO "Image"("fileName", "filePath", "mimeType", "size")
+
+VALUES
+    ('test1', '/images/test1.jpg', 'jpg', 3754),
+    ('test2', '/images/test2.jpg', 'png', 27238),
+    ('test3', '/images/test3.jpg', 'jpg', 1024),
+    ('test4', '/images/test4.jpg', 'png', 2000),
+    ('test5', '/images/test5.jpg', 'png', 2000);
 
 INSERT INTO "Tool"("name", "logo", "description")
 
@@ -13,26 +23,24 @@ INSERT INTO "Tool"("name", "logo", "description")
 	 ('Stackoverflow', 'test2', 'stack'),
 	 ('MDN', 'test3', 'Mozilla');
 
-INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "avatar")
+INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId")
 
 	VALUES
-  ('karim@gmail.com', 'dsqhdk', 'Karim', 'Romdhane', 'karim', 'test2'),
-  ('enzo@gmail.com', 'ddsqdlsj', 'Enzo', 'Bacqueyrisses', 'enzo', 'test1'),
-  ('floriane@test.fr', 'dsdffqqsd', 'Floriane', 'Perucchini', 'floriane', 'test3'),
-  ('abdel@test.fr', 'dsdffqqsd', 'Abdel', 'Karim', 'abdel', 'test4'),
-  ('azouaou@test.fr', 'dsdffqqsd', 'Azouaou', 'Benadda', 'test', 'test5');
+  ('karim@gmail.com', 'D09eodhenziedz!', 'Karim', 'Romdhane', 'karim', 1),
+  ('enzo@gmail.com', 'D09eodhenziedz!', 'Enzo', 'Bacqueyrisses', 'enzo', 2),
+  ('floriane@test.fr', 'D09eodhenziedz!', 'Floriane', 'Perucchini', 'floriane', null),
+  ('abdel@test.fr', 'D09eodhenziedz!', 'Abdel', 'Karim', 'abdel', 4),
+  ('azouaou@test.fr', 'D09eodhenziedz!', 'Azouaou', 'Benadda', 'test', 5);
 
-INSERT INTO "Bookmark"(name, description, link, "linkImg", "userId", "toolId")
+INSERT INTO "Bookmark"(name, description, link, "imgId", "userId", "toolId")
 
     VALUES
-    ('Favorite1', 'Super favorite 1', 'link1', 'link image 1', 1, 2),
-    ('Favorite1', 'Super favorite 1', 'link1', 'link image 1', 2, 1),
-    ('Favorite1', 'Super favorite 1', 'link1', 'link image 1', 3, 3),
-    ('Favorite1', 'Super favorite 1', 'link1', 'link image 1', 4, 2),
-    ('Favorite1', 'Super favorite 1', 'link1', 'link image 1', 5, 1),
-    ('Favorite1', 'Super favorite 1', 'link1', 'link image 1', 5, 2);
-
-
+    ('Favorite1', 'Super favorite 1', 'link1', 1, 1, 2),
+    ('Favorite1', 'Super favorite 1', 'link1', 2, 2, 1),
+    ('Favorite1', 'Super favorite 1', 'link1', 3, 3, 3),
+    ('Favorite1', 'Super favorite 1', 'link1', 3, 4, 2),
+    ('Favorite1', 'Super favorite 1', 'link1', 1, 5, 1),
+    ('Favorite1', 'Super favorite 1', 'link1', null, 5, 2);
 
 INSERT INTO "Token"("expiration", "userId", "emailToken", "jwtRefreshToken")
 
