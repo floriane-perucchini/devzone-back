@@ -134,14 +134,13 @@ const mainController = {
   },
 
   contact: async function (request, response, next) {
-    const { to, text } = request.body;
+    const { email, message } = request.body;
 
     const mailData = {
-      from: "devzoneapplication@gmail.com",
-      to: to,
+      from: email,
+      to: "devzoneapplication@gmail.com",
       subject: "Contact Form",
-      text: text,
-      html: "<b>Hey there!</b>",
+      html: `<b>${message}</b>`,
     };
 
     try {
