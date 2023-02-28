@@ -73,6 +73,10 @@ model Token {
   emailToken      String
   userId          Int
   user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([emailToken])
+  @@index([jwtRefreshToken])
+  @@index([expiration])
 }
 
 model Image {
@@ -83,4 +87,10 @@ model Image {
   size     BigInt
   Bookmark Bookmark[]
   User     User[]
+
+  @@index([fileName])
+  @@index([filePath])
+  @@index([mimeType])
+  @@index([size])
 }
+
