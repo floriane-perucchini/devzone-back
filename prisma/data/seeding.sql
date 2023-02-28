@@ -26,11 +26,11 @@ INSERT INTO "Tool"("name", "logo", "description")
 INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId")
 
 	VALUES
-  ('karim@gmail.com', 'dsqhdk', 'Karim', 'Romdhane', 'karim', 1),
-  ('enzo@gmail.com', 'ddsqdlsj', 'Enzo', 'Bacqueyrisses', 'enzo', 2),
-  ('floriane@test.fr', 'dsdffqqsd', 'Floriane', 'Perucchini', 'floriane', null),
-  ('abdel@test.fr', 'dsdffqqsd', 'Abdel', 'Karim', 'abdel', 4),
-  ('azouaou@test.fr', 'dsdffqqsd', 'Azouaou', 'Benadda', 'test', 5);
+  ('karim@gmail.com', 'D09eodhenziedz!', 'Karim', 'Romdhane', 'karim', 1),
+  ('enzo@gmail.com', 'D09eodhenziedz!', 'Enzo', 'Bacqueyrisses', 'enzo', 2),
+  ('floriane@test.fr', 'D09eodhenziedz!', 'Floriane', 'Perucchini', 'floriane', null),
+  ('abdel@test.fr', 'D09eodhenziedz!', 'Abdel', 'Karim', 'abdel', 4),
+  ('azouaou@test.fr', 'D09eodhenziedz!', 'Azouaou', 'Benadda', 'test', 5);
 
 INSERT INTO "Bookmark"(name, description, link, "imgId", "userId", "toolId")
 
