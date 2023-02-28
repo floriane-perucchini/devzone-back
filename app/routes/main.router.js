@@ -6,6 +6,7 @@ const router = express.Router();
 
 // GET Routes
 router.get("/verify", main.verify);
+router.get("/feed/:article", main.feed);
 
 // POST Routes
 router.post("/signup", validate, main.signup);
