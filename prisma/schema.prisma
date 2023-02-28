@@ -14,9 +14,6 @@ model Tool {
   description String?
   bookmark    Bookmark[]
   users       ToolsOnUsers[]
-
-  @@index([logo])
-  @@index([name])
 }
 
 model User {
@@ -26,16 +23,7 @@ model User {
   firstname String?
   lastname  String?
   username  String
-  active    Boolean        @default(false)
-  imgId     Int?
-  bookmark  Bookmark[]
-  Token     Token[]
-  tools     ToolsOnUsers[]
-  image     Image?         @relation(fields: [imgId], references: [id], onDelete: Cascade)
 
-  @@index([email])
-  @@index([firstname])
-  @@index([lastname])
 }
 
 model Bookmark {
@@ -45,14 +33,7 @@ model Bookmark {
   link        String?
   userId      Int?
   toolId      Int?
-  imgId       Int?
-  image       Image?  @relation(fields: [imgId], references: [id], onDelete: Cascade)
-  tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade, map: "bookmark_toolId_fkey")
-  user        User?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "bookmark_userId_fkey")
 
-  @@index([link])
-  @@index([imgId])
-  @@index([name])
 }
 
 model ToolsOnUsers {
@@ -64,33 +45,5 @@ model ToolsOnUsers {
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, toolId])
-}
-
-model Token {
-  id              Int     @id @default(autoincrement())
-  jwtRefreshToken String?
-  expiration      String?
-  emailToken      String
-  userId          Int
-  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([emailToken])
-  @@index([jwtRefreshToken])
-  @@index([expiration])
-}
-
-model Image {
-  id       Int        @id @default(autoincrement())
-  fileName String     @unique
-  filePath String
-  mimeType String
-  size     BigInt
-  Bookmark Bookmark[]
-  User     User[]
-
-  @@index([fileName])
-  @@index([filePath])
-  @@index([mimeType])
-  @@index([size])
 }
 
