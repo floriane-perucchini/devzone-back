@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test": "node --no-warnings --experimental-vm-modules $( [ -f ./node_modules/.bin/jest ] && echo ./node_modules/.bin/jest || which jest --runInBand --detectOpenHandles --forceExit)",
     "start": "nodemon ./app/bin/www",
     "dev": "DEBUG=* node ./app/bin/www"
   },
@@ -23,7 +23,8 @@
     "eslint": "^8.34.0",
     "jest": "^29.4.3",
     "prettier": "2.8.4",
-    "prisma": "^4.10.1"
+    "prisma": "^4.10.1",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "@extractus/article-extractor": "^7.2.9",

@@ -256,3 +256,15 @@
 ::1 - - [28/Feb/2023:10:41:12 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 200 24666
 ::1 - - [28/Feb/2023:10:43:47 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 200 24811
 ::1 - - [28/Feb/2023:10:43:51 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 304 -
+::1 - - [28/Feb/2023:13:21:14 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 200 32470
+::1 - - [28/Feb/2023:13:25:13 +0000] "GET /users HTTP/1.1" 401 42
+::1 - - [28/Feb/2023:13:25:57 +0000] "GET /users HTTP/1.1" 200 1196
+::1 - - [28/Feb/2023:13:30:23 +0000] "GET /users HTTP/1.1" 401 42
+::1 - - [28/Feb/2023:13:34:52 +0000] "GET /users HTTP/1.1" 401 42
+::1 - - [28/Feb/2023:15:07:56 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 404 144
+::1 - - [28/Feb/2023:15:09:21 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 404 144
+::1 - - [28/Feb/2023:15:10:12 +0000] "GET /feed/?https://www.cnbc.com/2022/09/21/what-another-major-rate-hike-by-the-federal-reserve-means-to-you.html HTTP/1.1" 404 144
+::1 - - [28/Feb/2023:15:10:16 +0000] "GET /feed/https://www.cnbc.com/2022/09/21/what-another-major-rate-hike-by-the-federal-reserve-means-to-you.html HTTP/1.1" 404 245
+::1 - - [28/Feb/2023:15:11:03 +0000] "GET /feed/?url=https://news.google.com/rss HTTP/1.1" 404 144
+::1 - - [28/Feb/2023:15:12:38 +0000] "GET /feed/?url=https://news.google.com/rss HTTP/1.1" 404 144
+::1 - - [28/Feb/2023:15:15:22 +0000] "GET /feed/?url=https://news.google.com/rss HTTP/1.1" 200 25979

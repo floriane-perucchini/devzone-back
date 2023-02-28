@@ -14,9 +14,6 @@ model Tool {
   description String?
   bookmark    Bookmark[]
   users       ToolsOnUsers[]
-
-  @@index([logo])
-  @@index([name])
 }
 
 model User {
@@ -27,14 +24,8 @@ model User {
   lastname  String?
   username  String
   avatar    String?
-  active    Boolean        @default(false)
   bookmark  Bookmark[]
   tools     ToolsOnUsers[]
-  Token     Token[]
-
-  @@index([email])
-  @@index([firstname])
-  @@index([lastname])
 }
 
 model Bookmark {
@@ -47,28 +38,15 @@ model Bookmark {
   toolId      Int?
   tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_toolId_fkey")
   user        User?   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_userId_fkey")
-
-  @@index([link])
-  @@index([linkImg])
-  @@index([name])
 }
 
 model ToolsOnUsers {
-  user       User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId     Int
-  tool       Tool      @relation(fields: [toolId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   toolId     Int
   created_at DateTime  @default(now()) @db.Timestamptz(6)
   updated_at DateTime? @db.Timestamptz(6)
+  tool       Tool      @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, toolId])
-}
-
-model Token {
-  id              Int     @id @default(autoincrement())
-  jwtRefreshToken String?
-  expiration      String?
-  emailToken      String
-  userId          Int
-  user            User    @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
