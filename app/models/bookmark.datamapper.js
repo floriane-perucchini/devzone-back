@@ -20,9 +20,9 @@ const bookmarkDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
-  update: async function ({ name, description, link, linkImg }, id) {
-    const sql = `UPDATE "Bookmark" set name = $1, description = $2, link = $3, "linkImg" = $4 WHERE id = $5`;
-    const values = [name, description, link, linkImg, id];
+  update: async function ({ name, description, link, imgId }, id) {
+    const sql = `UPDATE "Bookmark" set name = $1, description = $2, link = $3, "imgId" = $4 WHERE id = $5`;
+    const values = [name, description, link, imgId, id];
 
     const result = await client.query(sql, values);
     return result.rowCount;

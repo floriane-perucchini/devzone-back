@@ -114,3 +114,9 @@ ALTER TABLE "ToolsOnUsers" ADD CONSTRAINT "ToolsOnUsers_userId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "Token" ADD CONSTRAINT "Token_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddDomain
+CREATE DOMAIN valid_mail AS text CHECK (value ~ '^([a-zA-Z0-9]+[-_.]?)*[a-zA-Z0-9]+@[a-zA-Z0-9]+[-]?[a-zA-Z0-9]+.[a-z]{2,}$');
+ALTER TABLE "User"
+    ALTER COLUMN email SET DATA TYPE valid_mail;
+

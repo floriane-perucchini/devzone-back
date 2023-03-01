@@ -27,18 +27,19 @@ const userDatamapper = {
     return result.rows[0];
   },
   update: async function (
-    { email, password, firstname, lastname, username, avatar, active },
+    { email, password, firstname, lastname, username, active, website, imgId },
     id
   ) {
-    const sql = `UPDATE "User" set email = $1, password = $2, firstname = $3, lastname = $4, username = $5, avatar = $6, active = $7 WHERE id = $8`;
+    const sql = `UPDATE "User" set email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7, "imgId" = $8 WHERE id = $9`;
     const values = [
       email,
       password,
       firstname,
       lastname,
       username,
-      avatar,
       active,
+      website,
+      imgId,
       id,
     ];
 

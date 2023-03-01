@@ -31,6 +31,9 @@ const userController = {
     const { email, firstname, lastname, username, password, avatar } =
       request.body;
 
+    // TODO: Verify if username is already in use and verify it
+    // TODO: Verify email and replace it when it's valid
+
     try {
       const user = await db.user.get(id);
       if (!user) return next(new Error("404"));
