@@ -157,7 +157,7 @@ const mainController = {
         messageId: email.messageId,
       });
     } catch (error) {
-      error.message = "Mail couldn't be sent.";
+      error.message = "Contact form mail couldn't be sent.";
       error.type = "nodemailer";
       return next(error);
     }
