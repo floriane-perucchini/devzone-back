@@ -23,14 +23,14 @@ INSERT INTO "Tool"("name", "logo", "description")
 	 ('Stackoverflow', 'test2', 'stack'),
 	 ('MDN', 'test3', 'Mozilla');
 
-INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId")
+INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId", "website")
 
 	VALUES
-  ('karim@gmail.com', 'D09eodhenziedz!', 'Karim', 'Romdhane', 'karim', 1),
-  ('enzo@gmail.com', 'D09eodhenziedz!', 'Enzo', 'Bacqueyrisses', 'enzo', 2),
-  ('floriane@test.fr', 'D09eodhenziedz!', 'Floriane', 'Perucchini', 'floriane', null),
-  ('abdel@test.fr', 'D09eodhenziedz!', 'Abdel', 'Karim', 'abdel', 4),
-  ('azouaou@test.fr', 'D09eodhenziedz!', 'Azouaou', 'Benadda', 'test', 5);
+  ('karim@gmail.com', 'D09eodhenziedz!', 'Karim', 'Romdhane', 'karim', 1, 'https///website.com'),
+  ('enzo@gmail.com', 'D09eodhenziedz!', 'Enzo', 'Bacqueyrisses', 'enzo', 2, 'https///website.com'),
+  ('floriane@test.fr', 'D09eodhenziedz!', 'Floriane', 'Perucchini', 'floriane', null, 'https///website.com'),
+  ('abdel@test.fr', 'D09eodhenziedz!', 'Abdel', 'Karim', 'abdel', 4, 'https///website.com'),
+  ('azouaou@test.fr', 'D09eodhenziedz!', 'Azouaou', 'Benadda', 'test', 5, 'https///website.com');
 
 INSERT INTO "Bookmark"(name, description, link, "imgId", "userId", "toolId")
 
