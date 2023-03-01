@@ -250,3 +250,17 @@
 ::ffff:127.0.0.1 - - [01/Mar/2023:09:42:05 +0000] "POST /signup HTTP/1.1" 409 109
 ::ffff:127.0.0.1 - - [01/Mar/2023:09:50:33 +0000] "POST /signup HTTP/1.1" 201 43
 ::ffff:127.0.0.1 - - [01/Mar/2023:09:50:41 +0000] "POST /signup HTTP/1.1" 422 27
+::1 - - [01/Mar/2023:10:06:51 +0000] "GET /verify?token=c4d4a2fb-5199-4c50-aadc-59b71c768f5e HTTP/1.1" 500 150
+::ffff:127.0.0.1 - - [01/Mar/2023:10:13:08 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [01/Mar/2023:10:13:19 +0000] "GET /verify?token=7f050c71-dffa-4930-a8b6-dbcc5df5e4d4 HTTP/1.1" 500 150
+::ffff:127.0.0.1 - - [01/Mar/2023:10:14:18 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [01/Mar/2023:10:14:23 +0000] "GET /verify?token=7682ce6a-87c3-40d3-8eeb-9aec20c5e1af HTTP/1.1" 500 150
+::ffff:127.0.0.1 - - [01/Mar/2023:10:15:55 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [01/Mar/2023:10:16:00 +0000] "GET /verify?token=cd9625a0-d503-4cdc-b9a9-e220ed45e29e HTTP/1.1" 500 150
+::ffff:127.0.0.1 - - [01/Mar/2023:10:16:42 +0000] "POST /signup HTTP/1.1" 409 109
+::ffff:127.0.0.1 - - [01/Mar/2023:10:16:48 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [01/Mar/2023:10:16:54 +0000] "GET /verify?token=e7592ac9-9936-499a-9e48-fe9b2bb5a93b HTTP/1.1" 500 150
+::ffff:127.0.0.1 - - [01/Mar/2023:10:18:51 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [01/Mar/2023:10:18:57 +0000] "GET /verify?token=fb9c383a-3d25-4957-ab39-92c2e41b8b26 HTTP/1.1" 500 150
+::ffff:127.0.0.1 - - [01/Mar/2023:10:21:19 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [01/Mar/2023:10:21:24 +0000] "GET /verify?token=91f12499-7fe8-484e-bd81-35da65b5cf9b HTTP/1.1" 200 35
