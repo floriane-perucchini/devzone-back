@@ -8,11 +8,13 @@ const userDatamapper = {
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT "Tool"."name"
-     FROM "User"
-     INNER JOIN "ToolsOnUsers" ON "User"."id" = "ToolsOnUsers"."userId"
-     INNER JOIN "Tool" ON "ToolsOnUsers"."toolId" = "Tool"."id"
-     WHERE "User"."id" = $1`;
+    const sql = `SELECT u.*, t.name AS tool_name
+    FROM User u
+    JOIN ToolsOnUsers tou ON tou.userId = u.id
+    JOIN Tool t ON t.id = tou.toolId;
+    `;
+   
+
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
@@ -43,6 +45,14 @@ const userDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+  updateTool: async function ({ userId, toolId }) {
+    const sql = `INSERT INTO "ToolsOnUsers" (userId, toolId) VALUES ($1, $2);`;
+    const values = [userId, toolId];
+    const result = await client.query(sql, values);
+    return result.rowCount;
+    },
+    
+  
   delete: async function (id) {
     const sql = `DELETE FROM "User" WHERE id = $1`;
     const values = [id];

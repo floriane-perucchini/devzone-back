@@ -1,5 +1,6 @@
 import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
+import client from "../services/database.service.js";
 
 const userController = {
   getAll: async function (request, response, next) {
@@ -21,6 +22,18 @@ const userController = {
       if (!user) return next(new Error("Couldn't get the user."));
 
       response.json(user);
+    } catch (error) {
+      next(error);
+    }
+  },
+  getUserWithTools: async function (request, response, next) {
+    const { id } = request.params;
+  
+    try {
+      const userWithTools = await db.user.getUserWithTools(id);
+      if (!userWithTools) return next(new Error("Couldn't get the user with tools."));
+  
+      response.json(userWithTools);
     } catch (error) {
       next(error);
     }
@@ -49,6 +62,26 @@ const userController = {
       if (!userUpdated) return next(new Error("User update failed."));
 
       response.json("User updated successfully.");
+    } catch (error) {
+      next(error);
+    }
+  },
+  addUserTool: async function (request, response, next) {
+    const { userId, toolId } = request.body;
+
+    try {
+      const user = await db.user.get(userId);
+      if (!user) return next(new Error("User not found."));
+
+      const tool = await db.tool.get(toolId);
+      if (!tool) return next(new Error("Tool not found."));
+
+      user.tools.push(tool);
+
+      const userUpdated = await db.user.update(user, userId);
+      if (!userUpdated) return next(new Error("User update failed."));
+
+      response.json("Tool added successfully.");
     } catch (error) {
       next(error);
     }

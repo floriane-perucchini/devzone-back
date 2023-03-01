@@ -5,11 +5,12 @@ import { auth } from "../middlewares/index.middleware.js";
 
 const router = express.Router();
 // GET Routes
-router.get("/users", auth, user.getAll);
-router.get("/user/:id", auth, user.get);
+router.get("/users",  user.getAll);
+router.get("/user/:id",  user.get);
 
 // PATCH Routes
 router.patch("/user/:id", validate, user.update);
+router.post("/user/:id", user.addUserTool );
 
 // DELETE Routes
 router.delete("/user/:id", user.delete);

@@ -1,0 +1,8 @@
+BEGIN;
+
+
+ALTER TABLE "User"
+DROP COLUMN "tool_id";
+
+
+COMMIT;
