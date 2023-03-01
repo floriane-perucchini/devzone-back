@@ -15,6 +15,11 @@ async function errorsHandler(error, request, response, next) {
     return response.status(error.status || 409).json(error);
   }
 
+  // Handle NodeMailer Errors
+  if (error.type === "nodemailer") {
+    return response.json({ message: error.message, error });
+  }
+
   // Handle Database General Errors
   if (error.type === "database") {
     return response.status(error.status || 500).json({
