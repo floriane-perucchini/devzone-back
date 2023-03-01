@@ -10,7 +10,7 @@ const featureController = {
      }
    }
    */
-  feedRSS: async function (request, response) {
+  rss: async function (request, response) {
     const meta = {
       service: "feed-reader",
       lang: "javascript",
