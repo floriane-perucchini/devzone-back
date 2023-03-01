@@ -26,6 +26,7 @@ model User {
   firstname String?
   lastname  String?
   username  String
+  website   String
   active    Boolean        @default(false)
   imgId     Int?
   bookmark  Bookmark[]
