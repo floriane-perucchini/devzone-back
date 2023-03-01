@@ -16,9 +16,9 @@ const mainController = {
         username: wannabeUser.username,
         email: wannabeUser.email,
       });
-      if (checkUser?.email)
+      if (checkUser?.email === wannabeUser.email)
         return next(new Error409("This email is already in use."));
-      if (checkUser?.username)
+      if (checkUser?.username === wannabeUser.username)
         return next(new Error409("This username is already in use."));
 
       // Hash user password
@@ -42,9 +42,13 @@ const mainController = {
         html: `<b>Hey there! Click on this <a href='${link}'>link</a> to confirm your email.</b>`,
       };
 
-      transporter.sendMail(mailData).catch((error) => next(error));
+      transporter.sendMail(mailData).catch((error) => {
+        return next(error);
+      });
 
-      response.status(201).json("Registration and email sent successfully.");
+      return response
+        .status(201)
+        .json("Registration and email sent successfully.");
     } catch (error) {
       next(error);
     }
