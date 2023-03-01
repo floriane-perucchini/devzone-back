@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Image" ADD COLUMN     "type" TEXT,
+ALTER COLUMN "mimeType" DROP NOT NULL,
+ALTER COLUMN "size" DROP NOT NULL;

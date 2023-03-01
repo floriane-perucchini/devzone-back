@@ -32,7 +32,7 @@ model User {
   bookmark  Bookmark[]
   Token     Token[]
   tools     ToolsOnUsers[]
-  image     Image?         @relation(fields: [imgId], references: [id], onDelete: Cascade)
+  Image     Image?
 
   @@index([email])
   @@index([firstname])
@@ -48,9 +48,9 @@ model Bookmark {
   userId      Int?
   toolId      Int?
   imgId       Int?
-  image       Image?  @relation(fields: [imgId], references: [id], onDelete: Cascade)
   tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade, map: "bookmark_toolId_fkey")
   user        User?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "bookmark_userId_fkey")
+  Image       Image?
 
   @@index([link])
   @@index([imgId])
@@ -82,13 +82,16 @@ model Token {
 }
 
 model Image {
-  id       Int        @id @default(autoincrement())
-  fileName String     @unique
-  filePath String
-  mimeType String
-  size     BigInt
-  Bookmark Bookmark[]
-  User     User[]
+  id         Int       @id @default(autoincrement())
+  type       String?
+  fileName   String    @unique
+  filePath   String
+  mimeType   String?
+  size       BigInt?
+  bookmarkId Int?      @unique
+  Bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  userId     Int?      @unique
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([fileName])
   @@index([filePath])
