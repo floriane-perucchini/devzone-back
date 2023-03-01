@@ -1,8 +1,9 @@
 BEGIN;
 
+INSERT INTO public."ToolsOnUsers" ("userId", "toolId") VALUES (4, 1);
 
-ALTER TABLE "User"
-DROP COLUMN "tool_id";
+
+
 
 
 COMMIT;
