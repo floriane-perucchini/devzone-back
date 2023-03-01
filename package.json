@@ -1,0 +1,55 @@
+{
+  "name": "projet-13-devzone-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "start": "nodemon ./app/bin/www",
+    "dev": "DEBUG=* node ./app/bin/www",
+    "debcreate": "npx prisma db push",
+    "dbseed": "npx prisma db seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-clock-Moai/projet-13-devzone-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-clock-Moai/projet-13-devzone-back/issues"
+  },
+  "homepage": "https://github.com/O-clock-Moai/projet-13-devzone-back#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "jest": "^29.4.3",
+    "prettier": "2.8.4",
+    "prisma": "^4.10.1"
+  },
+  "dependencies": {
+    "@extractus/article-extractor": "^7.2.9",
+    "@extractus/feed-extractor": "^6.2.1",
+    "@prisma/client": "^4.10.1",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-jsdoc-swagger": "^1.8.0",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.1",
+    "passport-jwt": "^4.0.1",
+    "pg": "^8.9.0",
+    "redis": "^4.6.4",
+    "zod": "^3.20.6"
+  },
+  "type": "module",
+  "prisma": {
+    "seed": "zsh prisma/seed.sh"
+  }
+}
