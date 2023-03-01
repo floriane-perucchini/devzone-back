@@ -6,7 +6,9 @@
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "start": "nodemon ./app/bin/www",
-    "dev": "DEBUG=* node ./app/bin/www"
+    "dev": "DEBUG=* node ./app/bin/www",
+    "createdb": "npx prisma db pull",
+    "seedingdb": "psql -d devzone -U devzoneadmin -f prisma/data/seeding.sql"
   },
   "repository": {
     "type": "git",
