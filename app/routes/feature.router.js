@@ -5,6 +5,6 @@ import { featureController as feature } from "../controllers/index.controller.js
 const router = express.Router();
 
 // GET Routes
-router.get("/api/feed/:article", feature.feedRSS);
+router.get("/api/rss", feature.feedRSS);
 
 export default router;
