@@ -42,13 +42,15 @@ const mainController = {
         html: `<b>Hey there! Click on this <a href='${link}'>link</a> to confirm your email.</b>`,
       };
 
-      transporter.sendMail(mailData).catch((error) => {
+      try {
+        await transporter.sendMail(mailData);
+      } catch (error) {
+        error.message = "Registered successfully but email couldn't be sent.";
+        error.type = "nodemailer";
         return next(error);
-      });
+      }
 
-      return response
-        .status(201)
-        .json("Registration and email sent successfully.");
+      response.status(201).json("Registration and email sent successfully.");
     } catch (error) {
       next(error);
     }
@@ -149,12 +151,14 @@ const mainController = {
     };
 
     try {
-      const email = transporter.sendMail(mailData);
+      await transporter.sendMail(mailData);
       return response.json({
         message: "Mail sent successfully.",
         messageId: email.messageId,
       });
     } catch (error) {
+      error.message = "Mail couldn't be sent.";
+      error.type = "nodemailer";
       return next(error);
     }
   },
