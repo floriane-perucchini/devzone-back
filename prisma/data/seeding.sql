@@ -6,6 +6,7 @@ TRUNCATE TABLE "User" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
+TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE ;
 
 INSERT INTO "Image"("fileName", "filePath", "mimeType", "size")
 
@@ -16,12 +17,19 @@ VALUES
     ('test4', '/images/test4.jpg', 'png', 2000),
     ('test5', '/images/test5.jpg', 'png', 2000);
 
-INSERT INTO "Tool"("name", "logo", "description")
 
-	VALUES
-	 ('Github', 'test', 'git'),
-	 ('Stackoverflow', 'test2', 'stack'),
-	 ('MDN', 'test3', 'Mozilla');
+INSERT INTO "Tool"("name", "icon", "description", "order", "link", )
+VALUES
+    ('News', 'icon', 'Latest developers news', 1, '/app/news'),
+    ('Search', 'icon', 'Search for NPMs, Stackoverflow & Github', 2, '/app/search'),
+    ('HTML', 'icon', 'HTML, CSS and Javascript playground', 1, '/app/playground-html'),
+    ('javascript', 'icon', 'Pure Javascript playground', 2, '/app/playground-js');
+
+INSERT INTO "Category"("name", "description", "order",)
+VALUES
+    ('General', 'General Category Description', 1),
+    ('Playground', 'Playground Category Description', 2);
+
 
 INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId", "website", active)
 
