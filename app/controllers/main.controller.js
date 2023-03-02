@@ -6,6 +6,13 @@ import "dotenv/config";
 import config from "../config/token.config.js";
 import { Error404, Error409 } from "../utils/errors/index.util.js";
 import { transporter } from "../services/index.service.js";
+import { ExtractJwt } from "passport-jwt";
+import { extract } from '@extractus/feed-extractor';
+import express from "express";
+import cors from "cors";
+
+const app = express();
+app.use(cors());
 
 const mainController = {
   signup: async function (request, response, next) {
@@ -162,6 +169,59 @@ const mainController = {
       return next(error);
     }
   },
-};
+
+  
+ /* rss: async function (request, response, next) {
+    try {
+      const feed = await extract('https://news.google.com/rss');
+      response.json(feed);
+    } catch (error) {
+      response.status(404).send('404 : DEAD END !');
+    }
+  }
+  
+  */
+ feed: async function(request, response) {
+  const meta = {
+    service: 'feed-reader',
+    lang: 'javascript',
+    server: 'express',
+    platform: 'node',
+  }
+  const url = request.query.url
+  if (!url) {
+    return response.json(meta) 
+ }
+ const {
+  useISODateFormat = 'y',
+  normalization = 'y',
+} = request.query
+
+const opts = {
+  useISODateFormat: useISODateFormat !== 'n',
+  normalization: normalization !== 'n',
+}
+try {
+  const data = await extract(url, opts)
+  return response.json({
+    error: 0,
+    message: 'feed data has been extracted successfully',
+    data,
+    meta,
+  })
+} catch (err) {
+  return response.json({
+    error: 1,
+    message: err.message,
+    data: null,
+    meta,
+  })
+}
+ 
+}}
+
+  
+    
+
 
 export default mainController;

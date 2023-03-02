@@ -24,17 +24,18 @@ model Tool {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  email     String
-  password  String
-  firstname String?
-  lastname  String?
-  username  String
-  active    Boolean    @default(false)
-  imgId     Int?
-  website   String?
-  bookmark  Bookmark[]
-  image     Image?     @relation(fields: [imgId], references: [id], onDelete: Cascade)
+  id                        Int        @id @default(autoincrement())
+  email                     String
+  password                  String
+  firstname                 String?
+  lastname                  String?
+  username                  String
+  active                    Boolean    @default(false)
+  imgId                     Int?
+  website                   String?
+  bookmark                  Bookmark[]
+  Image_Image_user_idToUser Image[]    @relation("Image_user_idToUser")
+  image                     Image?     @relation(fields: [imgId], references: [id], onDelete: Cascade)
 
   @@index([email])
   @@index([firstname])
@@ -81,13 +82,16 @@ model Token {
 }
 
 model Image {
-  id       Int        @id @default(autoincrement())
-  fileName String     @unique
-  filePath String
-  mimeType String
-  size     BigInt
-  Bookmark Bookmark[]
-  User     User[]
+  id                       Int        @id @default(autoincrement())
+  fileName                 String     @unique
+  filePath                 String
+  mimeType                 String
+  size                     BigInt
+  type                     String?
+  user_id                  Int?
+  Bookmark                 Bookmark[]
+  User_Image_user_idToUser User?      @relation("Image_user_idToUser", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+  User                     User[]
 
   @@index([fileName])
   @@index([filePath])
@@ -106,4 +110,3 @@ model Category {
   Tool_Category_tool_idToTool     Tool?     @relation("Category_tool_idToTool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Tool_Tool_category_idToCategory Tool[]    @relation("Tool_category_idToCategory")
 }
-

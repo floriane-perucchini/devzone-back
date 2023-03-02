@@ -1,18 +1,24 @@
 import { client } from "../services/index.service.js";
 
 const userDatamapper = {
+  // getAll a revoir pour afficher la liste de tous les tools
+  
   getAll: async function () {
-    const sql = `SELECT * FROM "User"`;
+    const sql = `SELECT u."id", u."email", u."firstname", u."lastname", u."username", u."avatar", t.*
+    FROM public."User" u
+    LEFT JOIN public."ToolsOnUsers" tou ON tou."userId" = u."id"
+    LEFT JOIN public."Tool" t ON t."id" = tou."toolId";`;
 
     const results = await client.query(sql);
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT "Tool"."name"
-     FROM "User"
-     INNER JOIN "ToolsOnUsers" ON "User"."id" = "ToolsOnUsers"."userId"
-     INNER JOIN "Tool" ON "ToolsOnUsers"."toolId" = "Tool"."id"
-     WHERE "User"."id" = $1`;
+    const sql = `SELECT u."id", u."email", u."firstname", u."lastname", u."username", u."avatar", array_agg(t."name") AS "tools"
+    FROM public."User" u
+    JOIN public."ToolsOnUsers" tou ON tou."userId" = u."id"
+    JOIN public."Tool" t ON t."id" = tou."toolId"
+    WHERE u."id" = $1
+    GROUP BY u."id", u."email", u."firstname", u."lastname", u."username", u."avatar" ;`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
@@ -43,6 +49,15 @@ const userDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+  updateTool: async function ({ userId, toolId }) {
+    const sql = `INSERT INTO public."ToolsOnUsers" ("userId", "toolId") VALUES ($1, $2);
+    `;
+    const values = [userId, toolId];
+    const result = await client.query(sql, values);
+    return result.rows[0];
+    },
+    
+  
   delete: async function (id) {
     const sql = `DELETE FROM "User" WHERE id = $1`;
     const values = [id];
