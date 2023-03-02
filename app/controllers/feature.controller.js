@@ -21,7 +21,7 @@ const featureController = {
     if (!url) {
       return response.json(meta);
     }
-    const { useISODateFormat = "y", normalization = "y" } = request.query;
+    const { useISODateFormat = "y", normalization = "n" } = request.query;
 
     const opts = {
       useISODateFormat: useISODateFormat !== "n",

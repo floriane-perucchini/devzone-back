@@ -14,19 +14,8 @@ const userController = {
     }
   },
 
+
   get: async function (request, response, next) {
-    const { id } = request.params;
-
-    try {
-      const user = await db.user.get(id);
-      if (!user) return next(new Error("Couldn't get the user."));
-
-      response.json(user);
-    } catch (error) {
-      next(error);
-    }
-  },
-  getUserWithTools: async function (request, response, next) {
     const { id } = request.params;
 
     try {

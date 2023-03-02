@@ -7,22 +7,18 @@ const userDatamapper = {
     const sql = `SELECT u."id", u."email", u."firstname", u."lastname", u."username", u."avatar", t.*
     FROM public."User" u
     LEFT JOIN public."ToolsOnUsers" tou ON tou."userId" = u."id"
-    LEFT JOIN public."Tool" t ON t."id" = tou."toolId";
-    
-    `;
+    LEFT JOIN public."Tool" t ON t."id" = tou."toolId";`;
 
     const results = await client.query(sql);
     return results.rows;
   },
-  getUserWithTools: async function (id) {
+  get: async function (id) {
     const sql = `SELECT u."id", u."email", u."firstname", u."lastname", u."username", u."avatar", array_agg(t."name") AS "tools"
     FROM public."User" u
     JOIN public."ToolsOnUsers" tou ON tou."userId" = u."id"
     JOIN public."Tool" t ON t."id" = tou."toolId"
     WHERE u."id" = $1
-    GROUP BY u."id", u."email", u."firstname", u."lastname", u."username", u."avatar"
-    ;
-    `;
+    GROUP BY u."id", u."email", u."firstname", u."lastname", u."username", u."avatar" ;`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
