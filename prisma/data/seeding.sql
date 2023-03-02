@@ -6,6 +6,7 @@ TRUNCATE TABLE "User" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
+TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE ;
 
 INSERT INTO "Image"("fileName", "filePath", "mimeType", "size")
 
@@ -16,21 +17,28 @@ VALUES
     ('test4', '/images/test4.jpg', 'png', 2000),
     ('test5', '/images/test5.jpg', 'png', 2000);
 
-INSERT INTO "Tool"("name", "logo", "description")
+
+INSERT INTO "Tool"("name", "icon", "description", "order", "link", )
+VALUES
+    ('News', 'icon', 'Latest developers news', 1, '/app/news'),
+    ('Search', 'icon', 'Search for NPMs, Stackoverflow & Github', 2, '/app/search'),
+    ('HTML', 'icon', 'HTML, CSS and Javascript playground', 1, '/app/playground-html'),
+    ('javascript', 'icon', 'Pure Javascript playground', 2, '/app/playground-js');
+
+INSERT INTO "Category"("name", "description", "order",)
+VALUES
+    ('General', 'General Category Description', 1),
+    ('Playground', 'Playground Category Description', 2);
+
+
+INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId", "website", active)
 
 	VALUES
-	 ('Github', 'test', 'git'),
-	 ('Stackoverflow', 'test2', 'stack'),
-	 ('MDN', 'test3', 'Mozilla');
-
-INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "imgId", "website")
-
-	VALUES
-  ('karim@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Karim', 'Romdhane', 'karim', 1, 'https///website.com'),
-  ('enzo@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Enzo', 'Bacqueyrisses', 'enzo', 2, 'https///website.com'),
-  ('floriane@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Floriane', 'Perucchini', 'floriane', null, 'https///website.com'),
-  ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', 4, 'https///website.com'),
-  ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', 5, 'https///website.com');
+  ('karim@gmail.com', '$2b$12$.KhX3EPgaayYMTlr1dXcU.taGSltka4pgzmwle5NHOIcbvYWj9roC', 'Karim', 'Romdhane', 'karim', 1, 'https///website.com', true),
+  ('enzo@gmail.com', '$2b$12$D5ko8ixaxXCNR.qubJUiHuHnNjyY2y2t85HnieYNuBow2Q.AE6fAO', 'Enzo', 'Bacqueyrisses', 'enzo', 2, 'https///website.com', true),
+  ('floriane@test.fr', '$2b$12$9XCXX95b8xPorCrnMn/V0O6d98iGKUMgMO6T7ML7DYNe2c6TdiR3.', 'Floriane', 'Perucchini', 'floriane', null, 'https///website.com', true),
+  ('abdel@test.fr', '$2b$12$pJKz7rbXoFdQrLrKmr5p0.lAIfTr91IuqtdH1.Sp2dPW0q8QRtCmy', 'Abdel', 'Karim', 'abdel', 4, 'https///website.com', true),
+  ('azouaou@test.fr', '$2b$12$XkLJz9QJ2eikWb4e3WYfLuGkcvpzRaXqZdLPkaxay60oLOFkGNRGq', 'Azouaou', 'Benadda', 'test', 5, 'https///website.com', true);
 
 INSERT INTO "Bookmark"(name, description, link, "imgId", "userId", "toolId")
 

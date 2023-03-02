@@ -87,6 +87,18 @@ const userController = {
       next(error);
     }
   },
+  uploadAvatar: async function (request, response, next) {
+    const { id } = request.params;
+    const image = request.file;
+
+    if (image?.size > 3200000)
+      return next(new Error("Your avatar must have a size lower than 3MB."));
+
+    const insertedAvatar = await db.user.uploadAvatar(image, id);
+    if (!insertedAvatar) return next(new Error("Avatar couldn't be uploaded."));
+
+    response.json("Avatar was uploaded successfully.");
+  },
 };
 
 export default userController;
