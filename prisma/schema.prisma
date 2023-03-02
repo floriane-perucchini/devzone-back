@@ -8,31 +8,33 @@ datasource db {
 }
 
 model Tool {
-  id          Int            @id @default(autoincrement())
-  name        String
-  logo        String?
-  description String?
-  bookmark    Bookmark[]
-  users       ToolsOnUsers[]
+  id                                  Int        @id @default(autoincrement())
+  name                                String
+  description                         String?
+  icon                                String?
+  order                               Int?
+  link                                String?
+  category_id                         Int?
+  bookmark                            Bookmark[]
+  Category_Category_tool_idToTool     Category[] @relation("Category_tool_idToTool")
+  Category_Tool_category_idToCategory Category?  @relation("Tool_category_idToCategory", fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@index([logo])
+  @@index([icon], map: "Tool_logo_idx")
   @@index([name])
 }
 
 model User {
-  id        Int            @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   email     String
   password  String
   firstname String?
   lastname  String?
   username  String
-  website   String?
-  active    Boolean        @default(false)
+  active    Boolean    @default(false)
   imgId     Int?
+  website   String?
   bookmark  Bookmark[]
-  Token     Token[]
-  tools     ToolsOnUsers[]
-  image     Image?         @relation(fields: [imgId], references: [id], onDelete: Cascade)
+  image     Image?     @relation(fields: [imgId], references: [id], onDelete: Cascade)
 
   @@index([email])
   @@index([firstname])
@@ -62,8 +64,6 @@ model ToolsOnUsers {
   toolId     Int
   created_at DateTime  @default(now()) @db.Timestamptz(6)
   updated_at DateTime? @db.Timestamptz(6)
-  tool       Tool      @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, toolId])
 }
@@ -74,13 +74,11 @@ model Token {
   expiration      String?
   emailToken      String
   userId          Int
-  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([emailToken])
   @@index([jwtRefreshToken])
   @@index([expiration])
 }
-
 
 model Image {
   id       Int        @id @default(autoincrement())
@@ -96,3 +94,16 @@ model Image {
   @@index([mimeType])
   @@index([size])
 }
+
+model Category {
+  id                              Int       @id @default(autoincrement())
+  name                            String
+  description                     String
+  tool_id                         Int?
+  order                           Int?      @default(999)
+  created_at                      DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at                      DateTime? @db.Timestamptz(6)
+  Tool_Category_tool_idToTool     Tool?     @relation("Category_tool_idToTool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Tool_Tool_category_idToCategory Tool[]    @relation("Tool_category_idToCategory")
+}
+
