@@ -4,21 +4,23 @@ const userDatamapper = {
   // getAll a revoir pour afficher la liste de tous les tools
   
   getAll: async function () {
-    const sql = `SELECT u."id", u."email", u."firstname", u."lastname", u."username", u."avatar", t.*
-    FROM public."User" u
-    LEFT JOIN public."ToolsOnUsers" tou ON tou."userId" = u."id"
-    LEFT JOIN public."Tool" t ON t."id" = tou."toolId";`;
-
+    const sql = `SELECT "User".id, "User".email, "User".firstname, "User".lastname, "User".username, "User".active, "User"."imgId", "User".website, "Tool".id AS tool_id, "Tool".name AS tool_name, "Tool".description AS tool_description, "Tool".icon AS tool_icon, "Tool"."order" AS tool_order, "Tool".link AS tool_link, "Tool".category_id
+    FROM "User"
+    LEFT JOIN "ToolsOnUsers" ON "User".id = "ToolsOnUsers"."userId"
+    LEFT JOIN "Tool" ON "ToolsOnUsers"."toolId" = "Tool".id;`;
+    
+    
     const results = await client.query(sql);
+    console.log('db');
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT u."id", u."email", u."firstname", u."lastname", u."username", u."avatar", array_agg(t."name") AS "tools"
-    FROM public."User" u
-    JOIN public."ToolsOnUsers" tou ON tou."userId" = u."id"
-    JOIN public."Tool" t ON t."id" = tou."toolId"
-    WHERE u."id" = $1
-    GROUP BY u."id", u."email", u."firstname", u."lastname", u."username", u."avatar" ;`;
+    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u."imgId", u.website, 
+    t.id as tool_id, t.name as tool_name, t.description as tool_description, t.icon as tool_icon, t."order" as tool_order, t.link as tool_link, t.category_id as tool_category_id
+FROM "User" u
+LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id
+LEFT JOIN "Tool" t ON t.id = tou."toolId"
+WHERE u.id = $1;`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
@@ -56,8 +58,6 @@ const userDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
     },
-    
-  
   delete: async function (id) {
     const sql = `DELETE FROM "User" WHERE id = $1`;
     const values = [id];
