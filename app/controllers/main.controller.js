@@ -6,7 +6,7 @@ import "dotenv/config";
 import config from "../config/token.config.js";
 import { Error404, Error409 } from "../utils/errors/index.util.js";
 import { transporter } from "../services/index.service.js";
-import { ExtractJwt } from "passport-jwt";
+//import { ExtractJwt } from "passport-jwt";
 import { extract } from '@extractus/feed-extractor';
 import express from "express";
 import cors from "cors";

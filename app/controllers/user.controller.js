@@ -1,28 +1,24 @@
 import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
-import client from "../services/database.service.js";
+
 
 const userController = {
   getAll: async function (request, response, next) {
     try {
       const users = await db.user.getAll();
       if (!users) return next(new Error("Couldn't get the users."));
-
       response.json(users);
     } catch (error) {
       next(error);
     }
   },
-
-
   get: async function (request, response, next) {
     const { id } = request.params;
-
     try {
-      const userWithTools = await db.user.getUserWithTools(id);
-      if (!userWithTools) return next(new Error("Couldn't get the user with tools."));
+      const user = await db.user.get(id);
+      if (!user) return next(new Error("Couldn't get the user."));
 
-      response.json(userWithTools);
+      response.json(user);
     } catch (error) {
       next(error);
     }
@@ -55,21 +51,13 @@ const userController = {
       next(error);
     }
   },
-  addToolToUser: async function (request, response, next) {
+  updateTool: async function (request, response, next) {
     const { userId } = request.params;
     const { toolId } = request.body;
   
     try {
-      const user = await db.user.get(userId);
-      if (!user) return next(new Error("User not found."));
-  
-      const tool = await db.tool.get(toolId);
-      if (!tool) return next(new Error("Tool not found."));
-  
-      const updatedUser = await db.user.addTool(user, tool);
-      if (!updatedUser) return next(new Error("Failed to add tool to user."));
-  
-      response.json(updatedUser);
+      const toolUpdate = await db.ToolsOnUsers.get(userId, toolId)
+      response.json(toolUpdate);
     } catch (error) {
       next(error);
     }

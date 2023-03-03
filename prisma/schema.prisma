@@ -11,10 +11,10 @@ model Tool {
   id                                  Int        @id @default(autoincrement())
   name                                String
   description                         String?
-  icon                                String?
-  order                               Int?
-  link                                String?
   category_id                         Int?
+  icon                                String?
+  link                                String?
+  order                               Int?
   bookmark                            Bookmark[]
   Category_Category_tool_idToTool     Category[] @relation("Category_tool_idToTool")
   Category_Tool_category_idToCategory Category?  @relation("Tool_category_idToCategory", fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -24,18 +24,17 @@ model Tool {
 }
 
 model User {
-  id                        Int        @id @default(autoincrement())
-  email                     String
-  password                  String
-  firstname                 String?
-  lastname                  String?
-  username                  String
-  active                    Boolean    @default(false)
-  imgId                     Int?
-  website                   String?
-  bookmark                  Bookmark[]
-  Image_Image_user_idToUser Image[]    @relation("Image_user_idToUser")
-  image                     Image?     @relation(fields: [imgId], references: [id], onDelete: Cascade)
+  id        Int        @id @default(autoincrement())
+  email     String
+  password  String
+  firstname String?
+  lastname  String?
+  username  String
+  active    Boolean    @default(false)
+  imgId     Int?
+  website   String?
+  bookmark  Bookmark[]
+  image     Image?     @relation(fields: [imgId], references: [id], onDelete: Cascade)
 
   @@index([email])
   @@index([firstname])
@@ -44,16 +43,17 @@ model User {
 }
 
 model Bookmark {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  link        String?
-  userId      Int?
-  toolId      Int?
-  imgId       Int?
-  image       Image?  @relation(fields: [imgId], references: [id], onDelete: Cascade)
-  tool        Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade, map: "bookmark_toolId_fkey")
-  user        User?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "bookmark_userId_fkey")
+  id                                Int     @id @default(autoincrement())
+  name                              String
+  description                       String?
+  link                              String?
+  userId                            Int?
+  toolId                            Int?
+  imgId                             Int?
+  image                             Image?  @relation(fields: [imgId], references: [id], onDelete: Cascade)
+  tool                              Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade, map: "bookmark_toolId_fkey")
+  user                              User?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "bookmark_userId_fkey")
+  Image_Image_bookmark_idToBookmark Image[] @relation("Image_bookmark_idToBookmark")
 
   @@index([link])
   @@index([imgId])
@@ -82,16 +82,16 @@ model Token {
 }
 
 model Image {
-  id                       Int        @id @default(autoincrement())
-  fileName                 String     @unique
-  filePath                 String
-  mimeType                 String
-  size                     BigInt
-  type                     String?
-  user_id                  Int?
-  Bookmark                 Bookmark[]
-  User_Image_user_idToUser User?      @relation("Image_user_idToUser", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
-  User                     User[]
+  id                                   Int        @id @default(autoincrement())
+  fileName                             String     @unique
+  filePath                             String
+  mimeType                             String
+  size                                 BigInt
+  bookmark_id                          Int?
+  type                                 String?
+  Bookmark                             Bookmark[]
+  Bookmark_Image_bookmark_idToBookmark Bookmark?  @relation("Image_bookmark_idToBookmark", fields: [bookmark_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_id")
+  User                                 User[]
 
   @@index([fileName])
   @@index([filePath])
