@@ -2,16 +2,14 @@ import { client } from "../services/index.service.js";
 
 const userDatamapper = {
   // getAll a revoir pour afficher la liste de tous les tools
-  
+
   getAll: async function () {
     const sql = `SELECT "User".id, "User".email, "User".firstname, "User".lastname, "User".username, "User".active, "User"."imgId", "User".website, "Tool".id AS tool_id, "Tool".name AS tool_name, "Tool".description AS tool_description, "Tool".icon AS tool_icon, "Tool"."order" AS tool_order, "Tool".link AS tool_link, "Tool".category_id
     FROM "User"
     LEFT JOIN "ToolsOnUsers" ON "User".id = "ToolsOnUsers"."userId"
     LEFT JOIN "Tool" ON "ToolsOnUsers"."toolId" = "Tool".id;`;
-    
-    
+
     const results = await client.query(sql);
-    console.log('db');
     return results.rows;
   },
   get: async function (id) {
@@ -57,7 +55,7 @@ WHERE u.id = $1;`;
     const values = [userId, toolId];
     const result = await client.query(sql, values);
     return result.rows[0];
-    },
+  },
   delete: async function (id) {
     const sql = `DELETE FROM "User" WHERE id = $1`;
     const values = [id];

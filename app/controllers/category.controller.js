@@ -1,6 +1,5 @@
 import db from "../models/index.datamapper.js";
 
-
 const categoryController = {
   getAll: async function (request, response, next) {
     try {
@@ -23,10 +22,6 @@ const categoryController = {
       next(error);
     }
   },
-
-
-
-
 };
 
 export default categoryController;

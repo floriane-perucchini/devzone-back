@@ -129,7 +129,6 @@ const mainController = {
     const { token } = request.query;
     try {
       const verifiedUser = await db.main.getVerifiedUser(token);
-      console.log(verifiedUser);
       if (!verifiedUser)
         return next(new Error404(`User with token ${token} not found.`));
 

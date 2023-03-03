@@ -17,7 +17,7 @@ const bookmarkDatamapper = {
     const sql = `INSERT INTO public."Bookmark"(
        name, description, link, "userId", "toolId", "imgId")
       VALUES ($1, $2, $3, $4, $5, $6);`;
-     console.log('datamaper');
+
     const values = [name, description, link, userId, toolId, imgId];
 
     const result = await client.query(sql, values);
