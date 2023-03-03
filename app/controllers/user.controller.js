@@ -1,7 +1,6 @@
 import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
 
-
 const userController = {
   getAll: async function (request, response, next) {
     try {
@@ -54,15 +53,15 @@ const userController = {
   updateTool: async function (request, response, next) {
     const { userId } = request.params;
     const { toolId } = request.body;
-  
+
     try {
-      const toolUpdate = await db.ToolsOnUsers.get(userId, toolId)
+      const toolUpdate = await db.ToolsOnUsers.get(userId, toolId);
       response.json(toolUpdate);
     } catch (error) {
       next(error);
     }
   },
-  
+
   delete: async function (request, response, next) {
     const { id } = request.params;
 

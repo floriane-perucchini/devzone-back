@@ -5,8 +5,8 @@ import { validateUser as validate } from "../middlewares/validators/index.valida
 
 const router = express.Router();
 // GET Routes
-router.get("/users",  user.getAll);
-router.get("/user/:id",  user.get);
+router.get("/users", user.getAll);
+router.get("/user/:id", user.get);
 
 // POST Routes
 //router.post("/user/:id/upload/avatar",upload.single("avatar"),user.uploadAvatar);
