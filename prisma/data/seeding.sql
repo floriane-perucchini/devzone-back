@@ -6,7 +6,7 @@ TRUNCATE TABLE "User" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE ;
-
+TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
 
 
 INSERT INTO "Category"("name", "description",  "order")
@@ -25,6 +25,12 @@ INSERT INTO "Tool"("name", "description", "icon", "link", "order")
 	 ('HTML',  'HTML, CSS and Javascript playground',  'icon', '/app/playground-html', 1),
 	 ('javascript', 'Pure Javascript playground',  'icon', '/app/playground-js', 2);
 
+INSERT INTO "Category"("name", "description", "order",)
+
+    VALUES
+    ('General', 'General Category Description', 1),
+    ('Playground', 'Playground Category Description', 2);
+
 
 INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "active", "website")
 
@@ -42,6 +48,13 @@ VALUES
     ('test2', 'test2', 'jpg', 3754, 'avatar');
   
 INSERT INTO "Bookmark"("name", "description", "link", "userId", "toolId", "imgId")
+  ('karim@gmail.com', '$2b$12$.KhX3EPgaayYMTlr1dXcU.taGSltka4pgzmwle5NHOIcbvYWj9roC', 'Karim', 'Romdhane', 'karim', 1, 'https///website.com', true),
+  ('enzo@gmail.com', '$2b$12$D5ko8ixaxXCNR.qubJUiHuHnNjyY2y2t85HnieYNuBow2Q.AE6fAO', 'Enzo', 'Bacqueyrisses', 'enzo', 2, 'https///website.com', true),
+  ('floriane@test.fr', '$2b$12$9XCXX95b8xPorCrnMn/V0O6d98iGKUMgMO6T7ML7DYNe2c6TdiR3.', 'Floriane', 'Perucchini', 'floriane', null, 'https///website.com', true),
+  ('abdel@test.fr', '$2b$12$pJKz7rbXoFdQrLrKmr5p0.lAIfTr91IuqtdH1.Sp2dPW0q8QRtCmy', 'Abdel', 'Karim', 'abdel', 4, 'https///website.com', true),
+  ('azouaou@test.fr', '$2b$12$XkLJz9QJ2eikWb4e3WYfLuGkcvpzRaXqZdLPkaxay60oLOFkGNRGq', 'Azouaou', 'Benadda', 'test', 5, 'https///website.com', true);
+
+INSERT INTO "Bookmark"(name, description, link, "imgId", "userId", "toolId")
 
     VALUES
     ('Favorite1', 'Super favorite 1', 'link1', 1, 1, 2),

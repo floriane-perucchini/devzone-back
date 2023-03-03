@@ -65,6 +65,24 @@ WHERE u.id = $1;`;
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+  uploadAvatar: async function (
+    { fieldname, filename, mimetype, path, size },
+    id
+  ) {
+    const sql = `INSERT INTO "Image" (type, "fileName", "filePath", "mimeType", size, "userId") 
+    VALUES ($1, $2, $3, $4, $5, $6) 
+    ON CONFLICT ("userId") DO UPDATE
+      SET type = excluded.type,
+          "fileName" = excluded."fileName",
+          "filePath" = excluded."filePath",
+          "mimeType" = excluded."mimeType",
+          size = excluded.size;`;
+
+    const values = [fieldname, filename, path, mimetype, size, id];
+
+    const result = await client.query(sql, values);
+    return result.rowCount;
+  },
 };
 
 export default userDatamapper;

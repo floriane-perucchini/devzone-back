@@ -3,8 +3,8 @@ import userController from "./user.controller.js";
 import toolController from "./tool.controller.js";
 import mainController from "./main.controller.js";
 import featureController from "./feature.controller.js";
-import imageController from "./image.controller.js";
 import categoryController from "./category.controller.js";
+
 
 export {
   bookmarkController,
@@ -12,6 +12,6 @@ export {
   userController,
   mainController,
   featureController,
-  imageController,
   categoryController,
+
 };
