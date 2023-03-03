@@ -237,7 +237,6 @@
 ::ffff:127.0.0.1 - - [27/Feb/2023:19:29:49 +0000] "POST /login HTTP/1.1" 500 28
 ::1 - - [27/Feb/2023:19:30:00 +0000] "GET /verify?token=618453cc-6bc0-45b5-ac43-4338aac4d725 HTTP/1.1" 200 35
 ::ffff:127.0.0.1 - - [27/Feb/2023:19:30:04 +0000] "POST /login HTTP/1.1" 200 621
-
 ::1 - - [01/Mar/2023:13:11:21 +0000] "GET / HTTP/1.1" 404 139
 ::1 - - [01/Mar/2023:13:11:30 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 200 24904
 ::1 - - [01/Mar/2023:13:13:00 +0000] "GET /feed/?normalization=y&useISODateFormat=y&url=https://news.google.com/rss HTTP/1.1" 200 24640

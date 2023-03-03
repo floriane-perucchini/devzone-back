@@ -58,3 +58,8 @@ router.patch("/bookmark/:id", validate, bookmark.update);
 router.delete("/bookmark/:id", bookmark.delete);
 
 export default router;
+
+// TODO: Gérer le GET des bookmarks/tools etc
+// TODO: Add Contact Routes && request.get('host')
+// TODO: ADD default user avatar
+// TODO: Understand refresh tokens

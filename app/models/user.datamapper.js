@@ -67,16 +67,25 @@ WHERE u.id = $1;`;
     { fieldname, filename, mimetype, path, size },
     id
   ) {
-    const sql = `INSERT INTO "Image" (type, "fileName", "filePath", "mimeType", size, "userId") 
-    VALUES ($1, $2, $3, $4, $5, $6) 
-    ON CONFLICT ("userId") DO UPDATE
-      SET type = excluded.type,
-          "fileName" = excluded."fileName",
-          "filePath" = excluded."filePath",
-          "mimeType" = excluded."mimeType",
-          size = excluded.size;`;
+    const sql = `INSERT INTO "Image" (id, type, "fileName", "filePath", "mimeType", size) VALUES ($1, $2, $3, $4, $5, $6)`;
+    const values = [id, fieldname, filename, path, mimetype, size];
 
+    const result = await client.query(sql, values);
+    return result.rowCount;
+  },
+  updateAvatar: async function (
+    { fieldname, filename, mimetype, path, size },
+    id
+  ) {
+    const sql = `UPDATE "Image" SET type = $1, "fileName" = $2, "filePath" = $3, "mimeType" = $4, size = $5 WHERE "id" = $6`;
     const values = [fieldname, filename, path, mimetype, size, id];
+
+    const result = await client.query(sql, values);
+    return result.rowCount;
+  },
+  deleteAvatar: async function (id) {
+    const sql = `DELETE FROM "Image" WHERE "id" = $1`;
+    const values = [id];
 
     const result = await client.query(sql, values);
     return result.rowCount;

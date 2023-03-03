@@ -8,7 +8,6 @@ TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
 
-
 INSERT INTO "Category"("name", "description",  "order")
 
 VALUES
@@ -19,7 +18,7 @@ VALUES
 
 INSERT INTO "Tool"("name", "description", "icon", "link", "order")
 
-	VALUES
+VALUES
 	 ('News', 'Latest developers news',  'icon','/app/news',1),
 	 ('Search', 'Search for NPMs, Stackoverflow & Github', 'icon', '/app/search',2),
 	 ('HTML',  'HTML, CSS and Javascript playground',  'icon', '/app/playground-html', 1),
@@ -27,14 +26,14 @@ INSERT INTO "Tool"("name", "description", "icon", "link", "order")
 
 INSERT INTO "Category"("name", "description", "order")
 
-    VALUES
+VALUES
     ('General', 'General Category Description', 1),
     ('Playground', 'Playground Category Description', 2);
 
 
 INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "active", "website")
 
-	VALUES
+VALUES
   ('karim@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Karim', 'Romdhane', 'karim', true,'https///website.com'),
   ('enzo@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Enzo', 'Bacqueyrisses', 'enzo', true,'https///website.com'),
   ('floriane@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Floriane', 'Perucchini', 'floriane',true, 'https///website.com'),
@@ -46,7 +45,7 @@ INSERT INTO "Image"("fileName", "filePath", "mimeType", "size", "type")
 VALUES
     ('test1', 'test1', 'jpg', 3754, 'bookmark'),
     ('test2', 'test2', 'jpg', 3754, 'avatar');
-  
+
 
 INSERT INTO "Bookmark"("name", "description", "link", "imgId", "userId", "toolId")
 
@@ -57,7 +56,7 @@ INSERT INTO "Bookmark"("name", "description", "link", "imgId", "userId", "toolId
     ('Favorite1', 'Super favorite 1', 'link1', 2, 4, 2),
     ('Favorite1', 'Super favorite 1', 'link1', 1, 1, 1),
     ('Favorite1', 'Super favorite 1', 'link1', 2, 2, 2);
-    
+
 INSERT INTO "Token"("expiration", "userId", "emailToken", "jwtRefreshToken")
 
 VALUES
@@ -75,7 +74,6 @@ VALUES
     (2, 1),
     (3, 3);
 
-
 UPDATE "Category"
     SET "tool_id"=1;
 
@@ -87,12 +85,6 @@ UPDATE "User"
 
 UPDATE "Image"
     SET "bookmark_id"=1;
-       
-
-      
-
-
-
 
 COMMIT;
 
