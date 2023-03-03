@@ -5,23 +5,18 @@ import bcrypt from "bcrypt";
 const userController = {
   getAll: async function (request, response, next) {
     try {
-      console.log('ici');
       const users = await db.user.getAll();
       if (!users) return next(new Error("Couldn't get the users."));
-
       response.json(users);
     } catch (error) {
       next(error);
     }
   },
-
-
   get: async function (request, response, next) {
     const { id } = request.params;
-
     try {
       const user = await db.user.get(id);
-      if (!user) return next(new Error("Couldn't get the user with tools."));
+      if (!user) return next(new Error("Couldn't get the user."));
 
       response.json(user);
     } catch (error) {

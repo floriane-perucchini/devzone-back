@@ -51,6 +51,6 @@
   },
   "type": "module",
   "prisma": {
-    "seed": "zsh prisma/seed.sh"
+    "seed": "bash prisma/seed.sh"
   }
 }

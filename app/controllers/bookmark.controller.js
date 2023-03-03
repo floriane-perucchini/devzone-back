@@ -1,5 +1,5 @@
 import db from "../models/index.datamapper.js";
-import { Error404, Error409 } from "../utils/errors/index.util.js";
+import { Error404 } from "../utils/errors/index.util.js";
 
 const bookmarkController = {
   getAll: async function (request, response, next) {
@@ -7,24 +7,21 @@ const bookmarkController = {
       const bookmarks = await db.bookmark.getAll();
       if (!bookmarks)
         return next(new Error404("Couldn't find the bookmarks you requested."));
-
       response.json(bookmarks);
     } catch (error) {
       error.type = "database";
       error.method = request.method;
       error.message = "Bookmarks select request to the database failed.";
+      return next(error)
     }
   },
-
   get: async function (request, response, next) {
     const { id } = request.params;
-
     try {
-      const tool = await db.bookmark.get(id);
-      if (!tool)
+      const bookmark = await db.bookmark.get(id);
+      if (!bookmark)
         return next(new Error404("Couldn't find the bookmark you requested."));
-
-      response.json(tool);
+      response.json(bookmark);
     } catch (error) {
       error.type = "database";
       error.method = request.method;
@@ -32,14 +29,14 @@ const bookmarkController = {
       next(error);
     }
   },
-
   create: async function (request, response, next) {
     try {
-      const checkBookmark = db.bookmark.check(request.body.name);
-      if (checkBookmark) return next(new Error409("Bookmark already exists."));
-
-      const newBookmark = await db.bookmark.create(request.body);
-
+     /* const checkBookmark = db.bookmark.check(request.body.name);
+        if (checkBookmark) return next(new Error409("Bookmark already exists."));
+        console.log(checkBookmark);
+        */
+        console.log(request.body);
+        const newBookmark = await db.bookmark.create(request.body);
       response.status(201).json(newBookmark);
     } catch (error) {
       error.type = "database";
@@ -48,7 +45,6 @@ const bookmarkController = {
       next(error);
     }
   },
-
   update: async function (request, response, next) {
     const { id } = request.params;
     const { name, description, link, linkImg } = request.body;
@@ -72,7 +68,6 @@ const bookmarkController = {
       next(error);
     }
   },
-
   delete: async function (request, response, next) {
     const { id } = request.params;
 

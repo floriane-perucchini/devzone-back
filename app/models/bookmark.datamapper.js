@@ -13,9 +13,12 @@ const bookmarkDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
-  create: async function ({ name, description, link, linkImg, userId }) {
-    const sql = `INSERT INTO "Bookmark" (name, description, link, "linkImg", "userId") VALUES ($1, $2, $3, $4, $5)`;
-    const values = [name, description, link, linkImg, userId];
+  create: async function ({ name, description, link, userId, toolId, imgId }) {
+    const sql = `INSERT INTO public."Bookmark"(
+       name, description, link, "userId", "toolId", "imgId")
+      VALUES ($1, $2, $3, $4, $5, $6);`;
+     console.log('datamaper');
+    const values = [name, description, link, userId, toolId, imgId];
 
     const result = await client.query(sql, values);
     return result.rowCount;
