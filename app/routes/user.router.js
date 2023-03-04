@@ -13,11 +13,11 @@ router.get("/user/:id", user.get);
 
 // PATCH Routes
 router.patch("/user/:id", validate, user.update);
-router.patch(
-  "/user/:id/upload/avatar",
-  upload.single("avatar"),
-  user.updateAvatar
-);
+// router.patch(
+//   "/user/:id/upload/avatar",
+//   upload.single("avatar"),
+//   user.updateAvatar
+// );
 
 // DELETE Routes
 router.delete("/user/:id", user.delete);

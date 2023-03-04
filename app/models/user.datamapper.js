@@ -1,24 +1,23 @@
 import { client } from "../services/index.service.js";
 
 const userDatamapper = {
-  // getAll a revoir pour afficher la liste de tous les tools
-
   getAll: async function () {
-    const sql = `SELECT "User".id, "User".email, "User".firstname, "User".lastname, "User".username, "User".active, "User"."imgId", "User".website, "Tool".id AS tool_id, "Tool".name AS tool_name, "Tool".description AS tool_description, "Tool".icon AS tool_icon, "Tool"."order" AS tool_order, "Tool".link AS tool_link, "Tool".category_id
-    FROM "User"
-    LEFT JOIN "ToolsOnUsers" ON "User".id = "ToolsOnUsers"."userId"
-    LEFT JOIN "Tool" ON "ToolsOnUsers"."toolId" = "Tool".id;`;
+    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website,
+                        t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, t.link as toolLink, t."categoryId" as toolCategoryId
+                 FROM "User" u
+                        LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id
+                        LEFT JOIN "Tool" t ON t.id = tou."toolId"`;
 
     const results = await client.query(sql);
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u."imgId", u.website, 
-    t.id as tool_id, t.name as tool_name, t.description as tool_description, t.icon as tool_icon, t."order" as tool_order, t.link as tool_link, t.category_id as tool_category_id
-FROM "User" u
-LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id
-LEFT JOIN "Tool" t ON t.id = tou."toolId"
-WHERE u.id = $1;`;
+    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website,
+                        t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, t.link as toolLink, t."categoryId" as toolCategoryId
+                 FROM "User" u
+                        LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id
+                        LEFT JOIN "Tool" t ON t.id = tou."toolId"
+                 WHERE u.id = $1;`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
@@ -30,10 +29,10 @@ WHERE u.id = $1;`;
     return result.rows[0];
   },
   update: async function (
-    { email, password, firstname, lastname, username, active, website, imgId },
+    { email, password, firstname, lastname, username, active, website },
     id
   ) {
-    const sql = `UPDATE "User" set email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7, "imgId" = $8 WHERE id = $9`;
+    const sql = `UPDATE "User" set email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7 WHERE id = $8`;
     const values = [
       email,
       password,
@@ -42,7 +41,6 @@ WHERE u.id = $1;`;
       username,
       active,
       website,
-      imgId,
       id,
     ];
 
@@ -63,22 +61,16 @@ WHERE u.id = $1;`;
     const result = await client.query(sql, values);
     return result.rowCount;
   },
-  uploadAvatar: async function (
-    { fieldname, filename, mimetype, path, size },
-    id
-  ) {
-    const sql = `INSERT INTO "Image" (id, type, "fileName", "filePath", "mimeType", size) VALUES ($1, $2, $3, $4, $5, $6)`;
-    const values = [id, fieldname, filename, path, mimetype, size];
+  uploadAvatar: async function ({ filename, mimetype, path, size }, id) {
+    const sql = `INSERT INTO "Image" (id, "fileName", "filePath", "mimeType", size) VALUES ($1, $2, $3, $4, $5)`;
+    const values = [id, filename, path, mimetype, size];
 
     const result = await client.query(sql, values);
     return result.rowCount;
   },
-  updateAvatar: async function (
-    { fieldname, filename, mimetype, path, size },
-    id
-  ) {
-    const sql = `UPDATE "Image" SET type = $1, "fileName" = $2, "filePath" = $3, "mimeType" = $4, size = $5 WHERE "id" = $6`;
-    const values = [fieldname, filename, path, mimetype, size, id];
+  updateAvatar: async function ({ filename, mimetype, path, size }, id) {
+    const sql = `UPDATE "Image" SET "fileName" = $1, "filePath" = $2, "mimeType" = $3, size = $4 WHERE "id" = $5`;
+    const values = [filename, path, mimetype, size, id];
 
     const result = await client.query(sql, values);
     return result.rowCount;

@@ -16,13 +16,13 @@ VALUES
     ('dev', 'dev description',  1),
     ('facebook', 'facebook description', 2);
 
-INSERT INTO "Tool"("name", "description", "icon", "link", "order")
+INSERT INTO "Tool"("name", "description", "icon", "link", "order", "categoryId")
 
 VALUES
-	 ('News', 'Latest developers news',  'icon','/app/news',1),
-	 ('Search', 'Search for NPMs, Stackoverflow & Github', 'icon', '/app/search',2),
-	 ('HTML',  'HTML, CSS and Javascript playground',  'icon', '/app/playground-html', 1),
-	 ('javascript', 'Pure Javascript playground',  'icon', '/app/playground-js', 2);
+	 ('News', 'Latest developers news', 'icon','/app/news',1, 1),
+	 ('Search', 'Search for NPMs, Stackoverflow & Github', 'icon', '/app/search',2, 2),
+	 ('HTML',  'HTML, CSS and Javascript playground',  'icon', '/app/playground-html', 1, 3),
+	 ('javascript', 'Pure Javascript playground',  'icon', '/app/playground-js', 2, 4);
 
 INSERT INTO "Category"("name", "description", "order")
 
@@ -40,22 +40,22 @@ VALUES
   ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', true,'https///website.com'),
   ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', true,'https///website.com');
 
-INSERT INTO "Image"("fileName", "filePath", "mimeType", "size", "type")
+INSERT INTO "Image"("fileName", "filePath", "mimeType", "size", "userId")
 
 VALUES
-    ('test1', 'test1', 'jpg', 3754, 'bookmark'),
-    ('test2', 'test2', 'jpg', 3754, 'avatar');
+    ('test1', 'test1', 'jpg', 3754, 1),
+    ('test2', 'test2', 'jpg', 3754, 2);
 
 
-INSERT INTO "Bookmark"("name", "description", "link", "imgId", "userId", "toolId")
+INSERT INTO "Bookmark"("name", "description", "link", "imgLink", "userId", "toolId")
 
     VALUES
-    ('Favorite1', 'Super favorite 1', 'link1', 1, 1, 2),
-    ('Favorite1', 'Super favorite 1', 'link1', 2, 2, 1),
-    ('Favorite1', 'Super favorite 1', 'link1', 1, 3, 2),
-    ('Favorite1', 'Super favorite 1', 'link1', 2, 4, 2),
-    ('Favorite1', 'Super favorite 1', 'link1', 1, 1, 1),
-    ('Favorite1', 'Super favorite 1', 'link1', 2, 2, 2);
+    ('Favorite1', 'Super favorite 1', 'link1', '/image', 1, 2),
+    ('Favorite2', 'Super favorite 1', 'link1', '/image', 2, 1),
+    ('Favorite3', 'Super favorite 1', 'link1', '/image', 3, 2),
+    ('Favorite4', 'Super favorite 1', 'link1', '/image', 4, 2),
+    ('Favorite5', 'Super favorite 1', 'link1', '/image', 1, 1),
+    ('Favorite6', 'Super favorite 1', 'link1', '/image', 2, 2);
 
 INSERT INTO "Token"("expiration", "userId", "emailToken", "jwtRefreshToken")
 
@@ -73,18 +73,6 @@ VALUES
     (1, 2),
     (2, 1),
     (3, 3);
-
-UPDATE "Category"
-    SET "tool_id"=1;
-
-UPDATE "Tool"
-    SET "category_id"=1;
-
-UPDATE "User"
-    SET "imgId"=1;
-
-UPDATE "Image"
-    SET "bookmark_id"=1;
 
 COMMIT;
 

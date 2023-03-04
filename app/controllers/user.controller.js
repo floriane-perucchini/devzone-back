@@ -57,6 +57,7 @@ const userController = {
 
     try {
       const toolUpdate = await db.ToolsOnUsers.get(userId, toolId);
+
       response.json(toolUpdate);
     } catch (error) {
       next(error);
@@ -78,7 +79,6 @@ const userController = {
   uploadAvatar: async function (request, response, next) {
     const { id } = request.params;
     const image = request.file;
-    console.log(image);
 
     if (image?.size > 3200000)
       return next("Your avatar must have a size lower than 3MB.");
@@ -110,6 +110,8 @@ const userController = {
       const updatedAvatar = await db.user.updateAvatar(image, user.imgId);
       if (!updatedAvatar)
         return next(new Error("Avatar couldn't be uploaded."));
+
+      response.json("Avatar was updated successfully.");
     } catch (error) {
       return next(error);
     }
@@ -122,7 +124,7 @@ const userController = {
     const deletedAvatar = await db.user.deleteAvatar(id);
     if (!deletedAvatar) return next(new Error("Avatar couldn't be deleted."));
 
-    response.json("Avatar was updated successfully.");
+    response.json("Avatar was deleted successfully.");
   },
 };
 

@@ -71,7 +71,7 @@ const bookmarkController = {
     const { id } = request.params;
 
     try {
-      await db.tool.delete(id);
+      await db.bookmark.delete(id);
 
       response.json("Bookmark deleted successfully.");
     } catch (error) {

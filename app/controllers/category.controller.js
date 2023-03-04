@@ -5,6 +5,7 @@ const categoryController = {
     try {
       const categories = await db.category.getAll();
       if (!categories) return next(new Error("Couldn't get the categories."));
+
       response.json(categories);
     } catch (error) {
       next(error);
