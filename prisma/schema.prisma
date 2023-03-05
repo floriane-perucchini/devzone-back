@@ -8,19 +8,23 @@ datasource db {
 }
 
 model Tool {
-  id                                  Int        @id @default(autoincrement())
-  name                                String
-  description                         String?
-  category_id                         Int?
-  icon                                String?
-  link                                String?
-  order                               Int?
-  bookmark                            Bookmark[]
-  Category_Category_tool_idToTool     Category[] @relation("Category_tool_idToTool")
-  Category_Tool_category_idToCategory Category?  @relation("Tool_category_idToCategory", fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  categoryId  Int?
+  icon        String?
+  link        String?
+  order       Int?
+  bookmark    Bookmark[]
+  Category    Category?  @relation(fields: [categoryId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now()) @updatedAt
 
-  @@index([icon], map: "Tool_logo_idx")
   @@index([name])
+  @@index([description])
+  @@index([icon])
+  @@index([link])
+  @@index([order])
 }
 
 model User {
@@ -31,40 +35,45 @@ model User {
   lastname  String?
   username  String
   active    Boolean    @default(false)
-  imgId     Int?
   website   String?
   bookmark  Bookmark[]
-  image     Image?     @relation(fields: [imgId], references: [id], onDelete: Cascade)
+  Image     Image?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
 
   @@index([email])
+  @@index([password])
   @@index([firstname])
   @@index([lastname])
+  @@index([username])
+  @@index([active])
   @@index([website])
 }
 
 model Bookmark {
-  id                                Int     @id @default(autoincrement())
-  name                              String
-  description                       String?
-  link                              String?
-  userId                            Int?
-  toolId                            Int?
-  imgId                             Int?
-  image                             Image?  @relation(fields: [imgId], references: [id], onDelete: Cascade)
-  tool                              Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade, map: "bookmark_toolId_fkey")
-  user                              User?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "bookmark_userId_fkey")
-  Image_Image_bookmark_idToBookmark Image[] @relation("Image_bookmark_idToBookmark")
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  link        String?
+  imgLink     String?
+  toolId      Int?
+  userId      Int?
+  tool        Tool?    @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
 
-  @@index([link])
-  @@index([imgId])
   @@index([name])
+  @@index([description])
+  @@index([link])
+  @@index([imgLink])
 }
 
 model ToolsOnUsers {
-  userId     Int
-  toolId     Int
-  created_at DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at DateTime? @db.Timestamptz(6)
+  userId    Int
+  toolId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@id([userId, toolId])
 }
@@ -76,37 +85,37 @@ model Token {
   emailToken      String
   userId          Int
 
-  @@index([emailToken])
   @@index([jwtRefreshToken])
   @@index([expiration])
+  @@index([emailToken])
 }
 
 model Image {
-  id                                   Int        @id @default(autoincrement())
-  fileName                             String     @unique
-  filePath                             String
-  mimeType                             String
-  size                                 BigInt
-  bookmark_id                          Int?
-  type                                 String?
-  Bookmark                             Bookmark[]
-  Bookmark_Image_bookmark_idToBookmark Bookmark?  @relation("Image_bookmark_idToBookmark", fields: [bookmark_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_id")
-  User                                 User[]
+  id       Int    @id @default(autoincrement())
+  fileName String @unique
+  filePath String
+  mimeType String
+  size     BigInt
+  userId   Int?   @unique
+  User     User?  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([fileName])
   @@index([filePath])
   @@index([mimeType])
   @@index([size])
+  @@index([userId])
 }
 
 model Category {
-  id                              Int       @id @default(autoincrement())
-  name                            String
-  description                     String
-  tool_id                         Int?
-  order                           Int?      @default(999)
-  created_at                      DateTime? @default(now()) @db.Timestamptz(6)
-  updated_at                      DateTime? @db.Timestamptz(6)
-  Tool_Category_tool_idToTool     Tool?     @relation("Category_tool_idToTool", fields: [tool_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  Tool_Tool_category_idToCategory Tool[]    @relation("Tool_category_idToCategory")
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  order       Int?     @default(999)
+  Tool        Tool[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  @@index([name])
+  @@index([description])
+  @@index([order])
 }

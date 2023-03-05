@@ -13,19 +13,32 @@ const bookmarkDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
-  create: async function ({ name, description, link, userId, toolId, imgId }) {
+  getByUser: async function (id) {
+    const sql = `SELECT * FROM "Bookmark" WHERE "userId" = $1`;
+
+    const result = await client.query(sql, [id]);
+    return result.rows[0];
+  },
+  create: async function ({
+    name,
+    description,
+    link,
+    userId,
+    toolId,
+    imgLink,
+  }) {
     const sql = `INSERT INTO public."Bookmark"(
-       name, description, link, "userId", "toolId", "imgId")
+       name, description, link, "userId", "toolId", "imgLink")
       VALUES ($1, $2, $3, $4, $5, $6);`;
 
-    const values = [name, description, link, userId, toolId, imgId];
+    const values = [name, description, link, userId, toolId, imgLink];
 
     const result = await client.query(sql, values);
     return result.rowCount;
   },
-  update: async function ({ name, description, link, imgId }, id) {
-    const sql = `UPDATE "Bookmark" set name = $1, description = $2, link = $3, "imgId" = $4 WHERE id = $5`;
-    const values = [name, description, link, imgId, id];
+  update: async function ({ name, description, link, imgLink }, id) {
+    const sql = `UPDATE "Bookmark" set name = $1, description = $2, link = $3, "imgLink" = $4 WHERE id = $5`;
+    const values = [name, description, link, imgLink, id];
 
     const result = await client.query(sql, values);
     return result.rowCount;

@@ -13,16 +13,32 @@ const toolDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
-  create: async function ({ name, logo, description }) {
-    const sql = `INSERT INTO "Tool" (name, logo, description) VALUES ($1, $2, $3)`;
-    const values = [name, logo, description];
+  check: async function (name) {
+    const sql = `SELECT * FROM "Tool" WHERE name = $1`;
+
+    const result = await client.query(sql, [name]);
+    return result.rows[0];
+  },
+  create: async function ({
+    name,
+    description,
+    categoryId,
+    icon,
+    link,
+    order,
+  }) {
+    const sql = `INSERT INTO "Tool" (name, description, "categoryId", icon, link, "order") VALUES ($1, $2, $3, $4, $5, $6)`;
+    const values = [name, description, categoryId, icon, link, order];
 
     const result = await client.query(sql, values);
     return result.rowCount;
   },
-  update: async function ({ name, logo, description }, id) {
-    const sql = `UPDATE "Tool" set name = $1, logo = $2, description = $3 WHERE id = $4`;
-    const values = [name, logo, description, id];
+  update: async function (
+    { name, description, categoryId, icon, link, order },
+    id
+  ) {
+    const sql = `UPDATE "Tool" set name = $1, description = $2, "categoryId" = $3, icon = $4, link = $5, "order" = $6 WHERE id = $7`;
+    const values = [name, description, categoryId, icon, link, order, id];
 
     const result = await client.query(sql, values);
     return result.rowCount;

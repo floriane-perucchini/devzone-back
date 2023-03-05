@@ -1,5 +1,6 @@
 import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
+import fs from "fs";
 
 const userController = {
   getAll: async function (request, response, next) {
@@ -56,6 +57,7 @@ const userController = {
 
     try {
       const toolUpdate = await db.ToolsOnUsers.get(userId, toolId);
+
       response.json(toolUpdate);
     } catch (error) {
       next(error);
@@ -79,12 +81,50 @@ const userController = {
     const image = request.file;
 
     if (image?.size > 3200000)
+      return next("Your avatar must have a size lower than 3MB.");
+    try {
+      const user = await db.user.get(id);
+      if (user.imgId)
+        return next("Use the PATCH route to update the user avatar.");
+
+      const insertedAvatar = await db.user.uploadAvatar(image, id);
+      if (!insertedAvatar) return next("Avatar couldn't be uploaded.");
+
+      response.json("Avatar was uploaded successfully.");
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  },
+  updateAvatar: async function (request, response, next) {
+    const { id } = request.params;
+    const image = request.file;
+
+    if (image?.size > 3200000)
       return next(new Error("Your avatar must have a size lower than 3MB."));
 
-    const insertedAvatar = await db.user.uploadAvatar(image, id);
-    if (!insertedAvatar) return next(new Error("Avatar couldn't be uploaded."));
+    try {
+      const user = await db.user.get(id);
+      await fs.promises.unlink(user.filePath);
 
-    response.json("Avatar was uploaded successfully.");
+      const updatedAvatar = await db.user.updateAvatar(image, user.imgId);
+      if (!updatedAvatar)
+        return next(new Error("Avatar couldn't be uploaded."));
+
+      response.json("Avatar was updated successfully.");
+    } catch (error) {
+      return next(error);
+    }
+
+    response.json("Avatar was updated successfully.");
+  },
+  deleteAvatar: async function (request, response, next) {
+    const { id } = request.params;
+
+    const deletedAvatar = await db.user.deleteAvatar(id);
+    if (!deletedAvatar) return next(new Error("Avatar couldn't be deleted."));
+
+    response.json("Avatar was deleted successfully.");
   },
 };
 

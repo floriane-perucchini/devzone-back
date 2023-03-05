@@ -6,13 +6,7 @@ import "dotenv/config";
 import config from "../config/token.config.js";
 import { Error404, Error409 } from "../utils/errors/index.util.js";
 import { transporter } from "../services/index.service.js";
-//import { ExtractJwt } from "passport-jwt";
-import { extract } from '@extractus/feed-extractor';
-import express from "express";
-import cors from "cors";
-
-const app = express();
-app.use(cors());
+import { extract } from "@extractus/feed-extractor";
 
 const mainController = {
   signup: async function (request, response, next) {
@@ -40,7 +34,7 @@ const mainController = {
       const emailToken = String(crypto.randomUUID());
       await db.main.createEmailToken({ userId: newUser.id, emailToken });
 
-      const link = `http://localhost:3000/verify?token=${emailToken}`;
+      const link = `http:/${request.get("host")}/verify?token=${emailToken}`;
       const mailData = {
         from: "devzoneapplication@gmail.com",
         to: newUser.email,
@@ -158,10 +152,7 @@ const mainController = {
 
     try {
       await transporter.sendMail(mailData);
-      return response.json({
-        message: "Mail sent successfully.",
-        messageId: email.messageId,
-      });
+      return response.json("Form contact mail sent successfully.");
     } catch (error) {
       error.message = "Contact form mail couldn't be sent.";
       error.type = "nodemailer";
@@ -169,8 +160,7 @@ const mainController = {
     }
   },
 
-  
- /* rss: async function (request, response, next) {
+  /* rss: async function (request, response, next) {
     try {
       const feed = await extract('https://news.google.com/rss');
       response.json(feed);
@@ -178,49 +168,42 @@ const mainController = {
       response.status(404).send('404 : DEAD END !');
     }
   }
-  
+
   */
- feed: async function(request, response) {
-  const meta = {
-    service: 'feed-reader',
-    lang: 'javascript',
-    server: 'express',
-    platform: 'node',
-  }
-  const url = request.query.url
-  if (!url) {
-    return response.json(meta) 
- }
- const {
-  useISODateFormat = 'y',
-  normalization = 'y',
-} = request.query
+  feed: async function (request, response) {
+    const meta = {
+      service: "feed-reader",
+      lang: "javascript",
+      server: "express",
+      platform: "node",
+    };
+    const url = request.query.url;
+    if (!url) {
+      return response.json(meta);
+    }
+    const { useISODateFormat = "y", normalization = "y" } = request.query;
 
-const opts = {
-  useISODateFormat: useISODateFormat !== 'n',
-  normalization: normalization !== 'n',
-}
-try {
-  const data = await extract(url, opts)
-  return response.json({
-    error: 0,
-    message: 'feed data has been extracted successfully',
-    data,
-    meta,
-  })
-} catch (err) {
-  return response.json({
-    error: 1,
-    message: err.message,
-    data: null,
-    meta,
-  })
-}
- 
-}}
-
-  
-    
-
+    const opts = {
+      useISODateFormat: useISODateFormat !== "n",
+      normalization: normalization !== "n",
+    };
+    try {
+      const data = await extract(url, opts);
+      return response.json({
+        error: 0,
+        message: "feed data has been extracted successfully",
+        data,
+        meta,
+      });
+    } catch (err) {
+      return response.json({
+        error: 1,
+        message: err.message,
+        data: null,
+        meta,
+      });
+    }
+  },
+};
 
 export default mainController;
