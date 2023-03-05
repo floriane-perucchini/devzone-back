@@ -440,3 +440,15 @@
 ::ffff:127.0.0.1 - - [04/Mar/2023:17:47:32 +0000] "GET /categories HTTP/1.1" 200 1572
 ::ffff:127.0.0.1 - - [04/Mar/2023:17:57:52 +0000] "GET /categories HTTP/1.1" 200 1854
 ::ffff:127.0.0.1 - - [04/Mar/2023:17:58:24 +0000] "GET /categories HTTP/1.1" 200 1836
+::ffff:127.0.0.1 - - [05/Mar/2023:14:08:35 +0000] "GET /categories HTTP/1.1" 200 1836
+::ffff:127.0.0.1 - - [05/Mar/2023:14:08:55 +0000] "GET /category/1 HTTP/1.1" 200 432
+::ffff:127.0.0.1 - - [05/Mar/2023:14:09:25 +0000] "GET /category/1 HTTP/1.1" 200 568
+::ffff:127.0.0.1 - - [05/Mar/2023:14:09:33 +0000] "GET /users HTTP/1.1" 200 1448
+::ffff:127.0.0.1 - - [05/Mar/2023:14:09:38 +0000] "GET /user/1 HTTP/1.1" 200 308
+::ffff:127.0.0.1 - - [05/Mar/2023:14:10:02 +0000] "POST /signup HTTP/1.1" 201 43
+::1 - - [05/Mar/2023:14:10:16 +0000] "GET /verify?token=5c0d2e75-f3e9-4f9c-b2ee-f2cdef10be16 HTTP/1.1" 200 35
+::ffff:127.0.0.1 - - [05/Mar/2023:14:10:43 +0000] "POST /login HTTP/1.1" 200 699
+::ffff:127.0.0.1 - - [05/Mar/2023:14:13:58 +0000] "POST /bookmarks/user/1 HTTP/1.1" 404 156
+::ffff:127.0.0.1 - - [05/Mar/2023:14:14:19 +0000] "POST /bookmarks/user/1 HTTP/1.1" 404 156
+::ffff:127.0.0.1 - - [05/Mar/2023:14:14:41 +0000] "POST /bookmarks/user/1 HTTP/1.1" 404 156
+::ffff:127.0.0.1 - - [05/Mar/2023:14:14:45 +0000] "GET /bookmarks/user/1 HTTP/1.1" 200 194

@@ -12,7 +12,7 @@ const categoryDatamapper = {
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT c.*, array_agg(t.*) as tools
+    const sql = `SELECT c.*, json_agg(t.*) as tools
     FROM "Category" c
     LEFT JOIN "Tool" t ON c.id = t."categoryId"
     WHERE c.id = $1

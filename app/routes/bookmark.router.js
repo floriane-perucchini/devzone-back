@@ -23,6 +23,7 @@ const router = express.Router();
  */
 router.get("/bookmarks", bookmark.getAll);
 router.get("/bookmark/:id", bookmark.get);
+router.get("/bookmarks/user/:id", bookmark.getByUser);
 
 // POST Routes
 /**
