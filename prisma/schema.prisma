@@ -11,14 +11,14 @@ model Tool {
   id          Int        @id @default(autoincrement())
   name        String
   description String?
-  categoryId  Int?
   icon        String?
   link        String?
   order       Int?
-  bookmark    Bookmark[]
-  Category    Category?  @relation(fields: [categoryId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  categoryId  Int?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now()) @updatedAt
+  bookmark    Bookmark[]
+  Category    Category?  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@index([name])
   @@index([description])
@@ -36,10 +36,10 @@ model User {
   username  String
   active    Boolean    @default(false)
   website   String?
-  bookmark  Bookmark[]
-  Image     Image?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now()) @updatedAt
+  bookmark  Bookmark[]
+  Image     Image?
 
   @@index([email])
   @@index([password])
@@ -55,13 +55,13 @@ model Bookmark {
   name        String
   description String?
   link        String?
-  imgLink     String?
-  toolId      Int?
   userId      Int?
+  toolId      Int?
+  createdAt   DateTime @default(now())
+  imgLink     String?
+  updatedAt   DateTime @default(now()) @updatedAt
   tool        Tool?    @relation(fields: [toolId], references: [id], onDelete: Cascade)
   user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
 
   @@index([name])
   @@index([description])
@@ -97,7 +97,7 @@ model Image {
   mimeType String
   size     BigInt
   userId   Int?   @unique
-  User     User?  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  User     User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([fileName])
   @@index([filePath])
@@ -111,9 +111,9 @@ model Category {
   name        String
   description String
   order       Int?     @default(999)
-  Tool        Tool[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
+  Tool        Tool[]
 
   @@index([name])
   @@index([description])
