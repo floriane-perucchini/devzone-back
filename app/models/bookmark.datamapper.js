@@ -54,12 +54,12 @@ const bookmarkDatamapper = {
   }) {
     const sql = `INSERT INTO public."Bookmark"(
        name, description, link, "userId", "toolId", "imgLink")
-      VALUES ($1, $2, $3, $4, $5, $6);`;
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
     const values = [name, description, link, userId, toolId, imgLink];
 
     const result = await client.query(sql, values);
-    return result.rowCount;
+    return result.rows[0];
   },
   update: async function ({ name, description, link, imgLink }, id) {
     const sql = `UPDATE "Bookmark" set name = $1, description = $2, link = $3, "imgLink" = $4 WHERE id = $5`;
