@@ -452,3 +452,6 @@
 ::ffff:127.0.0.1 - - [05/Mar/2023:14:14:19 +0000] "POST /bookmarks/user/1 HTTP/1.1" 404 156
 ::ffff:127.0.0.1 - - [05/Mar/2023:14:14:41 +0000] "POST /bookmarks/user/1 HTTP/1.1" 404 156
 ::ffff:127.0.0.1 - - [05/Mar/2023:14:14:45 +0000] "GET /bookmarks/user/1 HTTP/1.1" 200 194
+::ffff:127.0.0.1 - - [05/Mar/2023:19:36:38 +0000] "GET /bookmarks/user/1 HTTP/1.1" 200 391
+::ffff:127.0.0.1 - - [05/Mar/2023:19:39:24 +0000] "GET /bookmarks/user/1 HTTP/1.1" 200 391
+::ffff:127.0.0.1 - - [05/Mar/2023:19:39:34 +0000] "GET /user/1 HTTP/1.1" 200 308
