@@ -61,7 +61,7 @@ router.delete("/bookmark/:id", bookmark.delete);
 export default router;
 
 // TODO: Gérer le GET des bookmarks/tools etc
-// TODO: bookmark && tools by userId Routes => bookmarks/user/:id
+// TODO: bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
 
 // TODO: Add Contact Routes && request.get('host')
 // TODO: ADD default user avatar

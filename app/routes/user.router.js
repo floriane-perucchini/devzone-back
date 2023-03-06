@@ -12,7 +12,7 @@ router.get("/user/:id", user.get);
 //router.post("/user/:id/upload/avatar",upload.single("avatar"),user.uploadAvatar);
 
 // PATCH Routes
-router.patch("/user/:id", validate, user.update);
+router.patch("/user/:id", user.update);
 // router.patch(
 //   "/user/:id/upload/avatar",
 //   upload.single("avatar"),

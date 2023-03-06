@@ -12,7 +12,7 @@ const userDatamapper = {
     return results.rows;
   },
   get: async function (id) {
-    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website,
+    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website, u.password,
                         t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, t.link as toolLink, t."categoryId" as toolCategoryId
                  FROM "User" u
                         LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id
@@ -32,7 +32,7 @@ const userDatamapper = {
     { email, password, firstname, lastname, username, active, website },
     id
   ) {
-    const sql = `UPDATE "User" set email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7 WHERE id = $8`;
+    const sql = `UPDATE "User" SET email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7 WHERE id = $8`;
     const values = [
       email,
       password,
@@ -43,6 +43,7 @@ const userDatamapper = {
       website,
       id,
     ];
+    console.log(values);
 
     const result = await client.query(sql, values);
     return result.rowCount;

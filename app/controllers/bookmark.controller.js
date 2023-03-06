@@ -50,6 +50,7 @@ const bookmarkController = {
   },
   create: async function (request, response, next) {
     try {
+      // TODO: Fix this
       /* const checkBookmark = db.bookmark.check(request.body.name);
         if (checkBookmark) return next(new Error409("Bookmark already exists."));
         console.log(checkBookmark);

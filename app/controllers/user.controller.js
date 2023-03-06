@@ -17,6 +17,7 @@ const userController = {
     try {
       const user = await db.user.get(id);
       if (!user) return next(new Error("Couldn't get the user."));
+      delete user?.password;
 
       response.json(user);
     } catch (error) {
@@ -26,8 +27,7 @@ const userController = {
 
   update: async function (request, response, next) {
     const { id } = request.params;
-    const { email, firstname, lastname, username, password, avatar } =
-      request.body;
+    const { email, firstname, lastname, username, password } = request.body;
 
     // TODO: Verify if username is already in use and verify it
     // TODO: Verify email and replace it when it's valid
@@ -40,7 +40,6 @@ const userController = {
       if (firstname) user.firstname = firstname.toLowerCase();
       if (lastname) user.lastname = lastname.toLowerCase();
       if (username) user.username = username.toLowerCase();
-      if (avatar) user.avatar = avatar.toLowerCase();
       if (password) user.password = await bcrypt.hash(password, 12);
 
       const userUpdated = await db.user.update(user, id);
