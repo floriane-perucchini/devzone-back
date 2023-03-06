@@ -17,7 +17,7 @@ const bookmarkDatamapper = {
     const sql = `SELECT * FROM "Bookmark" WHERE "userId" = $1`;
 
     const result = await client.query(sql, [id]);
-    return result.rows[0];
+    return result.rows;
   },
   create: async function ({
     name,
