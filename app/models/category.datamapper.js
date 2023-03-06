@@ -22,6 +22,17 @@ const categoryDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
+
+  getByUser: async function (id) {
+    const sql = `SELECT c.id, c.name, c.description, c."order" as category_order, json_agg(json_build_object('id', t.id, 'name', t.name, 'description', t.description, 'link', t.link, 'icon', t.icon, 'order', t."order")) as tools
+    FROM "Category" c
+    LEFT JOIN "Tool" t ON t."categoryId" = c.id
+    WHERE c.id = $1
+    GROUP BY c.id, c.name, c.description, c."order";`;
+
+    const result = await client.query(sql, [id]);
+    return result.rows;
+  },
 };
 
 export default categoryDatamapper;

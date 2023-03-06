@@ -21,6 +21,6 @@ const router = express.Router();
  */
 router.get("/categories", category.getAll);
 router.get("/category/:id", category.get);
-
+router.get("/categories/user/:id", category.getByUser);
 
 export default router;
