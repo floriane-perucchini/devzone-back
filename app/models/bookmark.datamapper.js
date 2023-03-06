@@ -14,7 +14,32 @@ const bookmarkDatamapper = {
     return result.rows[0];
   },
   getByUser: async function (id) {
-    const sql = `SELECT * FROM "Bookmark" WHERE "userId" = $1`;
+    const sql = `SELECT 
+    t.id AS "toolId",
+    t.name AS "name",
+    json_agg(
+        json_build_object(
+            'id', b.id,
+            'name', b.name,
+            'description', b.description,
+            'link', b.link,
+            'userId', b."userId",
+            'toolId', b."toolId",
+            'createdAt', b."createdAt",
+            'imgLink', b."imgLink",
+            'updatedAt', b."updatedAt"
+        )
+    ) AS bookmarks
+    FROM 
+    public."Tool" t
+    LEFT JOIN public."Bookmark" b ON b."toolId" = t.id
+    INNER JOIN public."User" u ON u.id = b."userId"
+    WHERE 
+    u.id = $1
+    GROUP BY 
+    t.id
+    ORDER BY 
+    t.id ASC;`;
 
     const result = await client.query(sql, [id]);
     return result.rows;

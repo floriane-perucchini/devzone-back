@@ -1,4 +1,5 @@
 import db from "../models/index.datamapper.js";
+import { Error404 } from "../utils/errors/index.util.js";
 
 const categoryController = {
   getAll: async function (request, response, next) {
@@ -20,6 +21,26 @@ const categoryController = {
 
       response.json(category);
     } catch (error) {
+      next(error);
+    }
+  },
+
+  getByUser: async function (request, response, next) {
+    const { id } = request.params;
+
+    try {
+      const category = await db.category.getByUser(id);
+      if (!category)
+        return next(
+          new Error404(
+            "Couldn't find the category with the toolId you requested."
+          )
+        );
+      response.json(category);
+    } catch (error) {
+      error.type = "database";
+      error.method = request.method;
+      error.message = "category select request to the database failed.";
       next(error);
     }
   },
