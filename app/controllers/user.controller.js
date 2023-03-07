@@ -114,7 +114,6 @@ const userController = {
 
       response.json("Avatar was uploaded successfully.");
     } catch (error) {
-      console.log(error);
       next(error);
     }
   },

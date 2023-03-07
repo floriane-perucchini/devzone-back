@@ -9,7 +9,9 @@ const db = {
   tool: toolDatamapper,
   bookmark: bookmarkDatamapper,
   category: categoryDatamapper,
+  toolsonusers: toolDatamapper,
   token: tokenDatamapper,
+
 };
 
 export default db;
