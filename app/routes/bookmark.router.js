@@ -62,9 +62,5 @@ export default router;
 
 // TODO: Bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
 
-// TODO: remove images from bookmarks && add imgLink String
-
-// TODO: Resend verification mail user
-
 // TODO: Understand refresh tokens
 // TODO: GitHub login
