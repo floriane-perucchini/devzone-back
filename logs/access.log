@@ -619,3 +619,7 @@
 ::ffff:127.0.0.1 - - [07/Mar/2023:14:46:25 +0000] "GET /category/1 HTTP/1.1" 200 581
 ::ffff:127.0.0.1 - - [07/Mar/2023:14:46:28 +0000] "GET /categorie HTTP/1.1" 404 148
 ::ffff:127.0.0.1 - - [07/Mar/2023:14:46:29 +0000] "GET /categories HTTP/1.1" 200 1193
+::ffff:127.0.0.1 - - [07/Mar/2023:15:02:28 +0000] "GET /confirmation/1 HTTP/1.1" 200 39
+::ffff:127.0.0.1 - - [07/Mar/2023:15:03:04 +0000] "GET /confirmation/1 HTTP/1.1" 200 39
+::ffff:127.0.0.1 - - [07/Mar/2023:15:03:26 +0000] "GET /confirmation/2 HTTP/1.1" 200 39
+::1 - - [07/Mar/2023:15:03:34 +0000] "GET /verify?token=3000 HTTP/1.1" 200 35

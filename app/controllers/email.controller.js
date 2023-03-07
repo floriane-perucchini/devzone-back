@@ -26,6 +26,43 @@ const emailController = {
     }
   },
 
+  confirmation: async function (request, response, next) {
+    const { id } = request.params;
+
+    let user;
+    let token;
+    try {
+      user = await db.user.get(id);
+      if (!user) return next(new Error404("User not found."));
+
+      token = await db.token.getToken(id);
+      if (!token) {
+        token = String(crypto.randomUUID());
+        await db.token.createEmail({ userId: id, token });
+      }
+    } catch (error) {
+      next(error);
+    }
+
+    const link = `http:/${request.get("host")}/verify?token=${token}`;
+    const mailData = {
+      from: "devzoneapplication@gmail.com",
+      to: user.email,
+      subject: "Welcome to DevZone!",
+      html: `<b>Hey there! Click on this <a href='${link}'>link</a> to confirm your email.</b>`,
+    };
+
+    try {
+      await transporter.sendMail(mailData);
+    } catch (error) {
+      error.message = "Confirmation email couldn't be sent.";
+      error.type = "nodemailer";
+      return next(error);
+    }
+
+    response.json("Confirmation email sent successfully.");
+  },
+
   resetPasswordLink: async function (request, response, next) {
     const { id } = request.params;
 
