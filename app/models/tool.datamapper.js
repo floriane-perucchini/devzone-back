@@ -48,11 +48,26 @@ const toolDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+  updateOnUser: async function (userId, toolId) {
+    const sql = `INSERT INTO "ToolsOnUsers" ("userId", "toolId")
+    VALUES ($1, $2)`;
+
+    const values = [userId, toolId];
+    const result = await client.query(sql, values);
+    return result.rowCount;
+  },
 
   delete: async function (id) {
     const sql = `DELETE FROM "Tool" WHERE id = $1`;
     const values = [id];
 
+    const result = await client.query(sql, values);
+    return result.rowCount;
+  },
+  deleteOnUser: async function (userId, toolId) {
+    const sql = `DELETE FROM "ToolsOnUsers" WHERE "userId" = $1 AND "toolId" = $2;`;
+
+    const values = [userId, toolId];
     const result = await client.query(sql, values);
     return result.rowCount;
   },
