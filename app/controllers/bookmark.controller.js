@@ -1,5 +1,5 @@
 import db from "../models/index.datamapper.js";
-import { Error404 } from "../utils/errors/index.util.js";
+import { Error404, Error409 } from "../utils/errors/index.util.js";
 
 const bookmarkController = {
   getAll: async function (request, response, next) {
@@ -50,11 +50,9 @@ const bookmarkController = {
   },
   create: async function (request, response, next) {
     try {
-      // TODO: Fix this
-      /* const checkBookmark = db.bookmark.check(request.body.name);
-        if (checkBookmark) return next(new Error409("Bookmark already exists."));
-        console.log(checkBookmark);
-        */
+      const checkBookmark = db.bookmark.getBy({ name: request.body.name });
+      if (checkBookmark) return next(new Error409("Bookmark already exists."));
+
       const newBookmark = await db.bookmark.create(request.body);
       response.status(201).json(newBookmark);
     } catch (error) {
@@ -64,6 +62,7 @@ const bookmarkController = {
       next(error);
     }
   },
+
   update: async function (request, response, next) {
     const { id } = request.params;
     const { name, description, link, imgLink } = request.body;

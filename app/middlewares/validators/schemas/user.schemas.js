@@ -12,6 +12,7 @@ const userSchemas = {
     avatar: z.string(),
   }),
   updateSchema: z.object({
+    // TODO: Make at least one mandatory
     email: z.string().email({ message: "Email must be valid." }).optional(),
     password: z.string().optional(),
     firstname: z

@@ -15,10 +15,11 @@ const toolDatamapper = {
     return result.rows[0];
   },
 
-  check: async function (name) {
-    const sql = `SELECT * FROM "Tool" WHERE name = $1`;
+  getBy: async function ({ name, description, categoryId, icon, link }) {
+    const sql = `SELECT * FROM "Tool" WHERE name = $1 OR description = $2 OR "categoryId" = $3 OR icon = $4 OR link = $5`;
+    const values = [name, description, categoryId, icon, link];
 
-    const result = await client.query(sql, [name]);
+    const result = await client.query(sql, values);
     return result.rows[0];
   },
 
