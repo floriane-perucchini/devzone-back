@@ -27,7 +27,6 @@ const toolController = {
   },
 
   create: async function (request, response, next) {
-    console.log(request.body);
     const { name, logo, description } = request.body;
     try {
       const checkTool = await db.tool.check(name);
@@ -65,6 +64,21 @@ const toolController = {
       next(error);
     }
   },
+  updateOnUser: async function (request, response, next) {
+    const { id } = request.params;
+
+    const { toolId } = request.body;
+
+    try {
+      const addTool = await db.toolsonusers.updateOnUser(id, toolId);
+
+      response.json(addTool);
+    } catch (error) {
+      error.message = "tool insertion failed";
+
+      next(error);
+    }
+  },
 
   delete: async function (request, response, next) {
     const { id } = request.params;
@@ -75,6 +89,20 @@ const toolController = {
       response.json("Tool deleted successfully.");
     } catch (error) {
       error.message = "Tool deletion failed.";
+      next(error);
+    }
+  },
+  deleteOnUser: async function (request, response, next) {
+    const { id } = request.params;
+
+    const { toolId } = request.body;
+
+    try {
+      const deleteTool = await db.toolsonusers.deleteOnUser(id, toolId);
+
+      response.json(deleteTool);
+    } catch (error) {
+      console.error(error);
       next(error);
     }
   },

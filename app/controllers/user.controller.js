@@ -28,7 +28,6 @@ const userController = {
   },
 
   update: async function (request, response, next) {
-    console.log(request.body);
     const { id } = request.params;
     const { email, firstname, lastname, username, password, website } =
       request.body;
@@ -95,7 +94,6 @@ const userController = {
 
       response.json("Avatar was uploaded successfully.");
     } catch (error) {
-      console.log(error);
       next(error);
     }
   },
