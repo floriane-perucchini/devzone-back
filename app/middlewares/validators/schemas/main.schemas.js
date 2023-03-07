@@ -29,7 +29,7 @@ const mainSchemas = {
         .string()
         .min(1, { message: "Username must be at least 1 character." }),
     })
-    .refine((data) => data.password === data.confirmedPassword, {
+    .refine((signup) => signup.password === signup.confirmedPassword, {
       message: "Passwords don't match",
       path: ["confirmedPassword"],
     }),
