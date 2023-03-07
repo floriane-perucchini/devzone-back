@@ -2,6 +2,7 @@ import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
 import fs from "fs";
 import { capitalize } from "../utils/index.js";
+import { Error409 } from "../utils/errors/index.util.js";
 
 const userController = {
   getAll: async function (request, response, next) {
@@ -31,17 +32,36 @@ const userController = {
     const { id } = request.params;
     const { email, firstname, lastname, username, password, website } =
       request.body;
-
-    // TODO: Verify if username is already in use and verify it
-    // TODO: Verify email and replace it when it's valid
     try {
       const user = await db.user.get(id);
       if (!user) return next(new Error("404"));
 
-      if (email) user.email = email.toLowerCase();
+      if (email) {
+        if (email === user.email) return next("Your email is identical");
+        const emailTaken = await db.user.getBy({ email });
+        if (emailTaken)
+          return next(
+            new Error409("Email is already taken, please choose another one.")
+          );
+        user.email = email.toLowerCase();
+      }
+
+      if (username) {
+        if (username === user.username)
+          return next("Your username is identical");
+        const usernameTaken = await db.user.getBy({ username });
+        console.log(usernameTaken);
+        if (usernameTaken)
+          return next(
+            new Error409(
+              "Username is already taken, please choose another one."
+            )
+          );
+        user.username = username.toLowerCase();
+      }
+
       if (firstname) user.firstname = capitalize(firstname);
       if (lastname) user.lastname = capitalize(lastname);
-      if (username) user.username = username.toLowerCase();
       if (website) user.username = website.toLowerCase();
       if (password) user.password = await bcrypt.hash(password, 12);
 

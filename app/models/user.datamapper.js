@@ -13,15 +13,35 @@ const userDatamapper = {
   },
 
   get: async function (id) {
-    const sql = `SELECT *FROM "User" WHERE id = $1;`;
+    const sql = `SELECT * FROM "User" WHERE id = $1;`;
 
     const result = await client.query(sql, [id]);
+    return result.rows[0];
+  },
+
+  getBy: async function ({ email, username, firstname, lastname }) {
+    const sql = `SELECT * FROM "User" WHERE email = $1 OR username = $2 OR firstname = $3 OR lastname = $4`;
+    const values = [email, username, firstname, lastname];
+
+    const result = await client.query(sql, values);
     return result.rows[0];
   },
 
   create: async function ({ email, password, firstname, lastname, username }) {
     const sql = `INSERT INTO "User" (email, firstname, lastname, username, password) VALUES ($1, $2, $3, $4, $5) RETURNING id, email`;
     const values = [email, firstname, lastname, username, password];
+    const result = await client.query(sql, values);
+    return result.rows[0];
+  },
+
+  checkPassword: async function ({
+    username = null,
+    email = null,
+    password = null,
+  }) {
+    const sql = `SELECT * FROM "User" WHERE username = $1 OR email = $2 AND password = $3`;
+    const values = [username, email, password];
+
     const result = await client.query(sql, values);
     return result.rows[0];
   },

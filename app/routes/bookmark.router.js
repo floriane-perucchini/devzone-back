@@ -60,23 +60,7 @@ router.delete("/bookmark/:id", bookmark.delete);
 
 export default router;
 
-// TODO: Gérer le GET des bookmarks/tools etc
-// TODO: bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
+// TODO: Bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
 
-// TODO: Add Contact Routes && request.get('host')
-// TODO: ADD default user avatar
 // TODO: Understand refresh tokens
-// TODO: user/:id => format: userinfo, tools: {}
-// TODO: categories => format tools
-// TODO: bookmark delete (wrong dm)
-// TODO: remove images from bookmarks && add imgLink String
-
-// TODO: Verify if username is already in use and verify it
-// TODO: Verify email and replace it when it's valid
-
-// TODO: Add toLowerCase to user
-
-// TODO: Lost password
-// TODO: Resend verification mail user
-
 // TODO: GitHub login

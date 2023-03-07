@@ -29,7 +29,7 @@ const toolController = {
   create: async function (request, response, next) {
     const { name, logo, description } = request.body;
     try {
-      const checkTool = await db.tool.check(name);
+      const checkTool = await db.tool.getBy(name);
       if (checkTool) next(new Error409("Tool already exists."));
 
       const newTool = await db.tool.create({ name, logo, description });
