@@ -8,37 +8,28 @@ TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
 
-INSERT INTO "Category"("name", "description",  "order")
-
-VALUES
-    ('slack', 'slack description', 1),
-    ('github', 'github description', 2),
-    ('dev', 'dev description',  1),
-    ('facebook', 'facebook description', 2);
-
-INSERT INTO "Tool"("name", "description", "icon", "link", "order", "categoryId")
-
-VALUES
-	 ('News', 'Latest developers news', 'icon','/app/news',1, 1),
-	 ('Search', 'Search for NPMs, Stackoverflow & Github', 'icon', '/app/search',2, 2),
-	 ('HTML',  'HTML, CSS and Javascript playground',  'icon', '/app/playground-html', 1, 3),
-	 ('javascript', 'Pure Javascript playground',  'icon', '/app/playground-js', 2, 4);
-
 INSERT INTO "Category"("name", "description", "order")
 
 VALUES
     ('General', 'General Category Description', 1),
     ('Playground', 'Playground Category Description', 2);
 
+INSERT INTO "Tool"("name", "description", "icon", "link", "order", "categoryId")
+
+VALUES
+    ('News', 'Latest developers news', 'icon','/app/news',1, 1),
+    ('Search', 'Search for NPMs, Stackoverflow & Github', 'icon', '/app/search',2, 1),
+    ('HTML',  'HTML, CSS and Javascript playground',  'icon', '/app/playground-html', 1, 2),
+    ('Javascript', 'Pure Javascript playground',  'icon', '/app/playground-js', 2, 2);
 
 INSERT INTO "User"("email", "password", "firstname", "lastname", "username", "active", "website")
 
 VALUES
-  ('karim@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Karim', 'Romdhane', 'karim', true,'https///website.com'),
-  ('enzo@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Enzo', 'Bacqueyrisses', 'enzo', true,'https///website.com'),
-  ('floriane@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Floriane', 'Perucchini', 'floriane',true, 'https///website.com'),
-  ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', true,'https///website.com'),
-  ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', true,'https///website.com');
+    ('karim@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Karim', 'Romdhane', 'karim', true,'https///website.com'),
+    ('enzo@gmail.com', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Enzo', 'Bacqueyrisses', 'enzo', true,'https///website.com'),
+    ('floriane@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Floriane', 'Perucchini', 'floriane',true, 'https///website.com'),
+    ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', true,'https///website.com'),
+    ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', true,'https///website.com');
 
 INSERT INTO "Image"("fileName", "filePath", "mimeType", "size", "userId")
 
@@ -49,7 +40,7 @@ VALUES
 
 INSERT INTO "Bookmark"("name", "description", "link", "imgLink", "userId", "toolId")
 
-    VALUES
+VALUES
     ('Favorite1', 'Super favorite 1', 'link1', '/image', 1, 2),
     ('Favorite2', 'Super favorite 1', 'link1', '/image', 2, 1),
     ('Favorite3', 'Super favorite 1', 'link1', '/image', 3, 2),
@@ -75,8 +66,3 @@ VALUES
     (3, 3);
 
 COMMIT;
-
-
-
-
-
