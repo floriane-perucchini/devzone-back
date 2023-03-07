@@ -4,7 +4,6 @@ import fs from "fs";
 import cors from "cors";
 import router from "./app/routes/index.router.js";
 import { errorsHandler } from "./app/middlewares/index.middleware.js";
-
 const app = express();
 
 app.use(cors());

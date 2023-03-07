@@ -23,6 +23,7 @@ const router = express.Router();
  */
 router.get("/bookmarks", bookmark.getAll);
 router.get("/bookmark/:id", bookmark.get);
+router.get("/bookmarks/user/:id", bookmark.getByUser);
 
 // POST Routes
 /**
@@ -58,3 +59,8 @@ router.patch("/bookmark/:id", validate, bookmark.update);
 router.delete("/bookmark/:id", bookmark.delete);
 
 export default router;
+
+// TODO: Bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
+
+// TODO: Understand refresh tokens
+// TODO: GitHub login

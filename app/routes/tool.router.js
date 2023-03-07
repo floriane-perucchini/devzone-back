@@ -1,7 +1,7 @@
 import express from "express";
 import { toolController as tool } from "../controllers/index.controller.js";
+import { toolController as toolsonusers } from "../controllers/index.controller.js";
 import { validateTool as validate } from "../middlewares/validators/index.validator.js";
-
 const router = express.Router();
 /**
  * tool
@@ -31,7 +31,8 @@ router.get("/tool/:id", tool.get);
  * @return {object} 200 - bookmark response
  * @return {object} 500 - Unexpected error
  */
-router.post("/tool", validate, tool.create);
+router.post("/tool", tool.create);
+router.post("/tools/user/:id", toolsonusers.updateOnUser);
 
 // PATCH Routes
 /**
@@ -54,5 +55,6 @@ router.patch("/tool/:id", validate, tool.update);
  * @return {object} 500 - Unexpected error
  */
 router.delete("/tool/:id", tool.delete);
+router.delete("/tools/user/:id", toolsonusers.deleteOnUser);
 
 export default router;

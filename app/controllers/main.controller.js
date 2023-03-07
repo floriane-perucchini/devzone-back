@@ -4,17 +4,20 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import "dotenv/config";
 import config from "../config/token.config.js";
-import { Error404, Error409 } from "../utils/errors/index.util.js";
+import { Error409 } from "../utils/errors/index.util.js";
 import { transporter } from "../services/index.service.js";
 
 const mainController = {
   signup: async function (request, response, next) {
     const wannabeUser = request.body;
+    wannabeUser.email = wannabeUser.email?.toLowerCase();
+    wannabeUser.username = wannabeUser.username?.toLowerCase();
+
     try {
       // Check if username/email already exists
-      const checkUser = await db.main.getUser({
-        username: wannabeUser.username,
-        email: wannabeUser.email,
+      const checkUser = await db.user.getBy({
+        username: wannabeUser.username.toLowerCase(),
+        email: wannabeUser.email.toLowerCase(),
       });
       if (checkUser?.email === wannabeUser.email)
         return next(new Error409("This email is already in use."));
@@ -29,16 +32,15 @@ const mainController = {
       const newUser = await db.user.create(wannabeUser);
       if (!newUser) return next(new Error("User creation failed."));
 
-      // Send email confirmation
+      // Create Token & Send email confirmation
       const emailToken = String(crypto.randomUUID());
-      await db.main.createEmailToken({ userId: newUser.id, emailToken });
+      await db.token.createEmail({ userId: newUser.id, emailToken });
 
-      const link = `http://localhost:3000/verify?token=${emailToken}`;
+      const link = `http:/${request.get("host")}/verify?token=${emailToken}`;
       const mailData = {
         from: "devzoneapplication@gmail.com",
         to: newUser.email,
         subject: "Welcome to DevZone!",
-        text: "text",
         html: `<b>Hey there! Click on this <a href='${link}'>link</a> to confirm your email.</b>`,
       };
 
@@ -60,10 +62,11 @@ const mainController = {
     const { username, email, password } = request.body;
     try {
       // Check if user exists
-      const user = await db.main.getUser({
+      const user = await db.user.getBy({
         username: username?.toLowerCase(),
         email: email?.toLowerCase(),
       });
+      console.log(user);
       if (!user) return next("Your email/username or password is not correct.");
 
       // Check if password is correct
@@ -72,7 +75,7 @@ const mainController = {
         return next("Your email/username or password is not correct.");
 
       // Check if credentials are valid
-      const checkUser = await db.main.checkUser({
+      const checkUser = await db.user.checkPassword({
         username: username?.toLowerCase(),
         email: email?.toLowerCase(),
         password: user.password,
@@ -96,7 +99,7 @@ const mainController = {
       // Create JWT Refresh Token
       const refreshToken = crypto.randomBytes(128).toString("base64");
 
-      await db.main.createRefreshToken({
+      await db.token.createRefresh({
         userId: user.id,
         jwtRefreshToken: refreshToken,
         expiration: Date.now() + config.refreshToken.expiresIn,
@@ -118,44 +121,20 @@ const mainController = {
       return next();
     }
   },
-  verify: async function (request, response, next) {
-    const { token } = request.query;
-    try {
-      const verifiedUser = await db.main.getVerifiedUser(token);
-      console.log(verifiedUser);
-      if (!verifiedUser)
-        return next(new Error404(`User with token ${token} not found.`));
-
-      verifiedUser.active = true;
-      const updatedUser = await db.user.update(
-        verifiedUser,
-        verifiedUser.userId
-      );
-      if (!updatedUser)
-        return next(new Error("User update active status failed."));
-
-      response.json("User email verified successfully.");
-    } catch (error) {
-      next(error);
-    }
-  },
 
   contact: async function (request, response, next) {
-    const { email, message } = request.body;
+    const { email, message, subject } = request.body;
 
     const mailData = {
       from: email,
       to: "devzoneapplication@gmail.com",
-      subject: "Contact Form",
+      subject,
       html: `<b>${message}</b>`,
     };
 
     try {
       await transporter.sendMail(mailData);
-      return response.json({
-        message: "Mail sent successfully.",
-        messageId: email.messageId,
-      });
+      return response.json("Form contact mail sent successfully.");
     } catch (error) {
       error.message = "Contact form mail couldn't be sent.";
       error.type = "nodemailer";

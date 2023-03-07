@@ -1,5 +1,9 @@
 node_modules
 .env
-logs/access.log
-/logs/access.log
 logs
+/log/access.log
+access.log
+/log
+logs/access.log
+*.log
+**/*.log
