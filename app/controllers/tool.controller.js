@@ -70,12 +70,12 @@ const toolController = {
     const { toolId } = request.body;
 
     try {
-      const addTool = await db.toolsOnUsers.updateOnUser(id, toolId);
+      const addedTool = await db.toolsOnUsers.updateOnUser(id, toolId);
+      if (!addedTool) return next(`Tool couldn't be added to user ${id}`);
 
-      response.json(addTool);
+      response.json(`Tool was added successfully from user ${id}`);
     } catch (error) {
-      error.message = "tool insertion failed";
-
+      error.message = "Tool insertion to user failed";
       next(error);
     }
   },
@@ -98,11 +98,12 @@ const toolController = {
     const { toolId } = request.body;
 
     try {
-      const deleteTool = await db.toolsOnUsers.deleteOnUser(id, toolId);
+      const deletedTool = await db.toolsOnUsers.deleteOnUser(id, toolId);
+      if (!deletedTool) return next("Tool couldn't be deleted.");
 
-      response.json(deleteTool);
+      response.json(`Tool was deleted successfully from user ${id}`);
     } catch (error) {
-      console.error(error);
+      error.message = "Tool deletion from user failed.";
       next(error);
     }
   },
