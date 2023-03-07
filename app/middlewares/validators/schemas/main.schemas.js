@@ -30,7 +30,7 @@ const mainSchemas = {
         .min(1, { message: "Username must be at least 1 character." }),
     })
     .refine((signup) => signup.password === signup.confirmedPassword, {
-      message: "Passwords don't match",
+      message: "Passwords don't match.",
       path: ["confirmedPassword"],
     }),
 };
