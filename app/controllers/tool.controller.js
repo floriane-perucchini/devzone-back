@@ -70,7 +70,7 @@ const toolController = {
     const { toolId } = request.body;
 
     try {
-      const addTool = await db.toolsonusers.updateOnUser(id, toolId);
+      const addTool = await db.toolsOnUsers.updateOnUser(id, toolId);
 
       response.json(addTool);
     } catch (error) {
@@ -98,7 +98,7 @@ const toolController = {
     const { toolId } = request.body;
 
     try {
-      const deleteTool = await db.toolsonusers.deleteOnUser(id, toolId);
+      const deleteTool = await db.toolsOnUsers.deleteOnUser(id, toolId);
 
       response.json(deleteTool);
     } catch (error) {
