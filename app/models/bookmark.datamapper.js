@@ -7,12 +7,14 @@ const bookmarkDatamapper = {
     const results = await client.query(sql);
     return results.rows;
   },
+
   get: async function (id) {
     const sql = `SELECT * FROM "Bookmark" WHERE id = $1`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
+
   getByUser: async function (id) {
     const sql = `SELECT 
     t.id AS "toolId",
@@ -44,6 +46,7 @@ const bookmarkDatamapper = {
     const result = await client.query(sql, [id]);
     return result.rows;
   },
+
   create: async function ({
     name,
     description,
@@ -61,6 +64,7 @@ const bookmarkDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   update: async function ({ name, description, link, imgLink }, id) {
     const sql = `UPDATE "Bookmark" set name = $1, description = $2, link = $3, "imgLink" = $4 WHERE id = $5`;
     const values = [name, description, link, imgLink, id];
@@ -68,6 +72,7 @@ const bookmarkDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+
   delete: async function (id) {
     const sql = `DELETE FROM "Bookmark" WHERE id = $1`;
     const values = [id];

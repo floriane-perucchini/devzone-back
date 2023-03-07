@@ -15,8 +15,4 @@ router.use(mainRouter);
 router.use(featureRouter);
 router.use(categoryRouter);
 
-
-
-
-
 export default router;

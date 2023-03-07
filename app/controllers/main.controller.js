@@ -11,11 +11,14 @@ import { extract } from "@extractus/feed-extractor";
 const mainController = {
   signup: async function (request, response, next) {
     const wannabeUser = request.body;
+    wannabeUser.email = wannabeUser.email?.toLowerCase();
+    wannabeUser.username = wannabeUser.username?.toLowerCase();
+
     try {
       // Check if username/email already exists
       const checkUser = await db.main.getUser({
-        username: wannabeUser.username,
-        email: wannabeUser.email,
+        username: wannabeUser.username.toLowerCase(),
+        email: wannabeUser.email.toLowerCase(),
       });
       if (checkUser?.email === wannabeUser.email)
         return next(new Error409("This email is already in use."));
@@ -119,6 +122,7 @@ const mainController = {
       return next();
     }
   },
+
   verify: async function (request, response, next) {
     const { token } = request.query;
     try {
@@ -141,12 +145,12 @@ const mainController = {
   },
 
   contact: async function (request, response, next) {
-    const { email, message } = request.body;
+    const { email, message, subject } = request.body;
 
     const mailData = {
       from: email,
       to: "devzoneapplication@gmail.com",
-      subject: "Contact Form",
+      subject,
       html: `<b>${message}</b>`,
     };
 
@@ -160,16 +164,6 @@ const mainController = {
     }
   },
 
-  /* rss: async function (request, response, next) {
-    try {
-      const feed = await extract('https://news.google.com/rss');
-      response.json(feed);
-    } catch (error) {
-      response.status(404).send('404 : DEAD END !');
-    }
-  }
-
-  */
   feed: async function (request, response) {
     const meta = {
       service: "feed-reader",

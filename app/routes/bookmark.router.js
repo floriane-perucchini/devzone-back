@@ -73,3 +73,10 @@ export default router;
 
 // TODO: Verify if username is already in use and verify it
 // TODO: Verify email and replace it when it's valid
+
+// TODO: Add toLowerCase to user
+
+// TODO: Lost password
+// TODO: Resend verification mail user
+
+// TODO: GitHub login

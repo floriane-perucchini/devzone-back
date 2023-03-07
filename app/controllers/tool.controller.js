@@ -27,6 +27,7 @@ const toolController = {
   },
 
   create: async function (request, response, next) {
+    console.log(request.body);
     const { name, logo, description } = request.body;
     try {
       const checkTool = await db.tool.check(name);
