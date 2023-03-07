@@ -1,12 +1,14 @@
 import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
 import fs from "fs";
+import { capitalize } from "../utils/index.js";
 
 const userController = {
   getAll: async function (request, response, next) {
     try {
       const users = await db.user.getAll();
       if (!users) return next(new Error("Couldn't get the users."));
+
       response.json(users);
     } catch (error) {
       next(error);
@@ -26,20 +28,22 @@ const userController = {
   },
 
   update: async function (request, response, next) {
+    console.log(request.body);
     const { id } = request.params;
-    const { email, firstname, lastname, username, password } = request.body;
+    const { email, firstname, lastname, username, password, website } =
+      request.body;
 
     // TODO: Verify if username is already in use and verify it
     // TODO: Verify email and replace it when it's valid
-
     try {
       const user = await db.user.get(id);
       if (!user) return next(new Error("404"));
 
       if (email) user.email = email.toLowerCase();
-      if (firstname) user.firstname = firstname.toLowerCase();
-      if (lastname) user.lastname = lastname.toLowerCase();
+      if (firstname) user.firstname = capitalize(firstname);
+      if (lastname) user.lastname = capitalize(lastname);
       if (username) user.username = username.toLowerCase();
+      if (website) user.username = website.toLowerCase();
       if (password) user.password = await bcrypt.hash(password, 12);
 
       const userUpdated = await db.user.update(user, id);

@@ -7,18 +7,21 @@ const toolDatamapper = {
     const results = await client.query(sql);
     return results.rows;
   },
+
   get: async function (id) {
     const sql = `SELECT * FROM "Tool" WHERE id = $1`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
   },
+
   check: async function (name) {
     const sql = `SELECT * FROM "Tool" WHERE name = $1`;
 
     const result = await client.query(sql, [name]);
     return result.rows[0];
   },
+
   create: async function ({
     name,
     description,
@@ -33,6 +36,7 @@ const toolDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+
   update: async function (
     { name, description, categoryId, icon, link, order },
     id
@@ -43,6 +47,7 @@ const toolDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
+
   delete: async function (id) {
     const sql = `DELETE FROM "Tool" WHERE id = $1`;
     const values = [id];

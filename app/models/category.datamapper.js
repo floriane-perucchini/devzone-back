@@ -11,6 +11,7 @@ const categoryDatamapper = {
     const results = await client.query(sql);
     return results.rows;
   },
+
   get: async function (id) {
     const sql = `SELECT c.*, json_agg(t.*) as tools
     FROM "Category" c

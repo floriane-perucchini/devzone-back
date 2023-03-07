@@ -31,7 +31,7 @@ router.get("/tool/:id", tool.get);
  * @return {object} 200 - bookmark response
  * @return {object} 500 - Unexpected error
  */
-router.post("/tool", validate, tool.create);
+router.post("/tool", tool.create);
 
 // PATCH Routes
 /**

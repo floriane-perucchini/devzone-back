@@ -4,3 +4,4 @@ logs
 /log/access.log
 access.log
 /log
+logs/access.log

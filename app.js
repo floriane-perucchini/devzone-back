@@ -4,7 +4,6 @@ import fs from "fs";
 import cors from "cors";
 import router from "./app/routes/index.router.js";
 import { errorsHandler } from "./app/middlewares/index.middleware.js";
-import { extract } from '@extractus/feed-extractor'
 const app = express();
 
 app.use(cors());
@@ -20,7 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(router);
-
 
 app.use(errorsHandler);
 

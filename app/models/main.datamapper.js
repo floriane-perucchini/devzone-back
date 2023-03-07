@@ -8,6 +8,7 @@ const mainDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   checkUser: async function ({
     username = null,
     email = null,
@@ -19,12 +20,14 @@ const mainDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   createEmailToken: async function ({ userId, emailToken }) {
     const sql = `INSERT INTO "Token" ("userId", "emailToken") VALUES ($1, $2)`;
     const values = [userId, emailToken];
 
     return await client.query(sql, values);
   },
+
   getVerifiedUser: async function (emailToken) {
     const sql = `SELECT * FROM "Token" JOIN "User" ON "User".id = "Token"."userId" WHERE "Token"."emailToken" = $1`;
     const values = [emailToken];
@@ -32,6 +35,7 @@ const mainDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   createRefreshToken: async function ({ userId, jwtRefreshToken, expiration }) {
     const sql = `UPDATE "Token" SET "jwtRefreshToken" = $1, expiration = $2 WHERE "userId" = $3`;
     const values = [jwtRefreshToken, expiration, userId];
