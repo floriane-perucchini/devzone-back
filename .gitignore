@@ -5,3 +5,5 @@ logs
 access.log
 /log
 logs/access.log
+*.log
+**/*.log
