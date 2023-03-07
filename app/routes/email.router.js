@@ -5,6 +5,7 @@ const router = express.Router();
 
 // GET Routes
 router.get("/verify", email.verify);
+router.get("/confirmation/:id", email.confirmation);
 router.get("/reset-link/:id", email.resetPasswordLink);
 
 // POST Routes

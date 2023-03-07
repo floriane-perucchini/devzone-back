@@ -64,7 +64,6 @@ export default router;
 
 // TODO: remove images from bookmarks && add imgLink String
 
-// TODO: Lost password
 // TODO: Resend verification mail user
 
 // TODO: Understand refresh tokens
