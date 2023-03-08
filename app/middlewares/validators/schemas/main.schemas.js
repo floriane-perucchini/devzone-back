@@ -21,7 +21,7 @@ const mainSchemas = {
         .string()
         .regex(
           new RegExp(
-            "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&.])[A-Za-z\\d@$!%*#?&]{8,}$"
+            "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#.?&])[A-Za-z\\d@$!%*#.?&]{8,}$"
           ),
           {
             message:
@@ -47,7 +47,7 @@ const mainSchemas = {
             .string()
             .regex(
               new RegExp(
-                "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&.])[A-Za-z\\d@$!%*#?&]{8,}$"
+                "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#.?&])[A-Za-z\\d@$!%*#.?&]{8,}$"
               ),
               {
                 message:
@@ -69,7 +69,7 @@ const mainSchemas = {
             .string()
             .regex(
               new RegExp(
-                "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&.])[A-Za-z\\d@$!%*#?&]{8,}$"
+                "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#.?&])[A-Za-z\\d@$!%*#.?&]{8,}$"
               ),
               {
                 message:
