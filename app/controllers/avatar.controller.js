@@ -10,8 +10,6 @@ const avatarController = {
     image.filePath = `/images/avatar-user${id}.webp`;
     const { size, buffer } = image;
 
-    if (size > 3200000)
-      return next("Your avatar must have a size lower than 3MB.");
     try {
       const userAvatar = await db.avatar.getBy({ userId: id });
 
@@ -38,9 +36,6 @@ const avatarController = {
     image.fileName = `avatar-user${id}.webp`;
     image.filePath = `/images/avatar-user${id}.webp`;
     const { buffer } = image;
-
-    if (image?.size > 3200000)
-      return next(new Error("Your avatar must have a size lower than 3MB."));
 
     try {
       const userAvatar = await db.avatar.getBy({ userId: id });
