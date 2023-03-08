@@ -91,17 +91,17 @@ model Token {
 }
 
 model Image {
-  id       Int    @id @default(autoincrement())
-  fileName String @unique
-  filePath String
-  mimeType String
-  size     BigInt
-  userId   Int?   @unique
-  User     User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int      @id @default(autoincrement())
+  fileName  String   @unique
+  filePath  String   @unique
+  size      BigInt
+  userId    Int?     @unique
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@index([fileName])
   @@index([filePath])
-  @@index([mimeType])
   @@index([size])
   @@index([userId])
 }

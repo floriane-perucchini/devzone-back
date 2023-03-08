@@ -31,11 +31,11 @@ VALUES
     ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', true,'https///website.com'),
     ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', true,'https///website.com');
 
-INSERT INTO "Image"("fileName", "filePath", "mimeType", "size", "userId")
+INSERT INTO "Image"("fileName", "filePath", "size", "userId")
 
 VALUES
-    ('test1', 'test1', 'jpg', 3754, 1),
-    ('test2', 'test2', 'jpg', 3754, 2);
+    ('test1', 'test1.webp', 3754, 1),
+    ('test2', 'test2.webp', 754, 2);
 
 
 INSERT INTO "Bookmark"("name", "description", "link", "imgLink", "userId", "toolId")
