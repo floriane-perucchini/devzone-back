@@ -1,7 +1,7 @@
 import multer from "multer";
 
 const imageUpload = multer({
-  dest: "public/images",
+  storage: multer.memoryStorage(),
 });
 
 export default imageUpload;

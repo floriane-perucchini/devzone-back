@@ -1,24 +1,24 @@
 import { client } from "../services/index.service.js";
 
 const avatarDatamapper = {
-  getBy: async function ({ fileName, filePath, mimeType, userId }) {
-    const sql = `SELECT * FROM "Image" WHERE "fileName" = $1 OR "filePath" = $2 OR "mimeType" = $3 OR "userId" = $4`;
-    const values = [fileName, filePath, mimeType, userId];
+  getBy: async function ({ fileName, filePath, userId }) {
+    const sql = `SELECT * FROM "Image" WHERE "fileName" = $1 OR "filePath" = $2 OR "userId" = $3`;
+    const values = [fileName, filePath, userId];
 
     const result = await client.query(sql, values);
     return result.rows[0];
   },
-  upload: async function ({ filename, mimetype, path, size }, id) {
-    const sql = `INSERT INTO "Image" ("fileName", "filePath", "mimeType", size, "userId") VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-    const values = [filename, path, mimetype, size, id];
+  upload: async function ({ fileName, filePath, size }, id) {
+    const sql = `INSERT INTO "Image" ("fileName", "filePath", size, "userId") VALUES ($1, $2, $3, $4) RETURNING *`;
+    const values = [fileName, filePath, size, id];
 
     const result = await client.query(sql, values);
     return result.rows[0];
   },
 
-  update: async function ({ filename, mimetype, path, size }, id) {
-    const sql = `UPDATE "Image" SET "fileName" = $1, "filePath" = $2, "mimeType" = $3, size = $4 WHERE "userId" = $5 RETURNING *`;
-    const values = [filename, path, mimetype, size, id];
+  update: async function ({ fileName, filePath, size }, id) {
+    const sql = `UPDATE "Image" SET "fileName" = $1, "filePath" = $2, size = $3 WHERE "userId" = $4 RETURNING *`;
+    const values = [fileName, filePath, size, id];
 
     const result = await client.query(sql, values);
     return result.rows[0];
