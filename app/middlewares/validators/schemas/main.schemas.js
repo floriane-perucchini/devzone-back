@@ -21,7 +21,7 @@ const mainSchemas = {
         .string()
         .regex(
           new RegExp(
-            "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
+            "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&.])[A-Za-z\\d@$!%*#?&]{8,}$"
           ),
           {
             message:
@@ -32,7 +32,7 @@ const mainSchemas = {
       confirmedPassword: z.string().trim(),
       username: z
         .string()
-        .min(1, { message: "Username must be at least 1 character." })
+        .min(2, { message: "Username must be at least 2 character." })
         .trim(),
     })
     .refine((signup) => signup.password === signup.confirmedPassword, {
@@ -69,7 +69,7 @@ const mainSchemas = {
             .string()
             .regex(
               new RegExp(
-                "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
+                "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&.])[A-Za-z\\d@$!%*#?&]{8,}$"
               ),
               {
                 message:
@@ -80,7 +80,7 @@ const mainSchemas = {
           confirmedPassword: z.string().trim(),
           username: z
             .string()
-            .min(1, { message: "Username must be at least 1 character." })
+            .min(2, { message: "Username must be at least 2 character." })
             .trim(),
         })
         .refine((signup) => signup.password === signup.confirmedPassword, {
