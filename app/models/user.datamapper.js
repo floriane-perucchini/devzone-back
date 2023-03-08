@@ -80,30 +80,6 @@ const userDatamapper = {
     const result = await client.query(sql, values);
     return result.rowCount;
   },
-
-  uploadAvatar: async function ({ filename, mimetype, path, size }, id) {
-    const sql = `INSERT INTO "Image" (id, "fileName", "filePath", "mimeType", size) VALUES ($1, $2, $3, $4, $5)`;
-    const values = [id, filename, path, mimetype, size];
-
-    const result = await client.query(sql, values);
-    return result.rowCount;
-  },
-
-  updateAvatar: async function ({ filename, mimetype, path, size }, id) {
-    const sql = `UPDATE "Image" SET "fileName" = $1, "filePath" = $2, "mimeType" = $3, size = $4 WHERE "id" = $5`;
-    const values = [filename, path, mimetype, size, id];
-
-    const result = await client.query(sql, values);
-    return result.rowCount;
-  },
-
-  deleteAvatar: async function (id) {
-    const sql = `DELETE FROM "Image" WHERE "id" = $1`;
-    const values = [id];
-
-    const result = await client.query(sql, values);
-    return result.rowCount;
-  },
 };
 
 export default userDatamapper;

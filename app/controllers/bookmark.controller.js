@@ -40,6 +40,7 @@ const bookmarkController = {
             "Couldn't find the bookmark with the user Id you requested."
           )
         );
+
       response.json(bookmark);
     } catch (error) {
       error.type = "database";

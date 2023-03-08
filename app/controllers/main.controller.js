@@ -123,12 +123,12 @@ const mainController = {
   },
 
   contact: async function (request, response, next) {
-    const { email, message, subject } = request.body;
-
+    const { email, message, subject, select } = request.body;
+    // TODO: Change select key
     const mailData = {
       from: email,
       to: "devzoneapplication@gmail.com",
-      subject,
+      subject: `${select}: ${subject}`,
       html: `<b>${message}</b>`,
     };
 
