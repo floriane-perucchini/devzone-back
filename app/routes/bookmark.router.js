@@ -62,5 +62,7 @@ export default router;
 
 // TODO: Bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
 
-// TODO: Understand refresh tokens
+// TODO: Understand refresh tokens - Delete token ??
 // TODO: GitHub login
+
+// TODO: Handle user avatars images

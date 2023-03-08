@@ -1,6 +1,5 @@
 import db from "../models/index.datamapper.js";
 import bcrypt from "bcrypt";
-import fs from "fs";
 import { capitalize } from "../utils/index.js";
 import { Error409 } from "../utils/errors/index.util.js";
 
@@ -97,55 +96,6 @@ const userController = {
     } catch (error) {
       next(error);
     }
-  },
-  uploadAvatar: async function (request, response, next) {
-    const { id } = request.params;
-    const image = request.file;
-
-    if (image?.size > 3200000)
-      return next("Your avatar must have a size lower than 3MB.");
-    try {
-      const user = await db.user.get(id);
-      if (user.imgId)
-        return next("Use the PATCH route to update the user avatar.");
-
-      const insertedAvatar = await db.user.uploadAvatar(image, id);
-      if (!insertedAvatar) return next("Avatar couldn't be uploaded.");
-
-      response.json("Avatar was uploaded successfully.");
-    } catch (error) {
-      next(error);
-    }
-  },
-  updateAvatar: async function (request, response, next) {
-    const { id } = request.params;
-    const image = request.file;
-
-    if (image?.size > 3200000)
-      return next(new Error("Your avatar must have a size lower than 3MB."));
-
-    try {
-      const user = await db.user.get(id);
-      await fs.promises.unlink(user.filePath);
-
-      const updatedAvatar = await db.user.updateAvatar(image, user.imgId);
-      if (!updatedAvatar)
-        return next(new Error("Avatar couldn't be uploaded."));
-
-      response.json("Avatar was updated successfully.");
-    } catch (error) {
-      return next(error);
-    }
-
-    response.json("Avatar was updated successfully.");
-  },
-  deleteAvatar: async function (request, response, next) {
-    const { id } = request.params;
-
-    const deletedAvatar = await db.user.deleteAvatar(id);
-    if (!deletedAvatar) return next(new Error("Avatar couldn't be deleted."));
-
-    response.json("Avatar was deleted successfully.");
   },
 };
 

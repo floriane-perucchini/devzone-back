@@ -5,7 +5,7 @@ import mainController from "./main.controller.js";
 import featureController from "./feature.controller.js";
 import categoryController from "./category.controller.js";
 import emailController from "./email.controller.js";
-
+import avatarController from "./avatar.controller.js";
 
 export {
   bookmarkController,
@@ -15,5 +15,5 @@ export {
   featureController,
   categoryController,
   emailController,
-
+  avatarController,
 };
