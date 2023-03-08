@@ -25,31 +25,11 @@ const bookmarkDatamapper = {
 
   getByUser: async function (id) {
     const sql = `SELECT
-    t.id AS "toolId",
-    t.name AS "name",
-    COALESCE(json_agg(
-    CASE
-    WHEN b.id IS NULL THEN NULL
-    ELSE json_build_object(
-    'id', b.id,
-    'name', b.name,
-    'description', b.description,
-    'link', b.link,
-    'userId', b."userId",
-    'toolId', b."toolId",
-    'createdAt', b."createdAt",
-    'imgLink', b."imgLink",
-    'updatedAt', b."updatedAt"
-    )
-    END
-    ) FILTER (WHERE b.id IS NOT NULL), '[]'::json) AS bookmarks
-    FROM
-    public."Tool" t
-    LEFT JOIN public."Bookmark" b ON b."toolId" = t.id AND b."userId" = $1
-    GROUP BY
-    t.id, t.name
-    ORDER BY
-    t.id ASC;`;
+    t.id AS "toolId", t.name AS "name",COALESCE(json_agg(CASE WHEN b.id IS NULL THEN NULL ELSE json_build_object(
+    'id', b.id,'name', b.name,'description', b.description,'link', b.link,'userId', b."userId",'toolId', b."toolId",
+    'createdAt', b."createdAt",'imgLink', b."imgLink",'updatedAt', b."updatedAt") END
+    ) FILTER (WHERE b.id IS NOT NULL), '[]'::json) AS bookmarks FROM public."Tool" t
+    LEFT JOIN public."Bookmark" b ON b."toolId" = t.id AND b."userId" = $1 GROUP BY t.id, t.name ORDER BY t.id ASC;`;
 
     const result = await client.query(sql, [id]);
     return result.rows;
