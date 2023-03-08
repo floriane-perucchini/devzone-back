@@ -3,10 +3,9 @@ import { client } from "../services/index.service.js";
 const userDatamapper = {
   getAll: async function () {
     const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website,
-                        t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, t.link as toolLink, t."categoryId" as toolCategoryId
-                 FROM "User" u
-                        LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id
-                        LEFT JOIN "Tool" t ON t.id = tou."toolId"`;
+                t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, 
+                t.link as toolLink, t."categoryId" as toolCategoryId
+                 FROM "User" u LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id LEFT JOIN "Tool" t ON t.id = tou."toolId"`;
 
     const results = await client.query(sql);
     return results.rows;
