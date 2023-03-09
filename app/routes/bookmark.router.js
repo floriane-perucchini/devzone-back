@@ -66,3 +66,7 @@ export default router;
 // TODO: GitHub login
 
 // TODO: Handle user avatars images
+
+// TODO: Update getAll users tools
+
+// TODO: Add type to Image & User (extrernal/server)
