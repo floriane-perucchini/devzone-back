@@ -31,11 +31,11 @@ VALUES
     ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', true,'https///website.com'),
     ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', true,'https///website.com');
 
-INSERT INTO "Avatar"("fileName", "filePath", "size", "userId")
+INSERT INTO "Avatar"("fileName", "filePath", "url", "size", "userId")
 
 VALUES
-    ('test1', 'test1.webp', 3754, 1),
-    ('test2', 'test2.webp', 754, 2);
+    ('test1', 'avatar-user-1.webp', 'localhost:3000/images/avatar-user1.webp', 3754, 1),
+    ('test2', 'avatar-user-2.webp', 'localhost:3000/images/avatar-user2.webp', 754, 2);
 
 
 INSERT INTO "Bookmark"("name", "description", "link", "imgLink", "userId", "toolId")
