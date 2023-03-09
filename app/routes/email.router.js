@@ -4,11 +4,12 @@ import { emailController as email } from "../controllers/index.controller.js";
 const router = express.Router();
 
 // GET Routes
-router.get("/verify", email.verify);
-router.get("/confirmation/:id", email.confirmation);
-router.get("/reset-link/:id", email.resetPasswordLink);
+router.get("/email/verify", email.verify);
+router.get("/email/confirmation/:id", email.confirmation);
+router.get("/password/reset-link/:id", email.resetPasswordLink);
 
 // POST Routes
-router.post("/reset/:id", email.resetPassword);
+router.post("/password/reset/:id", email.resetPassword);
+router.post("/contact", email.contact);
 
 export default router;

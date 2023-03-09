@@ -44,7 +44,7 @@ const emailController = {
       next(error);
     }
 
-    const link = `http:/${request.get("host")}/verify?token=${token}`;
+    const link = `http:/${request.get("host")}/email/verify?token=${token}`;
     const mailData = {
       from: "devzoneapplication@gmail.com",
       to: user.email,
@@ -118,6 +118,25 @@ const emailController = {
       response.json("Password reset sucessfully.");
     } catch (error) {
       next(error);
+    }
+  },
+
+  contact: async function (request, response, next) {
+    const { email, message, subject, type } = request.body;
+    const mailData = {
+      from: email,
+      to: "devzoneapplication@gmail.com",
+      subject: `${type}: ${subject}`,
+      html: `<b>${message}</b>`,
+    };
+
+    try {
+      await transporter.sendMail(mailData);
+      return response.json("Form contact mail sent successfully.");
+    } catch (error) {
+      error.message = "Contact form mail couldn't be sent.";
+      error.type = "nodemailer";
+      return next(error);
     }
   },
 };

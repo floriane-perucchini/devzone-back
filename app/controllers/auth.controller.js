@@ -7,21 +7,20 @@ import config from "../config/token.config.js";
 import { Error409 } from "../utils/errors/index.util.js";
 import { transporter } from "../services/index.service.js";
 
-const mainController = {
+const authController = {
   signup: async function (request, response, next) {
     const wannabeUser = request.body;
-    wannabeUser.email = wannabeUser.email?.toLowerCase();
-    wannabeUser.username = wannabeUser.username?.toLowerCase();
 
     try {
       // Check if username/email already exists
       const checkUser = await db.user.getBy({
-        username: wannabeUser.username.toLowerCase(),
-        email: wannabeUser.email.toLowerCase(),
+        username: wannabeUser.username?.toLowerCase(),
+        email: wannabeUser.email?.toLowerCase(),
       });
-      if (checkUser?.email === wannabeUser.email)
+      console.log(checkUser);
+      if (checkUser?.email === wannabeUser?.email)
         return next(new Error409("This email is already in use."));
-      if (checkUser?.username === wannabeUser.username)
+      if (checkUser?.username === wannabeUser?.username)
         return next(new Error409("This username is already in use."));
 
       // Hash user password
@@ -36,7 +35,9 @@ const mainController = {
       const emailToken = String(crypto.randomUUID());
       await db.token.createEmail({ userId: newUser.id, emailToken });
 
-      const link = `http:/${request.get("host")}/verify?token=${emailToken}`;
+      const link = `http:/${request.get(
+        "host"
+      )}/email/verify?token=${emailToken}`;
       const mailData = {
         from: "devzoneapplication@gmail.com",
         to: newUser.email,
@@ -121,25 +122,6 @@ const mainController = {
       return next();
     }
   },
-
-  contact: async function (request, response, next) {
-    const { email, message, subject, type } = request.body;
-    const mailData = {
-      from: email,
-      to: "devzoneapplication@gmail.com",
-      subject: `${type}: ${subject}`,
-      html: `<b>${message}</b>`,
-    };
-
-    try {
-      await transporter.sendMail(mailData);
-      return response.json("Form contact mail sent successfully.");
-    } catch (error) {
-      error.message = "Contact form mail couldn't be sent.";
-      error.type = "nodemailer";
-      return next(error);
-    }
-  },
 };
 
-export default mainController;
+export default authController;
