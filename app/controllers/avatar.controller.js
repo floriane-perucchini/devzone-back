@@ -7,8 +7,8 @@ const avatarController = {
     const { id } = request.params;
     const image = request.file;
     image.fileName = `avatar-user${id}.webp`;
-    image.filePath = `/images/avatar-user${id}.webp`;
-    const { size, buffer } = image;
+    image.filePath = `${request.get("host")}/images/avatar-user${id}.webp`;
+    const { buffer } = image;
 
     try {
       const userAvatar = await db.avatar.getBy({ userId: id });
@@ -22,7 +22,7 @@ const avatarController = {
       await sharp(buffer)
         .webp({ quality: 20 })
         .toFile(`./public/images/avatar-user${id}.webp`);
-      const path = `/images/avatar-user${id}.webp`;
+      const path = `${request.get("host")}/images/avatar-user${id}.webp`;
 
       response.status(201).json(path);
     } catch (error) {
@@ -34,7 +34,7 @@ const avatarController = {
     const { id } = request.params;
     const image = request.file;
     image.fileName = `avatar-user${id}.webp`;
-    image.filePath = `/images/avatar-user${id}.webp`;
+    image.filePath = `${request.get("host")}/images/avatar-user${id}.webp`;
     const { buffer } = image;
 
     try {
@@ -50,7 +50,7 @@ const avatarController = {
       await sharp(buffer)
         .webp({ quality: 20 })
         .toFile(`./public/images/avatar-user${id}.webp`);
-      const path = `/images/avatar-user${id}.webp`;
+      const path = `${request.get("host")}/images/avatar-user${id}.webp`;
 
       response.json(path);
     } catch (error) {

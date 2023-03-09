@@ -6,7 +6,7 @@ TRUNCATE TABLE "User" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "ToolsOnUsers" RESTART IDENTITY CASCADE ;
 TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE ;
-TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE ;
+TRUNCATE TABLE "Avatar" RESTART IDENTITY CASCADE ;
 
 INSERT INTO "Category"("name", "description", "order")
 
@@ -31,7 +31,7 @@ VALUES
     ('abdel@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Abdel', 'Karim', 'abdel', true,'https///website.com'),
     ('azouaou@test.fr', '$2b$12$kG3nFBKrQ/Ve8hfqQYlHW.Mg61hxUS0NyDWeaLjQ7otICixTNo.7W', 'Azouaou', 'Benadda', 'test', true,'https///website.com');
 
-INSERT INTO "Image"("fileName", "filePath", "size", "userId")
+INSERT INTO "Avatar"("fileName", "filePath", "size", "userId")
 
 VALUES
     ('test1', 'test1.webp', 3754, 1),
