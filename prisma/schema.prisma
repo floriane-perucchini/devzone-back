@@ -29,6 +29,7 @@ model Tool {
 
 model User {
   id        Int        @id @default(autoincrement())
+  type      String?
   email     String
   password  String
   firstname String?
@@ -92,8 +93,10 @@ model Token {
 
 model Avatar {
   id        Int      @id @default(autoincrement())
+  type      String?
   fileName  String   @unique
   filePath  String   @unique
+  url       String   @unique
   size      BigInt
   userId    Int?     @unique
   User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)

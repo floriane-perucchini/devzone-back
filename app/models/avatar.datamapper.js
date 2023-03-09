@@ -8,17 +8,17 @@ const avatarDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
-  upload: async function ({ fileName, filePath, size }, id) {
-    const sql = `INSERT INTO "Avatar" ("fileName", "filePath", size, "userId") VALUES ($1, $2, $3, $4) RETURNING *`;
-    const values = [fileName, filePath, size, id];
+  upload: async function ({ fileName, filePath, size, url }, id) {
+    const sql = `INSERT INTO "Avatar" ("fileName", "filePath", url, size, "userId") VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    const values = [fileName, filePath, url, size, id];
 
     const result = await client.query(sql, values);
     return result.rows[0];
   },
 
-  update: async function ({ fileName, filePath, size }, id) {
-    const sql = `UPDATE "Avatar" SET "fileName" = $1, "filePath" = $2, size = $3 WHERE "userId" = $4 RETURNING *`;
-    const values = [fileName, filePath, size, id];
+  update: async function ({ fileName, filePath, url, size }, id) {
+    const sql = `UPDATE "Avatar" SET "fileName" = $1, "filePath" = $2, url = $3, size = $4 WHERE "userId" = $5 RETURNING *`;
+    const values = [fileName, filePath, url, size, id];
 
     const result = await client.query(sql, values);
     return result.rows[0];
