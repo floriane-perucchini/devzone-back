@@ -12,8 +12,6 @@
     "avatarclean": "node prisma/data/avatarClean.js",
     "prisma": "npx prisma db push && npx prisma db seed && npm run avatarclean",
     "pm2": "pm2 start ./app/bin/www.js --watch"
-
-
   },
   "repository": {
     "type": "git",
