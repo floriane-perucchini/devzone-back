@@ -60,13 +60,9 @@ router.delete("/bookmark/:id", bookmark.delete);
 
 export default router;
 
-// TODO: Bookmark && tools && categories by userId Routes => bookmarks/user/:id CRUD!!
+// TODO: Update getUser (tools)
 
 // TODO: Understand refresh tokens - Delete token ??
+
 // TODO: GitHub login
-
-// TODO: Handle user avatars images
-
-// TODO: Update getAll users tools
-
-// TODO: Add type to Image & User (extrernal/server)
+// TODO: Update User with Type if GitHub login
