@@ -7,10 +7,10 @@
     "test": "node --no-warnings --experimental-vm-modules $( [ -f ./node_modules/.bin/jest ] && echo ./node_modules/.bin/jest || which jest --runInBand --detectOpenHandles --forceExit)",
     "start": "nodemon ./app/bin/www",
     "dev": "DEBUG=* node ./app/bin/www",
-    "createdb": "npx prisma db push",
-    "seedingdb": "psql -d devzone -U devzoneadmin -f prisma/data/seeding.sql",
-    "prisma": "npx prisma db push && npx prisma db seed && npm run avatarclean",
-    "avatarclean": "node  prisma/data/avatarClean.js"
+    "dbcreate": "npx prisma db push",
+    "dbseed": "npx prisma db seed",
+    "avatarclean": "node prisma/data/avatarClean.js",
+    "prisma": "npx prisma db push && npx prisma db seed && npm run avatarclean"
 
   },
   "repository": {
