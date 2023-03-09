@@ -29,7 +29,7 @@ model Tool {
 
 model User {
   id        Int        @id @default(autoincrement())
-  type      String?
+  type      String     @default("server")
   email     String
   password  String
   firstname String?
@@ -42,6 +42,7 @@ model User {
   bookmark  Bookmark[]
   Avatar    Avatar?
 
+  @@index([type])
   @@index([email])
   @@index([password])
   @@index([firstname])
@@ -93,7 +94,7 @@ model Token {
 
 model Avatar {
   id        Int      @id @default(autoincrement())
-  type      String?
+  type      String   @default("server")
   fileName  String   @unique
   filePath  String   @unique
   url       String   @unique
@@ -103,6 +104,7 @@ model Avatar {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  @@index([type])
   @@index([fileName])
   @@index([filePath])
   @@index([size])
