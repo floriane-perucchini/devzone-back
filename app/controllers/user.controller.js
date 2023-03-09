@@ -14,6 +14,7 @@ const userController = {
       next(error);
     }
   },
+
   get: async function (request, response, next) {
     const { id } = request.params;
     try {

@@ -62,6 +62,8 @@ export default router;
 
 // TODO: Update getUser (tools)
 
+// TODO: 404 page for API
+
 // TODO: Understand refresh tokens - Delete token ??
 
 // TODO: GitHub login
