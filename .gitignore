@@ -3,3 +3,4 @@ node_modules
 logs/access.log
 public/images/*
 !public/images/.gitkeep
+**/.DS_Store
