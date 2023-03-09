@@ -49,7 +49,6 @@ const userController = {
         if (username === user.username)
           return next("Your username is identical");
         const usernameTaken = await db.user.getBy({ username });
-        console.log(usernameTaken);
         if (usernameTaken)
           return next(
             new Error409(
@@ -68,18 +67,6 @@ const userController = {
       if (!userUpdated) return next(new Error("User update failed."));
 
       response.json("User updated successfully.");
-    } catch (error) {
-      next(error);
-    }
-  },
-  updateTool: async function (request, response, next) {
-    const { userId } = request.params;
-    const { toolId } = request.body;
-
-    try {
-      const toolUpdate = await db.ToolsOnUsers.get(userId, toolId);
-
-      response.json(toolUpdate);
     } catch (error) {
       next(error);
     }
