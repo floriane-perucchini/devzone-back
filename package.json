@@ -2,7 +2,7 @@
   "name": "projet-13-devzone-back",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "./app/bin/www",
   "scripts": {
     "test": "node --no-warnings --experimental-vm-modules $( [ -f ./node_modules/.bin/jest ] && echo ./node_modules/.bin/jest || which jest --runInBand --detectOpenHandles --forceExit)",
     "start": "nodemon ./app/bin/www",
@@ -10,7 +10,8 @@
     "dbcreate": "npx prisma db push",
     "dbseed": "npx prisma db seed",
     "avatarclean": "node prisma/data/avatarClean.js",
-    "prisma": "npx prisma db push && npx prisma db seed && npm run avatarclean"
+    "prisma": "npx prisma db push && npx prisma db seed && npm run avatarclean",
+    "pm2": "pm2 start ./app/bin/www.js --watch"
 
   },
   "repository": {
