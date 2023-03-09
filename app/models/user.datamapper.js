@@ -2,10 +2,10 @@ import { client } from "../services/index.service.js";
 
 const userDatamapper = {
   getAll: async function () {
-    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website, A.url as avatar,
-                t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, 
-                t.link as toolLink, t."categoryId" as toolCategoryId
-                 FROM "User" u LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id LEFT JOIN "Tool" t ON t.id = tou."toolId"  LEFT JOIN "Avatar" A on U.id = A."userId"`;
+    const sql = `SELECT u.id, u.email, u.firstname, u.lastname, u.username, u.active, u.website, u."githubUsername", A.url as avatar,
+    t.id as toolId, t.name as toolName, t.description as toolDescription, t.icon as toolIcon, t."order" as toolOrder, 
+    t.link as toolLink, t."categoryId" as toolCategoryId FROM "User" u LEFT JOIN "ToolsOnUsers" tou ON tou."userId" = u.id 
+    LEFT JOIN "Tool" t ON t.id = tou."toolId" LEFT JOIN "Avatar" A on U.id = A."userId"; `;
 
     const results = await client.query(sql);
     return results.rows;
@@ -13,8 +13,8 @@ const userDatamapper = {
 
   get: async function (id) {
     const sql = `SELECT U.*, A.url as avatar FROM "User" U
-                         LEFT JOIN "Avatar" A on U.id = A."userId"
-                         WHERE U.id = $1`;
+    LEFT JOIN "Avatar" A on U.id = A."userId"
+    WHERE U.id = $1`;
 
     const result = await client.query(sql, [id]);
     return result.rows[0];
