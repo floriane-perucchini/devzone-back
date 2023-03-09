@@ -28,19 +28,20 @@ model Tool {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  type      String     @default("server")
-  email     String
-  password  String
-  firstname String?
-  lastname  String?
-  username  String
-  active    Boolean    @default(false)
-  website   String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now()) @updatedAt
-  bookmark  Bookmark[]
-  Avatar    Avatar?
+  id             Int        @id @default(autoincrement())
+  email          String
+  password       String
+  firstname      String?
+  lastname       String?
+  username       String
+  active         Boolean    @default(false)
+  website        String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @default(now()) @updatedAt
+  githubUsername String?
+  type           String     @default("server")
+  Avatar         Avatar?
+  bookmark       Bookmark[]
 
   @@index([type])
   @@index([email])
@@ -86,6 +87,7 @@ model Token {
   expiration      String?
   emailToken      String
   userId          Int
+  githubToken     String?
 
   @@index([jwtRefreshToken])
   @@index([expiration])
@@ -100,9 +102,9 @@ model Avatar {
   url       String   @unique
   size      BigInt
   userId    Int?     @unique
-  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([type])
   @@index([fileName])
