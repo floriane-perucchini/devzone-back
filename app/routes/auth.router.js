@@ -7,5 +7,6 @@ const router = express.Router();
 // POST Routes
 router.post("/auth/signup", validate, auth.signup);
 router.post("/auth/login", validate, auth.login);
+router.post("/auth/github");
 
 export default router;
