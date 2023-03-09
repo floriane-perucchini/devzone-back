@@ -17,6 +17,10 @@ const avatarController = {
       if (userAvatar)
         return next("Use the PATCH route to update the user avatar.");
 
+      fs.promises
+        .access("public/images")
+        .catch(() => fs.mkdirSync("public/images"));
+
       const { size } = await sharp(buffer)
         .webp({ quality: 20 })
         .toFile(`./public${image.filePath}`);
