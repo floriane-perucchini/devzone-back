@@ -68,3 +68,5 @@ export default router;
 
 // TODO: GitHub login
 // TODO: Update User with Type if GitHub login
+
+// TODO: Ask Simoff why accesss.log not ignored in gitignore
