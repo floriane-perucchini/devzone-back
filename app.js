@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(logger("dev"));
-
 app.use(
   logger("common", {
     stream: fs.promises
