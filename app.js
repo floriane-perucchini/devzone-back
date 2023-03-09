@@ -14,10 +14,7 @@ app.use(express.static("public"));
 app.use(logger("dev"));
 app.use(
   logger("common", {
-    stream: fs.promises
-      .access("logs")
-      .catch(() => fs.mkdirSync("logs"))
-      .finally(() => fs.createWriteStream("./logs/access.log", { flags: "a" })),
+    stream: fs.createWriteStream("./logs/access.log", { flags: "a" }),
   })
 );
 
