@@ -1,9 +1,4 @@
 node_modules
 .env
-logs
-/log/access.log
-access.log
-/log
 logs/access.log
-*.log
-**/*.log
+public/images/*

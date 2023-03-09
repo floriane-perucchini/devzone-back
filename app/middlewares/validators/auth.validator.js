@@ -1,12 +1,12 @@
 import { mainSchemas } from "./schemas/index.schemas.js";
 const { loginSchema, signupSchema } = mainSchemas;
 
-function validateMain(request, response, next) {
+function validateAuth(request, response, next) {
   try {
-    if (request.url === "/login" && request.method === "POST")
+    if (request.url === "/auth/login" && request.method === "POST")
       loginSchema.parse(request.body);
 
-    if (request.url === "/signup" && request.method === "POST")
+    if (request.url === "/auth/signup" && request.method === "POST")
       signupSchema.parse(request.body);
   } catch (error) {
     next(error);
@@ -15,4 +15,4 @@ function validateMain(request, response, next) {
   next();
 }
 
-export default validateMain;
+export default validateAuth;
