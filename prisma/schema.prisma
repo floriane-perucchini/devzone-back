@@ -29,17 +29,17 @@ model Tool {
 
 model User {
   id             Int        @id @default(autoincrement())
+  type           String     @default("server")
   email          String
   password       String
   firstname      String?
   lastname       String?
   username       String
+  githubUsername String?
   active         Boolean    @default(false)
   website        String?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @default(now()) @updatedAt
-  githubUsername String?
-  type           String     @default("server")
   Avatar         Avatar?
   bookmark       Bookmark[]
 
@@ -49,6 +49,7 @@ model User {
   @@index([firstname])
   @@index([lastname])
   @@index([username])
+  @@index([githubUsername])
   @@index([active])
   @@index([website])
 }
@@ -60,8 +61,8 @@ model Bookmark {
   link        String?
   userId      Int?
   toolId      Int?
-  createdAt   DateTime @default(now())
   imgLink     String?
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
   tool        Tool?    @relation(fields: [toolId], references: [id], onDelete: Cascade)
   user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -84,14 +85,15 @@ model ToolsOnUsers {
 model Token {
   id              Int     @id @default(autoincrement())
   jwtRefreshToken String?
-  expiration      String?
   emailToken      String
-  userId          Int
   githubToken     String?
+  expiration      String?
+  userId          Int
 
   @@index([jwtRefreshToken])
   @@index([expiration])
   @@index([emailToken])
+  @@index([githubToken])
 }
 
 model Avatar {
