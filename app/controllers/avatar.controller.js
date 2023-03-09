@@ -55,6 +55,10 @@ const avatarController = {
       if (!updatedAvatar)
         return next(new Error("Avatar couldn't be uploaded."));
 
+      await sharp(buffer)
+        .webp({ quality: 20 })
+        .toFile(`./public${image.filePath}`);
+
       const path = image.url;
       response.json(path);
     } catch (error) {

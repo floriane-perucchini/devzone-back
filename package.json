@@ -9,7 +9,9 @@
     "dev": "DEBUG=* node ./app/bin/www",
     "createdb": "npx prisma db push",
     "seedingdb": "psql -d devzone -U devzoneadmin -f prisma/data/seeding.sql",
-    "prisma": "npx prisma db push && npx prisma db seed"
+    "prisma": "npx prisma db push && npx prisma db seed && npm run avatarclean",
+    "avatarclean": "node  prisma/data/avatarClean.js"
+
   },
   "repository": {
     "type": "git",

@@ -130,3 +130,15 @@
 ::ffff:127.0.0.1 - - [09/Mar/2023:09:14:05 +0000] "POST /avatar/user/4 HTTP/1.1" 500 48
 ::ffff:127.0.0.1 - - [09/Mar/2023:09:14:08 +0000] "DELETE /avatar/user/4 HTTP/1.1" 200 34
 ::ffff:127.0.0.1 - - [09/Mar/2023:09:14:11 +0000] "POST /avatar/user/4 HTTP/1.1" 201 42
+::ffff:127.0.0.1 - - [09/Mar/2023:09:21:56 +0000] "POST /avatar/user/4 HTTP/1.1" 201 42
+::ffff:127.0.0.1 - - [09/Mar/2023:09:22:21 +0000] "PUT /avatar/user/4 HTTP/1.1" 404 152
+::ffff:127.0.0.1 - - [09/Mar/2023:09:22:27 +0000] "PATCH /avatar/user/4 HTTP/1.1" 200 42
+::ffff:127.0.0.1 - - [09/Mar/2023:09:22:29 +0000] "DELETE /avatar/user/4 HTTP/1.1" 500 89
+::ffff:127.0.0.1 - - [09/Mar/2023:09:23:15 +0000] "DELETE /avatar/user/4 HTTP/1.1" 500 89
+::ffff:127.0.0.1 - - [09/Mar/2023:09:23:56 +0000] "POST /avatar/user/4 HTTP/1.1" 500 48
+::ffff:127.0.0.1 - - [09/Mar/2023:09:24:17 +0000] "POST /avatar/user/4 HTTP/1.1" 201 42
+::ffff:127.0.0.1 - - [09/Mar/2023:09:24:25 +0000] "PATCH /avatar/user/4 HTTP/1.1" 200 42
+::ffff:127.0.0.1 - - [09/Mar/2023:09:25:37 +0000] "PATCH /avatar/user/4 HTTP/1.1" 500 89
+::ffff:127.0.0.1 - - [09/Mar/2023:09:25:46 +0000] "PATCH /avatar/user/4 HTTP/1.1" 500 89
+::ffff:127.0.0.1 - - [09/Mar/2023:09:25:52 +0000] "PATCH /avatar/user/4 HTTP/1.1" 500 89
+::ffff:127.0.0.1 - - [09/Mar/2023:09:26:08 +0000] "PATCH /avatar/user/4 HTTP/1.1" 200 42
