@@ -86,14 +86,12 @@ model Token {
   id              Int     @id @default(autoincrement())
   jwtRefreshToken String?
   emailToken      String
-  githubToken     String?
   expiration      String?
   userId          Int
 
   @@index([jwtRefreshToken])
   @@index([expiration])
   @@index([emailToken])
-  @@index([githubToken])
 }
 
 model Avatar {
