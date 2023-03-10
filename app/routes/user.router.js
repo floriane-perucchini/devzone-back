@@ -7,6 +7,7 @@ const router = express.Router();
 // GET Routes
 router.get("/users", user.getAll);
 router.get("/user/:id", user.get);
+router.get("/user/token", user.getByToken);
 
 // PATCH Routes
 router.patch("/user/:id", validate, user.update);

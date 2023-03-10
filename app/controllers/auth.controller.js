@@ -6,6 +6,7 @@ import "dotenv/config";
 import config from "../config/token.config.js";
 import { Error409 } from "../utils/errors/index.util.js";
 import { transporter } from "../services/index.service.js";
+import axios from "axios";
 
 const authController = {
   signup: async function (request, response, next) {
@@ -17,7 +18,7 @@ const authController = {
         username: wannabeUser.username?.toLowerCase(),
         email: wannabeUser.email?.toLowerCase(),
       });
-      console.log(checkUser);
+
       if (checkUser?.email === wannabeUser?.email)
         return next(new Error409("This email is already in use."));
       if (checkUser?.username === wannabeUser?.username)
@@ -67,8 +68,10 @@ const authController = {
         username: username?.toLowerCase(),
         email: email?.toLowerCase(),
       });
-      console.log(user);
+
       if (!user) return next("Your email/username or password is not correct.");
+      if (!user.password)
+        return next("Your email/username or password is not correct.");
 
       // Check if password is correct
       const checkPassword = await bcrypt.compare(password, user.password);
@@ -91,12 +94,14 @@ const authController = {
         config.accessToken.secret,
         {
           algorithm: config.accessToken.algorithm,
-          // audience: config.accessToken.audience,
           expiresIn: config.accessToken.expiresIn || 1000,
-          // issuer: config.accessToken.issuer,
           subject: user.id.toString(),
         }
       );
+
+      // TODO: Add access token to db
+      await db.token.createToken({ userId: user.id, jwtToken: accessToken });
+
       // Create JWT Refresh Token
       const refreshToken = crypto.randomBytes(128).toString("base64");
 
@@ -120,6 +125,100 @@ const authController = {
       });
     } catch (error) {
       return next();
+    }
+  },
+
+  github: async function (request, response, next) {
+    const { code, redirectUri } = request.body;
+    const githubTokenBaseUrl = "https://github.com/login/oauth/access_token";
+    const githubGetTokenUrl = `${githubTokenBaseUrl}?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&client_secret=${process.env.GITHUB_OAUTH_CLIENT_SECRET}&code=${code}&redirect_uri=${redirectUri}`;
+
+    try {
+      // Get Access Token - Receive in body code/redirect
+      const getTokenResponse = await axios.post(githubGetTokenUrl, null, {
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      const { access_token: accessToken } = getTokenResponse.data;
+      if (!accessToken) {
+        return next("auhtGithub: No accessToken");
+      }
+
+      // Get User information
+      const getUserResponse = await axios.get("https://api.github.com/user", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const {
+        login: username,
+        name: firstname,
+        avatar_url: avatar,
+      } = getUserResponse.data;
+      if (!username) {
+        return next("auhtGithub: No username found");
+      }
+
+      // Get Email
+      const getUserEmailResponse = await axios.get(
+        "https://api.github.com/user/emails",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const { email } = getUserEmailResponse.data.find(
+        (data) => data.primary === true
+      );
+
+      if (!email) {
+        return next("auhtGithub: No email found");
+      }
+
+      // Search user in Database
+      const userDb = await db.user.getBy({ email });
+      const user = {
+        ...userDb,
+        email,
+        username,
+        githubUsername: username,
+        firstname,
+        githubToken: accessToken,
+        avatar,
+      };
+      if (userDb?.githubUsername) {
+        return response.status(200).json(user);
+      }
+      if (userDb) {
+        user.username = userDb.username;
+        user.type = "github";
+        try {
+          await db.user.update(user, userDb.id);
+        } catch (error) {
+          next(error);
+        }
+      }
+
+      try {
+        user.type = "github";
+        user.active = true;
+        user.githubUsername = username;
+        await db.user.create(user);
+      } catch (error) {
+        error.message = "user creation failed";
+        console.log(error);
+        next(error);
+      }
+      console.log(user);
+      return response.status(200).json(user);
+    } catch (error) {
+      error.message = "Couldn't auhtenticate with Github";
+      error.type = "authGithub";
+      console.log(error);
+      return next(error);
     }
   },
 };

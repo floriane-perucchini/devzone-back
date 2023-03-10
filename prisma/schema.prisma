@@ -31,7 +31,7 @@ model User {
   id             Int        @id @default(autoincrement())
   type           String     @default("server")
   email          String
-  password       String
+  password       String?
   firstname      String?
   lastname       String?
   username       String
@@ -86,14 +86,12 @@ model Token {
   id              Int     @id @default(autoincrement())
   jwtRefreshToken String?
   emailToken      String
-  githubToken     String?
   expiration      String?
   userId          Int
 
   @@index([jwtRefreshToken])
   @@index([expiration])
   @@index([emailToken])
-  @@index([githubToken])
 }
 
 model Avatar {
