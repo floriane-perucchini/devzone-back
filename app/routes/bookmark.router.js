@@ -70,3 +70,7 @@ export default router;
 // TODO: Update User with Type if GitHub login
 
 // TODO: Ask Simoff why accesss.log not ignored in gitignore
+
+// TODO: Creat route to get user by token
+
+// TODO: Auth: Check jwt/userId before API access

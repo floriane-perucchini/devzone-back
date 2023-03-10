@@ -31,7 +31,7 @@ model User {
   id             Int        @id @default(autoincrement())
   type           String     @default("server")
   email          String
-  password       String
+  password       String?
   firstname      String?
   lastname       String?
   username       String

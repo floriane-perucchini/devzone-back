@@ -28,9 +28,27 @@ const userDatamapper = {
     return result.rows[0];
   },
 
-  create: async function ({ email, password, firstname, lastname, username }) {
-    const sql = `INSERT INTO "User" (email, firstname, lastname, username, password) VALUES ($1, $2, $3, $4, $5) RETURNING id, email`;
-    const values = [email, firstname, lastname, username, password];
+  create: async function ({
+    email,
+    password,
+    firstname,
+    lastname,
+    username,
+    active,
+    type,
+    githubUsername,
+  }) {
+    const sql = `INSERT INTO "User" (email, firstname, lastname, username, password, active, type, "githubUsername") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, email`;
+    const values = [
+      email,
+      firstname,
+      lastname,
+      username,
+      password,
+      active,
+      type,
+      githubUsername,
+    ];
     const result = await client.query(sql, values);
     return result.rows[0];
   },
@@ -48,10 +66,20 @@ const userDatamapper = {
   },
 
   update: async function (
-    { email, password, firstname, lastname, username, active, website },
+    {
+      email,
+      password,
+      firstname,
+      lastname,
+      username,
+      active,
+      website,
+      type,
+      githubUsername,
+    },
     id
   ) {
-    const sql = `UPDATE "User" SET email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7 WHERE id = $8`;
+    const sql = `UPDATE "User" SET email = $1, password = $2, firstname = $3, lastname = $4, username = $5, active = $6, website = $7, type = $8, "githubUsername" = $9 WHERE id = $10`;
     const values = [
       email,
       password,
@@ -60,6 +88,8 @@ const userDatamapper = {
       username,
       active,
       website,
+      type,
+      githubUsername,
       id,
     ];
 

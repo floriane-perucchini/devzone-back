@@ -28,6 +28,16 @@ const userController = {
     }
   },
 
+  getByToken: async function (request, response, next) {
+    const { token } = request.params;
+
+    try {
+      const user = await db.token.getUser(token);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   update: async function (request, response, next) {
     const { id } = request.params;
     const { email, firstname, lastname, username, password, website } =

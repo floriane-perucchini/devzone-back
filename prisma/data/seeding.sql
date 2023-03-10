@@ -44,11 +44,11 @@ VALUES
 INSERT INTO "Token"("expiration", "userId", "emailToken", "jwtRefreshToken")
 
 VALUES
-    (1000, 1, '20000', 'hjfeiuzhfeiuz'),
-    (1000, 2, '3000', 'vdvdevezve'),
-    (1000, 3, '40000', 'vcdsvezvgrve'),
-    (1000, 4, '50000', 'doizefijnze'),
-    (1000, 5, '60000', 'fbezhufezh');
+    (1000, 1, '20000', '/JXRvAA01KsLYdQN7Gz+zOwfolcpJT8U0X5Xqh2iBz8ZBNokoJIxGfp0kVZ2np8FX3PXfQMlHb1/CPGtpW50s4vl8fmPdLY='),
+    (1000, 2, '3000', 'ddZGNBR2ZkSJlzGlSX2fhM3HaLQlCvcRmiWQZ20ISvZ5Vw8M2PAaHMA7gWYfsSwiZ0C0UM1JQycD/JXRvAA01KsLYdQN7Gz+zOwfolcpJT8U0X5Xqh2iBz8ZBNokoJIxGfp0kVZ2np8FX3PXfQMlHb1/CPGtpW50s4vl8fmPdLY='),
+    (1000, 3, '40000', 'ddZGNBR2ZkSJlzGlSX2fhM3HaLQlCvcRmiWQZ20ISvZ5Vw8M2PAaHMA7gWYfsSwiZ0C0UM1JQycD/JXRvAA01KsLYdQN7Gz+zOwfolcpJT8U0X5Xqh2iBz8ZBNokoJIxGfp0kVZ2np8FX3PXfQMlHb1/CPGtpW50s4vl8fmPdLY='),
+    (1000, 4, '50000', 'ddZGNBR2ZkSJlzGlSX2fhM3HaLQlCvcRmiWQZ20ISvZ5Vw8M2PAaHMA7gWYfsSwiZ0C0UM1JQycD/JXRvAA01KsLYdQN7Gz+zOwfolcpJT8U0X5Xqh2iBz8ZBNokoJIxGfp0kVZ2np8FX3PXfQMlHb1/CPGtpW50s4vl8fmPdLY='),
+    (1000, 5, '60000', 'ddZGNBR2ZkSJlzGlSX2fhM3HaLQlCvcRmiWQZ20ISvZ5Vw8M2PAaHMA7gWYfsSwiZ0C0UM1JQycD/JXRvAA01KsLYdQN7Gz+zOwfolcpJT8U0X5Xqh2iBz8ZBNokoJIxGfp0kVZ2np8FX3PXfQMlHb1/CPGtpW50s4vl8fmPdLY=');
 
 
 INSERT INTO "ToolsOnUsers" ("userId", "toolId")

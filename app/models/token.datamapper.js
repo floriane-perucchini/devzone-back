@@ -22,6 +22,13 @@ const tokenDatamapper = {
     return await client.query(sql, values);
   },
 
+  createToken: async function ({ userId, jwtToken }) {
+    const sql = `INSERT INTO "Token" ("userId", "jwtToken") VALUES ($1, $2)`;
+    const values = [userId, jwtToken];
+
+    return await client.query(sql, values);
+  },
+
   createRefresh: async function ({ userId, jwtRefreshToken, expiration }) {
     const sql = `UPDATE "Token" SET "jwtRefreshToken" = $1, expiration = $2 WHERE "userId" = $3`;
     const values = [jwtRefreshToken, expiration, userId];
