@@ -11,6 +11,8 @@ import axios from "axios";
 const authController = {
   signup: async function (request, response, next) {
     const wannabeUser = request.body;
+    wannabeUser.active = false;
+    wannabeUser.type = "server";
 
     try {
       // Check if username/email already exists
@@ -27,10 +29,16 @@ const authController = {
       // Hash user password
       wannabeUser.password = await bcrypt.hash(wannabeUser.password, 12);
       delete wannabeUser.confirmedPassword;
-
+      console.log(wannabeUser);
       // Create new user
-      const newUser = await db.user.create(wannabeUser);
-      if (!newUser) return next(new Error("User creation failed."));
+      let newUser;
+      try {
+        newUser = await db.user.create(wannabeUser);
+        if (!newUser) return next(new Error("User creation failed."));
+      } catch (error) {
+        console.log(error);
+        next(error);
+      }
 
       // Create Token & Send email confirmation
       const emailToken = String(crypto.randomUUID());
@@ -177,7 +185,6 @@ const authController = {
       if (!email) {
         return next("auhtGithub: No email found");
       }
-
       // Search user in Database
       const userDb = await db.user.getBy({ email });
       const user = {
@@ -189,14 +196,17 @@ const authController = {
         githubToken: accessToken,
         avatar,
       };
-      if (userDb?.githubUsername) {
-        return response.status(200).json(user);
-      }
+
+      // const usernametaken = await db.user.getBy({username})
+      // if (usernametaken)
+
       if (userDb) {
         user.username = userDb.username;
         user.type = "github";
         try {
           await db.user.update(user, userDb.id);
+          console.log(user);
+          return response.status(200).json(user);
         } catch (error) {
           next(error);
         }
@@ -207,13 +217,13 @@ const authController = {
         user.active = true;
         user.githubUsername = username;
         await db.user.create(user);
+        console.log(user);
+        return response.status(200).json(user);
       } catch (error) {
         error.message = "user creation failed";
         console.log(error);
         next(error);
       }
-      console.log(user);
-      return response.status(200).json(user);
     } catch (error) {
       error.message = "Couldn't auhtenticate with Github";
       error.type = "authGithub";
