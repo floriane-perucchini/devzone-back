@@ -97,10 +97,10 @@ model Token {
 model Avatar {
   id        Int      @id @default(autoincrement())
   type      String   @default("server")
-  fileName  String   @unique
-  filePath  String   @unique
-  url       String   @unique
-  size      BigInt
+  fileName  String?   @unique
+  filePath  String?   @unique
+  url       String   
+  size      BigInt?
   userId    Int?     @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
