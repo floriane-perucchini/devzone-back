@@ -34,7 +34,7 @@ router.get("/bookmarks/user/:id", bookmark.getByUser);
  * @return {object} 200 - bookmark response
  * @return {object} 500 - Unexpected error
  */
-router.post("/bookmark", validate, bookmark.create);
+router.post("/bookmark/:id", validate, bookmark.create);
 
 // PATCH Routes
 /**
