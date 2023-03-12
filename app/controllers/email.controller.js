@@ -20,7 +20,7 @@ const emailController = {
       if (!updatedUser)
         return next(new Error("User update active status failed."));
 
-      response.json("User email verified successfully.");
+      response.redirect("http://localhost:3000/login");
     } catch (error) {
       next(error);
     }

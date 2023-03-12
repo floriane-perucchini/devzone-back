@@ -50,10 +50,11 @@ const bookmarkController = {
     }
   },
   create: async function (request, response, next) {
+    const { id } = request.params;
+    const { link } = request.body;
+
     try {
-      const checkBookmark = await db.bookmark.getBy({
-        name: request.body.name,
-      });
+      const checkBookmark = await db.bookmark.getBy({ link }, id);
       if (checkBookmark) return next(new Error409("Bookmark already exists."));
 
       const newBookmark = await db.bookmark.create(request.body);
