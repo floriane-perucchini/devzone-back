@@ -8,13 +8,15 @@ const avatarDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   createExternal: async function (url, id) {
-    const sql = `INSERT INTO "Avatar" ( "url", "userId") VALUES ($1,$2) RETURNING *`;
-    const values = [url, id];
+    const sql = `INSERT INTO "Avatar" ("url", "userId", type) VALUES ($1, $2, $3) RETURNING *`;
+    const values = [url, id, "github"];
 
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   updateExternal: async function (url, id) {
     const sql = `UPDATE "Avatar" SET "url" = $1 WHERE "userId" = $2 RETURNING *`;
     const values = [url, id];
@@ -22,6 +24,7 @@ const avatarDatamapper = {
     const result = await client.query(sql, values);
     return result.rows[0];
   },
+
   upload: async function ({ fileName, filePath, size, url }, id) {
     const sql = `INSERT INTO "Avatar" ("fileName", "filePath", url, size, "userId") VALUES ($1, $2, $3, $4, $5) RETURNING *`;
     const values = [fileName, filePath, url, size, id];

@@ -60,17 +60,6 @@ router.delete("/bookmark/:id", bookmark.delete);
 
 export default router;
 
-// TODO: Update getUser (tools)
-
-// TODO: 404 page for API
-
 // TODO: Understand refresh tokens - Delete token ??
-
-// TODO: GitHub login
-// TODO: Update User with Type if GitHub login
-
-// TODO: Ask Simoff why accesss.log not ignored in gitignore
-
-// TODO: Creat route to get user by token
 
 // TODO: Auth: Check jwt/userId before API access

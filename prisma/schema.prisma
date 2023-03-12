@@ -85,7 +85,7 @@ model ToolsOnUsers {
 model Token {
   id              Int     @id @default(autoincrement())
   jwtRefreshToken String?
-  emailToken      String
+  emailToken      String?
   expiration      String?
   userId          Int
 
@@ -97,14 +97,14 @@ model Token {
 model Avatar {
   id        Int      @id @default(autoincrement())
   type      String   @default("server")
-  fileName  String?   @unique
-  filePath  String?   @unique
-  url       String   
+  fileName  String?  @unique
+  filePath  String?  @unique
+  url       String
   size      BigInt?
-  userId    Int?     @unique
+  userId    Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([type])
   @@index([fileName])
