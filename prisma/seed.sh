@@ -1,1 +1,3 @@
-psql -d devzone -U devzoneadmin -f prisma/data/seeding.sql
+. ../.env
+
+psql -d "${PGDATABASE}" -U "${PGUSER}" -f prisma/data/seeding.sql

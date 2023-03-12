@@ -35,11 +35,11 @@ INSERT INTO "Bookmark"("name", "description", "link", "imgLink", "userId", "tool
 
 VALUES
     ('Favorite1', 'Super favorite 1', 'link1', '/image', 1, 2),
-    ('Favorite2', 'Super favorite 1', 'link1', '/image', 2, 1),
-    ('Favorite3', 'Super favorite 1', 'link1', '/image', 3, 2),
-    ('Favorite4', 'Super favorite 1', 'link1', '/image', 4, 2),
-    ('Favorite5', 'Super favorite 1', 'link1', '/image', 1, 1),
-    ('Favorite6', 'Super favorite 1', 'link1', '/image', 2, 2);
+    ('Favorite2', 'Super favorite 1', 'link2', '/image', 2, 1),
+    ('Favorite3', 'Super favorite 1', 'link3', '/image', 3, 2),
+    ('Favorite4', 'Super favorite 1', 'link4', '/image', 4, 2),
+    ('Favorite5', 'Super favorite 1', 'link5', '/image', 1, 1),
+    ('Favorite6', 'Super favorite 1', 'link6', '/image', 2, 2);
 
 INSERT INTO "Token"("expiration", "userId", "emailToken", "jwtRefreshToken")
 

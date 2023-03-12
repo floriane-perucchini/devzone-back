@@ -36,6 +36,7 @@ const emailController = {
       if (!user) return next(new Error404("User not found."));
 
       token = await db.token.getToken(id);
+      token = token.emailToken;
       if (!token) {
         token = String(crypto.randomUUID());
         await db.token.createEmail({ userId: id, token });
@@ -71,6 +72,7 @@ const emailController = {
       if (!user) return next(new Error404("User not found."));
 
       let token = await db.token.getToken(id);
+      token = token.emailToken;
       if (!token) {
         token = String(crypto.randomUUID());
         await db.token.createEmail({ userId: id, token });
@@ -130,8 +132,16 @@ const emailController = {
       html: `<b>${message}</b>`,
     };
 
+    const mailDataUser = {
+      from: "devzoneapplication@gmail.com",
+      to: email,
+      subject: `Devzone: Contact Form`,
+      html: `<b>Hello! <br>We've received your email and will respond to you shortly.<br>Subjet: ${subject} <br>Your message: ${message}</b>`,
+    };
+
     try {
       await transporter.sendMail(mailData);
+      await transporter.sendMail(mailDataUser);
       return response.json("Form contact mail sent successfully.");
     } catch (error) {
       error.message = "Contact form mail couldn't be sent.";
