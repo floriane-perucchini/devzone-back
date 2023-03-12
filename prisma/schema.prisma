@@ -58,7 +58,7 @@ model Bookmark {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
-  link        String?  @unique
+  link        String?
   userId      Int?
   toolId      Int?
   imgLink     String?
