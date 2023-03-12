@@ -107,9 +107,6 @@ const authController = {
         }
       );
 
-      // TODO: Add access token to db
-      await db.token.createToken({ userId: user.id, jwtToken: accessToken });
-
       // Create JWT Refresh Token
       const refreshToken = crypto.randomBytes(128).toString("base64");
 
@@ -199,6 +196,7 @@ const authController = {
 
       // const usernametaken = await db.user.getBy({username})
       // if (usernametaken)
+      // TODO: Check if username is taken, if taken add random UUID to it
 
       if (userDb) {
         user.username = userDb.username;
